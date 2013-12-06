@@ -1,0 +1,26 @@
+[packageDeclaration]package[packageDeclaration] shiver.me.timbers;
+
+[JAVA_DOC]/**
+ * This class has been created to provide some example source that is syntactically incorrect.
+ *
+ * @author Karl Bennett
+ */[JAVA_DOC]
+[classOrInterfaceModifier]public[classOrInterfaceModifier] [classDeclaration]class[classDeclaration] InvalidTest {
+
+    [LINE_COMMENT]// A raw class level invocation doesn't parse.[LINE_COMMENT]
+    test(1);
+
+    [LINE_COMMENT]// Stand alone literal does parse.[LINE_COMMENT]
+    [literal]1[literal];
+
+    [LINE_COMMENT]// A raw class level expression does parse.[LINE_COMMENT]
+    test = [literal]1[literal] + [literal]1[literal];
+
+    [JAVA_DOC]/**
+     * Valid method after the invalid code doesn't completely parse.
+     */[JAVA_DOC]
+    public void test([primitiveType]int[primitiveType] test) {
+
+        test += [literal]5[literal];
+    }
+}

@@ -1,0 +1,35 @@
+[packageDeclaration]package[packageDeclaration] shiver.me.timbers;
+
+[JAVA_DOC]/**
+ * This class has been created to provide some example source for Transformationing.
+ *
+ * @author Karl Bennett
+ */[JAVA_DOC]
+[typeDeclaration][classOrInterfaceModifier]['public']public['public'][classOrInterfaceModifier][typeDeclaration] [classDeclaration]class[classDeclaration] [classDefinition]Test[classDefinition] {
+
+    [COMMENT]/*
+    * This is a multi line comment.
+    */[COMMENT]
+    [modifier]['private']private['private'][modifier] [modifier]final[modifier] [classOrInterfaceType]String[classOrInterfaceType] [variableDeclaratorId]test[variableDeclaratorId];
+
+    [modifier][classOrInterfaceModifier]['public']public['public'][classOrInterfaceModifier][modifier] [constructorDeclaration]Test[constructorDeclaration]([classOrInterfaceType]String[classOrInterfaceType] [variableDeclaratorId]test[variableDeclaratorId]) {
+
+        ['this']this['this'].test = test;
+    }
+
+    [modifier][classOrInterfaceModifier]['public']public['public'][classOrInterfaceModifier][modifier] [classOrInterfaceType]String[classOrInterfaceType] [methodDefinition]getTest[methodDefinition]() {
+
+        ['return']return['return'] test;
+    }
+
+    [modifier]['public']public['public'][modifier] [classOrInterfaceType]String[classOrInterfaceType] [methodDefinition]append[methodDefinition]([primitiveType]int[primitiveType] [variableDeclaratorId]number[variableDeclaratorId]) {
+
+        [LINE_COMMENT]// This is a comment.[LINE_COMMENT]
+        ['return']return['return'] test + number;
+    }
+
+    [modifier]public[modifier] [modifier]static[modifier] [primitiveType]int[primitiveType] [methodDefinition]increment[methodDefinition]([primitiveType]int[primitiveType] [variableDeclaratorId]number[variableDeclaratorId]) {
+
+        ['return']return['return'] number + [literal]1[literal];
+    }
+}

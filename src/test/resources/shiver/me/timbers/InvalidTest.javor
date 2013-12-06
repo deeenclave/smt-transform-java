@@ -1,0 +1,26 @@
+package shiver.me.timbers;
+
+/**
+ * This class has been created to provide some example source that is syntactically incorrect.
+ *
+ * @author Karl Bennett
+ */
+public class InvalidTest {
+
+    // A raw class level invocation doesn't parse.
+    test(1);
+
+    // Stand alone literal does parse.
+    1;
+
+    // A raw class level expression does parse.
+    test = 1 + 1;
+
+    /**
+     * Valid method after the invalid code doesn't completely parse.
+     */
+    public void test(int test) {
+
+        test += 5;
+    }
+}
