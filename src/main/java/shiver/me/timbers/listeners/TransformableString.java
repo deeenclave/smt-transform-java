@@ -30,7 +30,7 @@ public class TransformableString implements CharSequence {
         this.currentStartIndex = -1;
     }
 
-    public void transformNamedToken(Transformation transformation, int startIndex, String subString) {
+    public void transformSubstring(Transformation transformation, int startIndex, String subString) {
 
         if (isNewWord(getCurrentStartIndex(), startIndex)) {
 

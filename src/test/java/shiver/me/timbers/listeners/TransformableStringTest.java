@@ -324,9 +324,9 @@ public class TransformableStringTest {
 
         final String subString = staticToken.getText();
 
-        listener.transformNamedToken(WRAPPING_TYPE_DECLARATION, STATIC_START_INDEX, subString);
-        listener.transformNamedToken(WRAPPING_MODIFIER, STATIC_START_INDEX, subString);
-        listener.transformNamedToken(WRAPPING_STATIC, STATIC_START_INDEX, subString);
+        listener.transformSubstring(WRAPPING_TYPE_DECLARATION, STATIC_START_INDEX, subString);
+        listener.transformSubstring(WRAPPING_MODIFIER, STATIC_START_INDEX, subString);
+        listener.transformSubstring(WRAPPING_STATIC, STATIC_START_INDEX, subString);
 
         assertEquals("the transformed string should be correct.", TRANSFORMED_STATIC_TEXT,
                 listener.toString());
@@ -337,25 +337,25 @@ public class TransformableStringTest {
 
         final String publicSubString = publicToken.getText();
 
-        listener.transformNamedToken(WRAPPING_TYPE_DECLARATION, PUBLIC_START_INDEX, publicSubString);
-        listener.transformNamedToken(WRAPPING_CLASS_OR_INTERFACE_MODIFIER, PUBLIC_START_INDEX,
+        listener.transformSubstring(WRAPPING_TYPE_DECLARATION, PUBLIC_START_INDEX, publicSubString);
+        listener.transformSubstring(WRAPPING_CLASS_OR_INTERFACE_MODIFIER, PUBLIC_START_INDEX,
                 publicSubString);
-        listener.transformNamedToken(WRAPPING_PUBLIC, PUBLIC_START_INDEX, publicSubString);
+        listener.transformSubstring(WRAPPING_PUBLIC, PUBLIC_START_INDEX, publicSubString);
 
         final String staticSubString = staticToken.getText();
 
-        listener.transformNamedToken(WRAPPING_TYPE_DECLARATION, STATIC_START_INDEX, staticSubString);
-        listener.transformNamedToken(WRAPPING_MODIFIER, STATIC_START_INDEX, staticSubString);
-        listener.transformNamedToken(WRAPPING_STATIC, STATIC_START_INDEX, staticSubString);
+        listener.transformSubstring(WRAPPING_TYPE_DECLARATION, STATIC_START_INDEX, staticSubString);
+        listener.transformSubstring(WRAPPING_MODIFIER, STATIC_START_INDEX, staticSubString);
+        listener.transformSubstring(WRAPPING_STATIC, STATIC_START_INDEX, staticSubString);
 
-        listener.transformNamedToken(WRAPPING_VOID, VOID_START_INDEX, voidToken.getText());
+        listener.transformSubstring(WRAPPING_VOID, VOID_START_INDEX, voidToken.getText());
 
         final Token mainToken = mock(Token.class);
         when(mainToken.getStartIndex()).thenReturn(19);
         when(mainToken.getStopIndex()).thenReturn(22);
         when(mainToken.getText()).thenReturn("main");
 
-        listener.transformNamedToken(WRAPPING_METHOD_DEFINITION, mainToken.getStartIndex(),
+        listener.transformSubstring(WRAPPING_METHOD_DEFINITION, mainToken.getStartIndex(),
                 mainToken.getText());
 
         assertEquals("the transformed string should be correct.", TRANSFORMED_PUBLIC_AND_STATIC_TEXT,
@@ -367,14 +367,14 @@ public class TransformableStringTest {
 
         final String publicSubString = publicToken.getText();
 
-        listener.transformNamedToken(null, PUBLIC_START_INDEX,
+        listener.transformSubstring(null, PUBLIC_START_INDEX,
                 publicSubString);
     }
 
     @Test(expected = NullPointerException.class)
     public void testTransformSubstringWithNullSubString() {
 
-        listener.transformNamedToken(WRAPPING_METHOD_DEFINITION, PUBLIC_START_INDEX,
+        listener.transformSubstring(WRAPPING_METHOD_DEFINITION, PUBLIC_START_INDEX,
                 null);
     }
 
@@ -383,7 +383,7 @@ public class TransformableStringTest {
 
         final String publicSubString = publicToken.getText();
 
-        listener.transformNamedToken(WRAPPING_METHOD_DEFINITION, PUBLIC_STOP_INDEX,
+        listener.transformSubstring(WRAPPING_METHOD_DEFINITION, PUBLIC_STOP_INDEX,
                 publicSubString);
     }
 
@@ -399,7 +399,7 @@ public class TransformableStringTest {
 
         final String publicSubString = publicToken.getText();
 
-        listener.transformNamedToken(WRAPPING_TYPE_DECLARATION, PUBLIC_START_INDEX, publicSubString);
+        listener.transformSubstring(WRAPPING_TYPE_DECLARATION, PUBLIC_START_INDEX, publicSubString);
 
         assertThat("the length should be different to the wrapped string after a transformation.", listener.length(),
                 not(TEST_TEXT.length()));
@@ -418,7 +418,7 @@ public class TransformableStringTest {
 
         final String publicSubString = publicToken.getText();
 
-        listener.transformNamedToken(WRAPPING_TYPE_DECLARATION, PUBLIC_START_INDEX, publicSubString);
+        listener.transformSubstring(WRAPPING_TYPE_DECLARATION, PUBLIC_START_INDEX, publicSubString);
 
         final int INDEX = 20;
 
@@ -441,7 +441,7 @@ public class TransformableStringTest {
 
         final String publicSubString = publicToken.getText();
 
-        listener.transformNamedToken(WRAPPING_TYPE_DECLARATION, PUBLIC_START_INDEX, publicSubString);
+        listener.transformSubstring(WRAPPING_TYPE_DECLARATION, PUBLIC_START_INDEX, publicSubString);
 
         final int START = 10;
         final int END = 20;
