@@ -9,7 +9,6 @@ import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.io.IOUtils;
 import shiver.me.timbers.listeners.CommentIgnoringErrorListener;
-import shiver.me.timbers.listeners.TransformingParseTreeListener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -36,7 +35,7 @@ public class JavaTransformer implements Transformer {
         final ParserRuleContext result = parser.compilationUnit();
 
         final ParseTreeWalker walker = new ParseTreeWalker();
-        walker.walk(new TransformingParseTreeListener(transformedSource, transformations, parser), result);
+//        walker.walk(new TransformingParseTreeListener(transformedSource, transformations, parser), result);
 
         return transformedSource.toString();
     }
