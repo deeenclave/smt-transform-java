@@ -1,6 +1,8 @@
 package shiver.me.timbers;
 
 import org.junit.Test;
+import shiver.me.timbers.transform.IndividualTransformations;
+import shiver.me.timbers.transform.Transformation;
 import shiver.me.timbers.types.Const;
 import shiver.me.timbers.types.Goto;
 import shiver.me.timbers.types.Strictfp;

@@ -9,6 +9,8 @@ import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.io.IOUtils;
 import shiver.me.timbers.listeners.CommentIgnoringErrorListener;
+import shiver.me.timbers.transform.Transformations;
+import shiver.me.timbers.transform.Transformer;
 
 import java.io.IOException;
 import java.io.InputStream;
