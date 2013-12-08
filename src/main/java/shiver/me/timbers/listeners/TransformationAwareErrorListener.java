@@ -9,40 +9,44 @@ import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.misc.Nullable;
+import shiver.me.timbers.transform.NullTransformation;
+import shiver.me.timbers.transform.Transformations;
 
 import java.util.BitSet;
-import java.util.Set;
 
 import static shiver.me.timbers.Asserts.assertIsNotNull;
+import static shiver.me.timbers.Checks.isNotNull;
 
 /**
  * This console error listener will not register an error if the error token is for a comment type.
  *
  * @author Karl Bennett
  */
-public class CommentIgnoringErrorListener implements ANTLRErrorListener {
+public class TransformationAwareErrorListener implements ANTLRErrorListener {
 
     private final ANTLRErrorListener listener;
-    private final Set<Integer> commentTypes;
+    private final Transformations transformations;
 
-    public CommentIgnoringErrorListener(ANTLRErrorListener listener, Set<Integer> commentTypes) {
+    public TransformationAwareErrorListener(ANTLRErrorListener listener, Transformations transformations) {
 
-        assertIsNotNull(CommentIgnoringErrorListener.class.getSimpleName() + " listener argument cannot be null.",
+        assertIsNotNull(TransformationAwareErrorListener.class.getSimpleName() + " listener argument cannot be null.",
                 listener);
-        assertIsNotNull(CommentIgnoringErrorListener.class.getSimpleName() + " commentTypes argument cannot be null.",
-                commentTypes);
+        assertIsNotNull(TransformationAwareErrorListener.class.getSimpleName() + " transformations argument cannot be null.",
+                transformations);
 
         this.listener = listener;
-        this.commentTypes = commentTypes;
+        this.transformations = transformations;
     }
 
     @Override
     public void syntaxError(Recognizer<?, ?> recognizer, Object offendingSymbol, int line,
                             int charPositionInLine, String msg, RecognitionException e) {
 
-        final int type = ((Token) offendingSymbol).getType();
+        final Token token = (Token) offendingSymbol;
 
-        if (commentTypes.contains(type)) {
+        final String tokenName = recognizer.getTokenNames()[token.getType()];
+
+        if (!(transformations.get(tokenName) instanceof NullTransformation)) {
 
             return;
         }

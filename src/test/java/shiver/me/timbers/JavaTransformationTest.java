@@ -17,8 +17,8 @@ import static shiver.me.timbers.TestData.INVALID_TEST_FILE_NAME;
 import static shiver.me.timbers.TestData.MOCK_APPLYER;
 import static shiver.me.timbers.TestData.SOURCE;
 import static shiver.me.timbers.TestData.TRANSFORMATIONS;
-import static shiver.me.timbers.TestData.Transformed_INVALID_SOURCE;
-import static shiver.me.timbers.TestData.Transformed_SOURCE;
+import static shiver.me.timbers.TestData.TRANSFORMED_INVALID_SOURCE;
+import static shiver.me.timbers.TestData.TRANSFORMED_SOURCE;
 import static shiver.me.timbers.TestData.readTestFile;
 
 public class JavaTransformationTest {
@@ -26,14 +26,14 @@ public class JavaTransformationTest {
     @Test
     public void testTransformation() {
 
-        assertEquals("the source should be Transformed correctly.", Transformed_SOURCE,
+        assertEquals("the source should be Transformed correctly.", TRANSFORMED_SOURCE,
                 new JavaTransformer().transform(readTestFile(), TRANSFORMATIONS));
     }
 
     @Test
     public void testTransformationWithInvalidSource() {
 
-        assertEquals("the source should be Transformed correctly.", Transformed_INVALID_SOURCE,
+        assertEquals("the source should be Transformed correctly.", TRANSFORMED_INVALID_SOURCE,
                 new JavaTransformer().transform(readTestFile(INVALID_TEST_FILE_NAME), TRANSFORMATIONS));
     }
 

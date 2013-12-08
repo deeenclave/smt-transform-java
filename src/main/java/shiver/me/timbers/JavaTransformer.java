@@ -6,16 +6,21 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.ConsoleErrorListener;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.io.IOUtils;
-import shiver.me.timbers.listeners.CommentIgnoringErrorListener;
+import shiver.me.timbers.listeners.TransformationAwareErrorListener;
+import shiver.me.timbers.listeners.TransformingParseTreeListener;
+import shiver.me.timbers.rules.ClassDefinition;
+import shiver.me.timbers.rules.MethodDefinition;
 import shiver.me.timbers.transform.Transformations;
 import shiver.me.timbers.transform.Transformer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
-import static shiver.me.timbers.Comments.COMMENT_TYPES;
+import static shiver.me.timbers.JavaParser.*;
 
 /**
  * A Transformation for Java source code, it will apply any Transformations that have names matching the different token names.
@@ -30,16 +35,21 @@ public class JavaTransformer implements Transformer {
 
         final String source = toString(stream);
 
-        final StringBuilder transformedSource = new StringBuilder(source);
-
-        final JavaParser parser = buildParser(source);
+        final JavaParser parser = buildParser(source, transformations);
 
         final ParserRuleContext result = parser.compilationUnit();
 
-        final ParseTreeWalker walker = new ParseTreeWalker();
-//        walker.walk(new TransformingParseTreeListener(transformedSource, transformations, parser), result);
+        final ParseTreeListener listener = new TransformingParseTreeListener(parser, transformations,
+                new HashMap<Integer, String>() {{
+                   put(RULE_classDeclaration, ClassDefinition.NAME);
+                   put(RULE_methodDeclaration, MethodDefinition.NAME);
+                }},
+                source);
 
-        return transformedSource.toString();
+        final ParseTreeWalker walker = new ParseTreeWalker();
+        walker.walk(listener, result);
+
+        return listener.toString();
     }
 
     private static String toString(InputStream stream) {
@@ -54,7 +64,7 @@ public class JavaTransformer implements Transformer {
         }
     }
 
-    private static JavaParser buildParser(String source) {
+    private static JavaParser buildParser(String source, Transformations transformations) {
 
         final CharStream charStream = new ANTLRInputStream(source);
 
@@ -64,7 +74,7 @@ public class JavaTransformer implements Transformer {
 
         final JavaParser parser = new JavaParser(tokenStream);
         parser.removeErrorListeners();
-        parser.addErrorListener(new CommentIgnoringErrorListener(new ConsoleErrorListener(), COMMENT_TYPES));
+        parser.addErrorListener(new TransformationAwareErrorListener(new ConsoleErrorListener(), transformations));
 
         return parser;
     }

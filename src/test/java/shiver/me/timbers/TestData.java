@@ -93,8 +93,8 @@ public final class TestData {
     ));
 
     public static final String SOURCE = readTestFileToString(TEST_FILE_NAME);
-    public static final String Transformed_SOURCE = readTestFileToString(TRANSFORMED_TEST_FILE_NAME);
-    public static final String Transformed_INVALID_SOURCE = readTestFileToString(TRANSFORMED_INVALID_TEST_FILE_NAME);
+    public static final String TRANSFORMED_SOURCE = readTestFileToString(TRANSFORMED_TEST_FILE_NAME);
+    public static final String TRANSFORMED_INVALID_SOURCE = readTestFileToString(TRANSFORMED_INVALID_TEST_FILE_NAME);
 
     /**
      * @return the input stream for the default test file.
