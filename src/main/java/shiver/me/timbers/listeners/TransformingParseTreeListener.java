@@ -12,24 +12,29 @@ import shiver.me.timbers.transform.TransformableString;
 import shiver.me.timbers.transform.Transformation;
 import shiver.me.timbers.transform.Transformations;
 
-import java.util.Map;
+import static shiver.me.timbers.Asserts.assertIsNotNull;
 
-/**
- * @author Karl Bennett
- */
 public class TransformingParseTreeListener implements ParseTreeListener {
 
     private final Recognizer recognizer;
     private final Transformations transformations;
-    private final Map<Integer, String> customRules;
+    private final Transformations parentTransformations;
     private final TransformableString transformableString;
 
     public TransformingParseTreeListener(Recognizer recognizer, Transformations transformations,
-                                         Map<Integer, String> customRules, String string) {
+                                         Transformations parentTransformations, String string) {
+
+        assertIsNotNull(Transformations.class.getSimpleName() + " recognizer argument cannot be null.",
+                recognizer);
+        assertIsNotNull(Transformations.class.getSimpleName() + " transformations argument cannot be null.",
+                transformations);
+        assertIsNotNull(Transformations.class.getSimpleName() + " parentTransformations argument cannot be null.",
+                parentTransformations);
+        assertIsNotNull(Transformations.class.getSimpleName() + " string argument cannot be null.", string);
 
         this.transformableString = new TransformableString(string);
         this.transformations = transformations;
-        this.customRules = customRules;
+        this.parentTransformations = parentTransformations;
         this.recognizer = recognizer;
     }
 
@@ -40,7 +45,7 @@ public class TransformingParseTreeListener implements ParseTreeListener {
 
         final Token token = node.getSymbol();
 
-        transformString(customRules.get(ruleType), token);
+        transformString(parentTransformations, getRuleName(ruleType), token);
 
         if (0 <= token.getType()) {
 
@@ -62,21 +67,19 @@ public class TransformingParseTreeListener implements ParseTreeListener {
 
     @Override
     public void exitEveryRule(@NotNull ParserRuleContext context) {
-
-//        transformRule(context);
     }
 
     private void transformToken(Token token) {
 
-        transformString(getTokenName(token.getType()), token);
+        transformString(transformations, getTokenName(token.getType()), token);
     }
 
     private void transformRule(ParserRuleContext context) {
 
-        transformString(getRuleName(context.getRuleIndex()), context.getStart());
+        transformString(transformations, getRuleName(context.getRuleIndex()), context.getStart());
     }
 
-    private void transformString(String name, Token token) {
+    private void transformString(Transformations transformations, String name, Token token) {
 
         final Transformation transformation = transformations.get(name);
 

@@ -44,14 +44,24 @@ public class TransformationAwareErrorListener implements ANTLRErrorListener {
 
         final Token token = (Token) offendingSymbol;
 
-        final String tokenName = recognizer.getTokenNames()[token.getType()];
+        final int type = token.getType();
 
-        if (!(transformations.get(tokenName) instanceof NullTransformation)) {
+        if (0 < type) {
 
-            return;
+            final String tokenName = recognizer.getTokenNames()[type];
+
+            if (canTransform(tokenName)) {
+
+                return;
+            }
         }
 
         listener.syntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
+    }
+
+    private boolean canTransform(String tokenName) {
+
+        return !(transformations.get(tokenName) instanceof NullTransformation);
     }
 
     @Override

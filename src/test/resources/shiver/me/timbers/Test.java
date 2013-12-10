@@ -1,7 +1,7 @@
 package shiver.me.timbers;
 
 /**
- * This class has been created to provide some example source for Transformationing.
+ * This class has been created to provide some example source for Transforming.
  *
  * @author Karl Bennett
  */

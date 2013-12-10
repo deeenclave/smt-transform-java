@@ -1,35 +1,35 @@
-[packageDeclaration]package[packageDeclaration] shiver.me.timbers;
+['package'][packageDeclaration][compilationUnit]package[compilationUnit][packageDeclaration]['package'] [Identifier][qualifiedName]shiver[qualifiedName][Identifier].[Identifier]me[Identifier].[Identifier]timbers[Identifier];
 
 [JAVA_DOC]/**
- * This class has been created to provide some example source for Transformationing.
+ * This class has been created to provide some example source for Transforming.
  *
  * @author Karl Bennett
  */[JAVA_DOC]
-[typeDeclaration][classOrInterfaceModifier]['public']public['public'][classOrInterfaceModifier][typeDeclaration] [classDeclaration]class[classDeclaration] [classDefinition]Test[classDefinition] {
+['public'][classOrInterfaceModifier][typeDeclaration]public[typeDeclaration][classOrInterfaceModifier]['public'] ['class'][classDeclaration]class[classDeclaration]['class'] [Identifier][classDefinition]Test[classDefinition][Identifier] [classBody]{[classBody]
 
     [COMMENT]/*
     * This is a multi line comment.
     */[COMMENT]
-    [modifier]['private']private['private'][modifier] [modifier]final[modifier] [classOrInterfaceType]String[classOrInterfaceType] [variableDeclaratorId]test[variableDeclaratorId];
+    ['private'][classOrInterfaceModifier][modifier][classBodyDeclaration]private[classBodyDeclaration][modifier][classOrInterfaceModifier]['private'] ['final'][classOrInterfaceModifier][modifier]final[modifier][classOrInterfaceModifier]['final'] [Identifier][classOrInterfaceType][type][fieldDeclaration][memberDeclaration]String[memberDeclaration][fieldDeclaration][type][classOrInterfaceType][Identifier] [Identifier][variableDeclaratorId][variableDeclarator][variableDeclarators]test[variableDeclarators][variableDeclarator][variableDeclaratorId][Identifier];
 
-    [modifier][classOrInterfaceModifier]['public']public['public'][classOrInterfaceModifier][modifier] [constructorDeclaration]Test[constructorDeclaration]([classOrInterfaceType]String[classOrInterfaceType] [variableDeclaratorId]test[variableDeclaratorId]) {
+    ['public'][classOrInterfaceModifier][modifier][classBodyDeclaration]public[classBodyDeclaration][modifier][classOrInterfaceModifier]['public'] [Identifier][constructorDeclaration][memberDeclaration]Test[memberDeclaration][constructorDeclaration][Identifier][formalParameters]([formalParameters][Identifier][classOrInterfaceType][type][formalParameter][formalParameterList]String[formalParameterList][formalParameter][type][classOrInterfaceType][Identifier] [Identifier][variableDeclaratorId]test[variableDeclaratorId][Identifier]) [block][constructorBody]{[constructorBody][block]
 
-        ['this']this['this'].test = test;
+        ['this'][primary][expression][expression][expression][statementExpression][statement][blockStatement]this[blockStatement][statement][statementExpression][expression][expression][expression][primary]['this'].[Identifier]test[Identifier] = [Identifier][primary][expression]test[expression][primary][Identifier];
     }
 
-    [modifier][classOrInterfaceModifier]['public']public['public'][classOrInterfaceModifier][modifier] [classOrInterfaceType]String[classOrInterfaceType] [methodDefinition]getTest[methodDefinition]() {
+    ['public'][classOrInterfaceModifier][modifier][classBodyDeclaration]public[classBodyDeclaration][modifier][classOrInterfaceModifier]['public'] [Identifier][classOrInterfaceType][type][methodDeclaration][memberDeclaration]String[memberDeclaration][methodDeclaration][type][classOrInterfaceType][Identifier] [Identifier][methodDefinition]getTest[methodDefinition][Identifier][formalParameters]([formalParameters]) [block][methodBody]{[methodBody][block]
 
-        ['return']return['return'] test;
+        ['return'][statement][blockStatement]return[blockStatement][statement]['return'] [Identifier][primary][expression]test[expression][primary][Identifier];
     }
 
-    [modifier]['public']public['public'][modifier] [classOrInterfaceType]String[classOrInterfaceType] [methodDefinition]append[methodDefinition]([primitiveType]int[primitiveType] [variableDeclaratorId]number[variableDeclaratorId]) {
+    ['public'][classOrInterfaceModifier][modifier][classBodyDeclaration]public[classBodyDeclaration][modifier][classOrInterfaceModifier]['public'] [Identifier][classOrInterfaceType][type][methodDeclaration][memberDeclaration]String[memberDeclaration][methodDeclaration][type][classOrInterfaceType][Identifier] [Identifier][methodDefinition]append[methodDefinition][Identifier][formalParameters]([formalParameters]['int'][primitiveType][type][formalParameter][formalParameterList]int[formalParameterList][formalParameter][type][primitiveType]['int'] [Identifier][variableDeclaratorId]number[variableDeclaratorId][Identifier]) [block][methodBody]{[methodBody][block]
 
         [LINE_COMMENT]// This is a comment.[LINE_COMMENT]
-        ['return']return['return'] test + number;
+        ['return'][statement][blockStatement]return[blockStatement][statement]['return'] [Identifier][primary][expression][expression]test[expression][expression][primary][Identifier] + [Identifier][primary][expression]number[expression][primary][Identifier];
     }
 
-    [modifier]public[modifier] [modifier]static[modifier] [primitiveType]int[primitiveType] [methodDefinition]increment[methodDefinition]([primitiveType]int[primitiveType] [variableDeclaratorId]number[variableDeclaratorId]) {
+    ['public'][classOrInterfaceModifier][modifier][classBodyDeclaration]public[classBodyDeclaration][modifier][classOrInterfaceModifier]['public'] ['static'][classOrInterfaceModifier][modifier]static[modifier][classOrInterfaceModifier]['static'] ['int'][primitiveType][type][methodDeclaration][memberDeclaration]int[memberDeclaration][methodDeclaration][type][primitiveType]['int'] [Identifier][methodDefinition]increment[methodDefinition][Identifier][formalParameters]([formalParameters]['int'][primitiveType][type][formalParameter][formalParameterList]int[formalParameterList][formalParameter][type][primitiveType]['int'] [Identifier][variableDeclaratorId]number[variableDeclaratorId][Identifier]) [block][methodBody]{[methodBody][block]
 
-        ['return']return['return'] number + [literal]1[literal];
+        ['return'][statement][blockStatement]return[blockStatement][statement]['return'] [Identifier][primary][expression][expression]number[expression][expression][primary][Identifier] + [IntegerLiteral][literal][primary][expression]1[expression][primary][literal][IntegerLiteral];
     }
 }

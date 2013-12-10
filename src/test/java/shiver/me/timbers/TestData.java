@@ -1,34 +1,52 @@
 package shiver.me.timbers;
 
 import org.apache.commons.io.IOUtils;
+import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
+import org.reflections.util.FilterBuilder;
 import shiver.me.timbers.rules.ClassDeclaration;
-import shiver.me.timbers.rules.ClassDefinition;
 import shiver.me.timbers.rules.ClassOrInterfaceModifier;
 import shiver.me.timbers.rules.ClassOrInterfaceType;
 import shiver.me.timbers.rules.ConstructorDeclaration;
 import shiver.me.timbers.rules.Literal;
-import shiver.me.timbers.rules.MethodDefinition;
+import shiver.me.timbers.rules.MethodDeclaration;
 import shiver.me.timbers.rules.Modifier;
 import shiver.me.timbers.rules.PackageDeclaration;
 import shiver.me.timbers.rules.PrimitiveType;
 import shiver.me.timbers.rules.TypeDeclaration;
 import shiver.me.timbers.rules.VariableDeclaratorId;
 import shiver.me.timbers.transform.Applyer;
+import shiver.me.timbers.transform.CompositeTransformation;
 import shiver.me.timbers.transform.IndividualTransformations;
 import shiver.me.timbers.transform.Transformation;
 import shiver.me.timbers.transform.Transformations;
 import shiver.me.timbers.types.Comment;
+import shiver.me.timbers.types.Const;
+import shiver.me.timbers.types.Goto;
 import shiver.me.timbers.types.JavaDoc;
 import shiver.me.timbers.types.LineComment;
 import shiver.me.timbers.types.Private;
 import shiver.me.timbers.types.Public;
 import shiver.me.timbers.types.Return;
 import shiver.me.timbers.types.Static;
+import shiver.me.timbers.types.Strictfp;
 import shiver.me.timbers.types.This;
 import shiver.me.timbers.types.Void;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import static java.util.Arrays.asList;
 import static org.mockito.Mockito.mock;
@@ -45,52 +63,34 @@ public final class TestData {
 
     public static final Applyer MOCK_APPLYER = mock(Applyer.class);
 
-    public static final Transformation WRAPPING_CLASS_DECLARATION = new NameWrappingTransformation(ClassDeclaration.NAME);
-    public static final Transformation WRAPPING_CLASS_OR_INTERFACE_MODIFIER =
-            new NameWrappingTransformation(ClassOrInterfaceModifier.NAME);
-    public static final Transformation WRAPPING_CLASS_OR_INTERFACE_TYPE = new NameWrappingTransformation(ClassOrInterfaceType.NAME);
-    public static final Transformation WRAPPING_COMMENT = new NameWrappingTransformation(Comment.NAME);
-    public static final Transformation WRAPPING_JAVA_DOC = new NameWrappingTransformation(JavaDoc.NAME);
-    public static final Transformation WRAPPING_LINE_COMMENT = new NameWrappingTransformation(LineComment.NAME);
-    public static final Transformation WRAPPING_LITERAL = new NameWrappingTransformation(Literal.NAME);
-    public static final Transformation WRAPPING_MODIFIER = new NameWrappingTransformation(Modifier.NAME);
-    public static final Transformation WRAPPING_PACKAGE_DECLARATION = new NameWrappingTransformation(PackageDeclaration.NAME);
-    public static final Transformation WRAPPING_PRIMITIVE_TYPE = new NameWrappingTransformation(PrimitiveType.NAME);
-    public static final Transformation WRAPPING_RETURN = new NameWrappingTransformation(Return.NAME);
-    public static final Transformation WRAPPING_THIS = new NameWrappingTransformation(This.NAME);
-    public static final Transformation WRAPPING_TYPE_DECLARATION = new NameWrappingTransformation(TypeDeclaration.NAME);
-    public static final Transformation WRAPPING_VARIABLE_DECLARATOR_ID = new NameWrappingTransformation(VariableDeclaratorId.NAME);
-    public static final Transformation WRAPPING_CONSTRUCTOR_DECLARATION = new NameWrappingTransformation(ConstructorDeclaration.NAME);
-    public static final Transformation WRAPPING_CLASS_DEFINITION = new NameWrappingTransformation(ClassDefinition.NAME);
-    public static final Transformation WRAPPING_METHOD_DEFINITION = new NameWrappingTransformation(MethodDefinition.NAME);
-    public static final Transformation WRAPPING_PUBLIC = new NameWrappingTransformation(Public.NAME);
-    public static final Transformation WRAPPING_STATIC = new NameWrappingTransformation(Static.NAME);
-    public static final Transformation WRAPPING_VOID = new NameWrappingTransformation(Void.NAME);
-    public static final Transformation WRAPPING_PRIVATE = new NameWrappingTransformation(Private.NAME);
+    private static final Reflections TYPE_TRANSFORMATION_REFECTIONS = buildReflections("shiver.me.timbers.type");
+    private static final Reflections RULE_TRANSFORMATION_REFECTIONS = buildReflections("shiver.me.timbers.rules");
 
-    public static final Transformations TRANSFORMATIONS = new IndividualTransformations(asList(
-            WRAPPING_CLASS_DECLARATION,
-            WRAPPING_CLASS_OR_INTERFACE_MODIFIER,
-            WRAPPING_CLASS_OR_INTERFACE_TYPE,
-            WRAPPING_COMMENT,
-            WRAPPING_JAVA_DOC,
-            WRAPPING_LINE_COMMENT,
-            WRAPPING_MODIFIER,
-            WRAPPING_PACKAGE_DECLARATION,
-            WRAPPING_PRIMITIVE_TYPE,
-            WRAPPING_LITERAL,
-            WRAPPING_THIS,
-            WRAPPING_RETURN,
-            WRAPPING_TYPE_DECLARATION,
-            WRAPPING_VARIABLE_DECLARATOR_ID,
-            WRAPPING_CONSTRUCTOR_DECLARATION,
-            WRAPPING_CLASS_DEFINITION,
-            WRAPPING_METHOD_DEFINITION,
-            WRAPPING_PUBLIC,
-            WRAPPING_STATIC,
-            WRAPPING_VOID,
-            WRAPPING_PRIVATE
+    public static final List<Class<Transformation>> TYPE_TRANSFORMATION_CLASSES =
+            allTransformations(TYPE_TRANSFORMATION_REFECTIONS);
+    public static final List<Class<Transformation>> RULE_TRANSFORMATION_CLASSES =
+            allTransformations(RULE_TRANSFORMATION_REFECTIONS);
+
+    public static final Transformations EMPTY_TRANSFORMATIONS =
+            new IndividualTransformations(Collections.<Transformation>emptyList());
+
+    public static final Transformations UNUSED_TRANSFORMATIONS = new IndividualTransformations(Arrays.<Transformation>asList(
+            new Const(MOCK_APPLYER),
+            new Goto(MOCK_APPLYER),
+            new Strictfp(MOCK_APPLYER)
     ));
+
+    public static final Transformations TRANSFORMATIONS = new IndividualTransformations(
+            new ArrayList<Transformation>() {{
+                addAll(buildTransformation(TYPE_TRANSFORMATION_CLASSES));
+                addAll(buildTransformation(RULE_TRANSFORMATION_CLASSES));
+            }});
+
+    public static final Transformations PARENT_TRANSFORMATIONS = new IndividualTransformations(
+            Arrays.<Transformation>asList(
+                    new CompositeTransformation(ClassDeclaration.NAME, new WrappingApplyer("classDefinition")),
+                    new CompositeTransformation(MethodDeclaration.NAME, new WrappingApplyer("methodDefinition"))
+            ));
 
     public static final String SOURCE = readTestFileToString(TEST_FILE_NAME);
     public static final String TRANSFORMED_SOURCE = readTestFileToString(TRANSFORMED_TEST_FILE_NAME);
@@ -128,29 +128,93 @@ public final class TestData {
         }
     }
 
+    private static Reflections buildReflections(String packageName) {
+
+        return new Reflections(packageName);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static List<Class<Transformation>> allTransformations(Reflections reflections) {
+
+        Set<Class<? extends CompositeTransformation>> allTypeTransformationClasses = reflections.getSubTypesOf(CompositeTransformation.class);
+
+        List<Class<Transformation>> typeTransformationsClasses =
+                new ArrayList<Class<Transformation>>(allTypeTransformationClasses.size());
+
+        for (Class<? extends Object> type : allTypeTransformationClasses) {
+
+            typeTransformationsClasses.add((Class<Transformation>) type);
+        }
+
+        return Collections.unmodifiableList(typeTransformationsClasses);
+    }
+
+    private static List<Transformation> buildTransformation(List<Class<Transformation>> classes) {
+
+        List<Transformation> transformations = new ArrayList<Transformation>(classes.size());
+
+        Constructor<Transformation> constructor;
+        Field field;
+        String name;
+        for (Class<Transformation> type : classes) {
+
+            try {
+                constructor = type.getConstructor(Applyer.class);
+                field = type.getField("NAME");
+
+                name = field.get(null).toString();
+
+                transformations.add(constructor.newInstance(new WrappingApplyer(name)));
+
+            } catch (NoSuchMethodException e) {
+
+                throw new RuntimeException(e);
+
+            } catch (InvocationTargetException e) {
+
+                throw new RuntimeException(e);
+
+            } catch (InstantiationException e) {
+
+                throw new RuntimeException(e);
+
+            } catch (IllegalAccessException e) {
+
+                throw new RuntimeException(e);
+
+            } catch (NoSuchFieldException e) {
+
+                throw new RuntimeException(e);
+            }
+        }
+
+        return transformations;
+    }
+
     /**
      * A simple Transformation that wraps the related text with the name of the wrapped Transformation surrounded in square
      * brackets e.g. [type]int[type].
      */
-    private static class NameWrappingTransformation implements Transformation {
+    private static class NameWrappingTransformation extends CompositeTransformation {
+
+        private NameWrappingTransformation(String name) {
+            super(name, new WrappingApplyer(name));
+        }
+    }
+
+    private static class WrappingApplyer implements Applyer {
 
         private final String name;
 
-        private NameWrappingTransformation(String name) {
+        private WrappingApplyer(String name) {
 
             this.name = name;
         }
 
         @Override
-        public String getName() {
-
-            return name;
-        }
-
-        @Override
         public String apply(String string) {
 
-            return '[' + getName() + ']' + string + '[' + getName() + ']';
+            return '[' + name + ']' + string + '[' + name + ']';
         }
     }
 }

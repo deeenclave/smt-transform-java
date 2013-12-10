@@ -11,16 +11,13 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.io.IOUtils;
 import shiver.me.timbers.listeners.TransformationAwareErrorListener;
 import shiver.me.timbers.listeners.TransformingParseTreeListener;
-import shiver.me.timbers.rules.ClassDefinition;
-import shiver.me.timbers.rules.MethodDefinition;
 import shiver.me.timbers.transform.Transformations;
 import shiver.me.timbers.transform.Transformer;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
 
-import static shiver.me.timbers.JavaParser.*;
+import static shiver.me.timbers.Asserts.assertIsNotNull;
 
 /**
  * A Transformation for Java source code, it will apply any Transformations that have names matching the different token names.
@@ -29,6 +26,16 @@ import static shiver.me.timbers.JavaParser.*;
  * @author Karl Bennett
  */
 public class JavaTransformer implements Transformer {
+
+    private final Transformations parentTransformations;
+
+    public JavaTransformer(Transformations parentTransformations) {
+
+        assertIsNotNull(Transformations.class.getSimpleName() + " parentTransformations argument cannot be null.",
+                parentTransformations);
+
+        this.parentTransformations = parentTransformations;
+    }
 
     @Override
     public String transform(InputStream stream, final Transformations transformations) {
@@ -40,11 +47,7 @@ public class JavaTransformer implements Transformer {
         final ParserRuleContext result = parser.compilationUnit();
 
         final ParseTreeListener listener = new TransformingParseTreeListener(parser, transformations,
-                new HashMap<Integer, String>() {{
-                   put(RULE_classDeclaration, ClassDefinition.NAME);
-                   put(RULE_methodDeclaration, MethodDefinition.NAME);
-                }},
-                source);
+                parentTransformations, source);
 
         final ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(listener, result);
