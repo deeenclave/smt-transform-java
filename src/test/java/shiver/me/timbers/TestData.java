@@ -2,22 +2,8 @@ package shiver.me.timbers;
 
 import org.apache.commons.io.IOUtils;
 import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-import org.reflections.util.FilterBuilder;
 import shiver.me.timbers.rules.ClassDeclaration;
-import shiver.me.timbers.rules.ClassOrInterfaceModifier;
-import shiver.me.timbers.rules.ClassOrInterfaceType;
-import shiver.me.timbers.rules.ConstructorDeclaration;
-import shiver.me.timbers.rules.Literal;
 import shiver.me.timbers.rules.MethodDeclaration;
-import shiver.me.timbers.rules.Modifier;
-import shiver.me.timbers.rules.PackageDeclaration;
-import shiver.me.timbers.rules.PrimitiveType;
-import shiver.me.timbers.rules.TypeDeclaration;
-import shiver.me.timbers.rules.VariableDeclaratorId;
 import shiver.me.timbers.transform.Applyer;
 import shiver.me.timbers.transform.CompositeTransformation;
 import shiver.me.timbers.transform.IndividualTransformations;
@@ -28,13 +14,7 @@ import shiver.me.timbers.types.Const;
 import shiver.me.timbers.types.Goto;
 import shiver.me.timbers.types.JavaDoc;
 import shiver.me.timbers.types.LineComment;
-import shiver.me.timbers.types.Private;
-import shiver.me.timbers.types.Public;
-import shiver.me.timbers.types.Return;
-import shiver.me.timbers.types.Static;
 import shiver.me.timbers.types.Strictfp;
-import shiver.me.timbers.types.This;
-import shiver.me.timbers.types.Void;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,10 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import static java.util.Arrays.asList;
 import static org.mockito.Mockito.mock;
 
 public final class TestData {
@@ -80,16 +58,37 @@ public final class TestData {
             new Strictfp(MOCK_APPLYER)
     ));
 
-    public static final Transformations TRANSFORMATIONS = new IndividualTransformations(
+    public static final Transformations ALL_TRANSFORMATIONS = new IndividualTransformations(
             new ArrayList<Transformation>() {{
-                addAll(buildTransformation(TYPE_TRANSFORMATION_CLASSES));
-                addAll(buildTransformation(RULE_TRANSFORMATION_CLASSES));
+                addAll(buildTransformations(TYPE_TRANSFORMATION_CLASSES));
+                addAll(buildTransformations(RULE_TRANSFORMATION_CLASSES));
             }});
 
     public static final Transformations PARENT_TRANSFORMATIONS = new IndividualTransformations(
             Arrays.<Transformation>asList(
-                    new CompositeTransformation(ClassDeclaration.NAME, new WrappingApplyer("classDefinition")),
-                    new CompositeTransformation(MethodDeclaration.NAME, new WrappingApplyer("methodDefinition"))
+                    new CompositeTransformation(ClassDeclaration.NAME, new Applyer() {
+
+                        @Override
+                        public String apply(String string) {
+
+                            return string.contains("]class[") ? string : new WrappingApplyer("classDefinition").apply(string);
+                        }
+                    }),
+                    new CompositeTransformation(MethodDeclaration.NAME, new Applyer() {
+
+                        @Override
+                        public String apply(String string) {
+
+                            return string.equals(";") ? string : new WrappingApplyer("methodDefinition").apply(string);
+                        }
+                    })
+            ));
+
+    public static final Transformations ERROR_TRANSFORMATIONS = new IndividualTransformations(
+            Arrays.<Transformation>asList(
+                    new NameWrappingTransformation(Comment.NAME),
+                    new NameWrappingTransformation(LineComment.NAME),
+                    new NameWrappingTransformation(JavaDoc.NAME)
             ));
 
     public static final String SOURCE = readTestFileToString(TEST_FILE_NAME);
@@ -149,46 +148,49 @@ public final class TestData {
         return Collections.unmodifiableList(typeTransformationsClasses);
     }
 
-    private static List<Transformation> buildTransformation(List<Class<Transformation>> classes) {
+    private static List<Transformation> buildTransformations(List<Class<Transformation>> classes) {
 
         List<Transformation> transformations = new ArrayList<Transformation>(classes.size());
 
-        Constructor<Transformation> constructor;
-        Field field;
-        String name;
         for (Class<Transformation> type : classes) {
 
-            try {
-                constructor = type.getConstructor(Applyer.class);
-                field = type.getField("NAME");
-
-                name = field.get(null).toString();
-
-                transformations.add(constructor.newInstance(new WrappingApplyer(name)));
-
-            } catch (NoSuchMethodException e) {
-
-                throw new RuntimeException(e);
-
-            } catch (InvocationTargetException e) {
-
-                throw new RuntimeException(e);
-
-            } catch (InstantiationException e) {
-
-                throw new RuntimeException(e);
-
-            } catch (IllegalAccessException e) {
-
-                throw new RuntimeException(e);
-
-            } catch (NoSuchFieldException e) {
-
-                throw new RuntimeException(e);
-            }
+            transformations.add(buildTransformation(type));
         }
 
         return transformations;
+    }
+
+    private static Transformation buildTransformation(Class<Transformation> type) {
+
+        try {
+
+            Constructor<Transformation> constructor = type.getConstructor(Applyer.class);
+            Field field = type.getField("NAME");
+
+            String name = field.get(null).toString();
+
+            return constructor.newInstance(new WrappingApplyer(name));
+
+        } catch (NoSuchMethodException e) {
+
+            throw new RuntimeException(e);
+
+        } catch (InvocationTargetException e) {
+
+            throw new RuntimeException(e);
+
+        } catch (InstantiationException e) {
+
+            throw new RuntimeException(e);
+
+        } catch (IllegalAccessException e) {
+
+            throw new RuntimeException(e);
+
+        } catch (NoSuchFieldException e) {
+
+            throw new RuntimeException(e);
+        }
     }
 
     /**

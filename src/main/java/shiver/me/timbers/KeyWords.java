@@ -2,6 +2,7 @@ package shiver.me.timbers;
 
 import shiver.me.timbers.types.Abstract;
 import shiver.me.timbers.types.Assert;
+import shiver.me.timbers.types.Boolean;
 import shiver.me.timbers.types.Break;
 import shiver.me.timbers.types.Byte;
 import shiver.me.timbers.types.Case;
@@ -67,11 +68,11 @@ public final class KeyWords {
      * All the Java keywords.
      */
     public static final List<String> KEYWORDS = asList(
-            Abstract.NAME, Assert.NAME, shiver.me.timbers.types.Boolean.NAME, Break.NAME, Byte.NAME, Case.NAME,
-            Catch.NAME, Char.NAME, Class.NAME, Const.NAME, Continue.NAME, Default.NAME, Do.NAME, Double.NAME, Else.NAME,
-            Enum.NAME, Extends.NAME, Final.NAME, Finally.NAME, Float.NAME, For.NAME, If.NAME, Implements.NAME,
-            Import.NAME, Instanceof.NAME, Int.NAME, Interface.NAME, Long.NAME, Native.NAME, New.NAME, Null.NAME,
-            Package.NAME, Private.NAME, Protected.NAME, Public.NAME, Return.NAME, Short.NAME, Static.NAME, Super.NAME,
-            Switch.NAME, Synchronized.NAME, This.NAME, Throw.NAME, Throws.NAME, Transient.NAME, Try.NAME, Void.NAME,
-            Volatile.NAME, While.NAME);
+            Abstract.NAME, Assert.NAME, Boolean.NAME, Break.NAME, Byte.NAME, Case.NAME, Catch.NAME, Char.NAME,
+            Class.NAME, Continue.NAME, Default.NAME, Do.NAME, Double.NAME, Else.NAME, Enum.NAME, Extends.NAME,
+            Final.NAME, Finally.NAME, Float.NAME, For.NAME, If.NAME, Implements.NAME, Import.NAME, Instanceof.NAME,
+            Int.NAME, Interface.NAME, Long.NAME, Native.NAME, New.NAME, Null.NAME, Package.NAME, Private.NAME,
+            Protected.NAME, Public.NAME, Return.NAME, Short.NAME, Static.NAME, Super.NAME, Switch.NAME,
+            Synchronized.NAME, This.NAME, Throw.NAME, Throws.NAME, Transient.NAME, Try.NAME, Void.NAME, Volatile.NAME,
+            While.NAME);
 }

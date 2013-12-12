@@ -7,17 +7,17 @@ package shiver.me.timbers;
  */
 public class InvalidTest {
 
-    // A raw class level invocation doesn't parse.
+    // A raw class level invocation doesn't parse correctly.
     test(1);
 
     // Stand alone literal does parse.
     1;
 
-    // A raw class level expression does parse.
+    // A raw class level expression does not parse correctly.
     test = 1 + 1;
 
     /**
-     * Valid method after the invalid code doesn't completely parse.
+     * Valid method after the invalid code doesn't parse correctly.
      */
     public void test(int test) {
 

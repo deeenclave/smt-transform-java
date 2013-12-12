@@ -9,7 +9,6 @@ import org.antlr.v4.runtime.dfa.DFA;
 import org.junit.Before;
 import org.junit.Test;
 import shiver.me.timbers.JavaParser;
-import shiver.me.timbers.types.Public;
 
 import java.util.BitSet;
 
@@ -19,7 +18,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static shiver.me.timbers.JavaParser.*;
-import static shiver.me.timbers.TestData.TRANSFORMATIONS;
+import static shiver.me.timbers.TestData.ALL_TRANSFORMATIONS;
 
 /**
  * @author Karl Bennett
@@ -59,13 +58,13 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testCreate() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS);
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS);
     }
 
     @Test(expected = AssertionError.class)
     public void testCreateWithNullListener() {
 
-        new TransformationAwareErrorListener(null, TRANSFORMATIONS);
+        new TransformationAwareErrorListener(null, ALL_TRANSFORMATIONS);
     }
 
     @Test(expected = AssertionError.class)
@@ -77,7 +76,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testSyntaxError() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .syntaxError(recognizer, token, LINE, CHAR_POSITION_IN_LINE, MESSAGE, exception);
 
         verify(mockListener, times(1)).syntaxError(recognizer, token, LINE, CHAR_POSITION_IN_LINE, MESSAGE, exception);
@@ -88,7 +87,7 @@ public class TransformationAwareErrorListenerTest {
 
         when(token.getType()).thenReturn(PUBLIC);
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .syntaxError(recognizer, token, LINE, CHAR_POSITION_IN_LINE, MESSAGE, exception);
 
         verify(mockListener, times(0)).syntaxError(recognizer, token, LINE, CHAR_POSITION_IN_LINE, MESSAGE, exception);
@@ -97,21 +96,21 @@ public class TransformationAwareErrorListenerTest {
     @Test(expected = NullPointerException.class)
     public void testSyntaxErrorWithNullRecognizer() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .syntaxError(null, token, LINE, CHAR_POSITION_IN_LINE, MESSAGE, exception);
     }
 
     @Test(expected = NullPointerException.class)
     public void testSyntaxErrorWithNullToken() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .syntaxError(recognizer, null, LINE, CHAR_POSITION_IN_LINE, MESSAGE, exception);
     }
 
     @Test
     public void testSyntaxErrorWithNullMessage() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .syntaxError(recognizer, token, LINE, CHAR_POSITION_IN_LINE, null, exception);
 
         verify(mockListener, times(1)).syntaxError(recognizer, token, LINE, CHAR_POSITION_IN_LINE, null, exception);
@@ -120,7 +119,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testSyntaxErrorWithNullException() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .syntaxError(recognizer, token, LINE, CHAR_POSITION_IN_LINE, MESSAGE, null);
 
         verify(mockListener, times(1)).syntaxError(recognizer, token, LINE, CHAR_POSITION_IN_LINE, MESSAGE, null);
@@ -129,7 +128,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportAmbiguity() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportAmbiguity(recognizer, dfa, START_INDEX, STOP_INDEX, EXACT, bitSet, configs);
 
         verify(mockListener, times(1)).reportAmbiguity(recognizer, dfa, START_INDEX, STOP_INDEX, EXACT, bitSet, configs);
@@ -138,7 +137,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportAmbiguityWithNullRecognizer() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportAmbiguity(null, dfa, START_INDEX, STOP_INDEX, EXACT, bitSet, configs);
 
         verify(mockListener, times(1)).reportAmbiguity(null, dfa, START_INDEX, STOP_INDEX, EXACT, bitSet, configs);
@@ -147,7 +146,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportAmbiguityWithNullDfa() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportAmbiguity(recognizer, null, START_INDEX, STOP_INDEX, EXACT, bitSet, configs);
 
         verify(mockListener, times(1)).reportAmbiguity(recognizer, null, START_INDEX, STOP_INDEX, EXACT, bitSet, configs);
@@ -156,7 +155,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportAmbiguityWithNullBitSet() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportAmbiguity(recognizer, dfa, START_INDEX, STOP_INDEX, EXACT, null, configs);
 
         verify(mockListener, times(1)).reportAmbiguity(recognizer, dfa, START_INDEX, STOP_INDEX, EXACT, null, configs);
@@ -165,7 +164,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportAmbiguityWithNullConfigs() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportAmbiguity(recognizer, dfa, START_INDEX, STOP_INDEX, EXACT, bitSet, null);
 
         verify(mockListener, times(1)).reportAmbiguity(recognizer, dfa, START_INDEX, STOP_INDEX, EXACT, bitSet, null);
@@ -174,7 +173,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportAttemptingFullContext() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportAttemptingFullContext(recognizer, dfa, START_INDEX, STOP_INDEX, bitSet, configs);
 
         verify(mockListener, times(1))
@@ -184,7 +183,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportAttemptingFullContextWithNullRecognizer() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportAttemptingFullContext(null, dfa, START_INDEX, STOP_INDEX, bitSet, configs);
 
         verify(mockListener, times(1))
@@ -194,7 +193,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportAttemptingFullContextWithNullDfa() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportAttemptingFullContext(recognizer, null, START_INDEX, STOP_INDEX, bitSet, configs);
 
         verify(mockListener, times(1))
@@ -204,7 +203,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportAttemptingFullContextWithNullBitSet() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportAttemptingFullContext(recognizer, dfa, START_INDEX, STOP_INDEX, null, configs);
 
         verify(mockListener, times(1))
@@ -214,7 +213,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportAttemptingFullContextWithNullConfigs() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportAttemptingFullContext(recognizer, dfa, START_INDEX, STOP_INDEX, bitSet, null);
 
         verify(mockListener, times(1))
@@ -224,7 +223,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportContextSensitivity() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportContextSensitivity(recognizer, dfa, START_INDEX, STOP_INDEX, PREDICTION, configs);
 
         verify(mockListener, times(1))
@@ -234,7 +233,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportContextSensitivityWithNullRecognizer() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportContextSensitivity(null, dfa, START_INDEX, STOP_INDEX, PREDICTION, configs);
 
         verify(mockListener, times(1))
@@ -244,7 +243,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportContextSensitivityWithNullDfa() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportContextSensitivity(recognizer, null, START_INDEX, STOP_INDEX, PREDICTION, configs);
 
         verify(mockListener, times(1))
@@ -254,7 +253,7 @@ public class TransformationAwareErrorListenerTest {
     @Test
     public void testReportContextSensitivityWithNullConfigs() {
 
-        new TransformationAwareErrorListener(mockListener, TRANSFORMATIONS)
+        new TransformationAwareErrorListener(mockListener, ALL_TRANSFORMATIONS)
                 .reportContextSensitivity(recognizer, dfa, START_INDEX, STOP_INDEX, PREDICTION, null);
 
         verify(mockListener, times(1))
