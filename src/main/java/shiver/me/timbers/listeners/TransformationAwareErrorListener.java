@@ -46,7 +46,7 @@ public class TransformationAwareErrorListener implements ANTLRErrorListener {
 
         final int type = token.getType();
 
-        if (0 < type) {
+        if (0 <= type) {
 
             final String tokenName = recognizer.getTokenNames()[type];
 
