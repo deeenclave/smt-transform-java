@@ -19,10 +19,12 @@ public class TransformingParseTreeListener implements ParseTreeListener {
     private final Recognizer recognizer;
     private final Transformations transformations;
     private final Transformations parentTransformations;
+    private final Transformations errorTransformations;
     private final TransformableString transformableString;
 
     public TransformingParseTreeListener(Recognizer recognizer, Transformations transformations,
-                                         Transformations parentTransformations, String string) {
+                                         Transformations parentTransformations, Transformations errorTransformations,
+                                         String string) {
 
         assertIsNotNull(Transformations.class.getSimpleName() + " recognizer argument cannot be null.",
                 recognizer);
@@ -30,11 +32,14 @@ public class TransformingParseTreeListener implements ParseTreeListener {
                 transformations);
         assertIsNotNull(Transformations.class.getSimpleName() + " parentTransformations argument cannot be null.",
                 parentTransformations);
+        assertIsNotNull(Transformations.class.getSimpleName() + " errorTransformations argument cannot be null.",
+                errorTransformations);
         assertIsNotNull(Transformations.class.getSimpleName() + " string argument cannot be null.", string);
 
         this.transformableString = new TransformableString(string);
         this.transformations = transformations;
         this.parentTransformations = parentTransformations;
+        this.errorTransformations = errorTransformations;
         this.recognizer = recognizer;
     }
 
@@ -47,36 +52,34 @@ public class TransformingParseTreeListener implements ParseTreeListener {
 
         transformString(parentTransformations, getRuleName(ruleType), token);
 
-        if (0 <= token.getType()) {
+        final int tokenType = token.getType();
 
-            transformToken(token);
+        if (0 <= tokenType) {
+
+            transformString(transformations, getTokenName(tokenType), token);
         }
     }
 
     @Override
     public void visitErrorNode(@NotNull ErrorNode node) {
 
-        transformToken(node.getSymbol());
+        final Token token = node.getSymbol();
+        final int tokenType = token.getType();
+
+        transformString(errorTransformations, getTokenName(tokenType), token);
     }
 
     @Override
     public void enterEveryRule(@NotNull ParserRuleContext context) {
 
-        transformRule(context);
+        final Token token = context.getStart();
+        final int ruleType = context.getRuleIndex();
+
+        transformString(transformations, getRuleName(ruleType), token);
     }
 
     @Override
     public void exitEveryRule(@NotNull ParserRuleContext context) {
-    }
-
-    private void transformToken(Token token) {
-
-        transformString(transformations, getTokenName(token.getType()), token);
-    }
-
-    private void transformRule(ParserRuleContext context) {
-
-        transformString(transformations, getRuleName(context.getRuleIndex()), context.getStart());
     }
 
     private void transformString(Transformations transformations, String name, Token token) {

@@ -28,13 +28,17 @@ import static shiver.me.timbers.Asserts.assertIsNotNull;
 public class JavaTransformer implements Transformer {
 
     private final Transformations parentTransformations;
+    private final Transformations errorTransformations;
 
-    public JavaTransformer(Transformations parentTransformations) {
+    public JavaTransformer(Transformations parentTransformations, Transformations errorTransformations) {
 
         assertIsNotNull(Transformations.class.getSimpleName() + " parentTransformations argument cannot be null.",
                 parentTransformations);
+        assertIsNotNull(Transformations.class.getSimpleName() + " errorTransformations argument cannot be null.",
+                errorTransformations);
 
         this.parentTransformations = parentTransformations;
+        this.errorTransformations = errorTransformations;
     }
 
     @Override
@@ -42,12 +46,12 @@ public class JavaTransformer implements Transformer {
 
         final String source = toString(stream);
 
-        final JavaParser parser = buildParser(source, transformations);
+        final JavaParser parser = buildParser(source, errorTransformations);
 
         final ParserRuleContext result = parser.compilationUnit();
 
         final ParseTreeListener listener = new TransformingParseTreeListener(parser, transformations,
-                parentTransformations, source);
+                parentTransformations, errorTransformations, source);
 
         final ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(listener, result);
@@ -67,7 +71,7 @@ public class JavaTransformer implements Transformer {
         }
     }
 
-    private static JavaParser buildParser(String source, Transformations transformations) {
+    private static JavaParser buildParser(String source, Transformations errorTransformations) {
 
         final CharStream charStream = new ANTLRInputStream(source);
 
@@ -77,7 +81,7 @@ public class JavaTransformer implements Transformer {
 
         final JavaParser parser = new JavaParser(tokenStream);
         parser.removeErrorListeners();
-        parser.addErrorListener(new TransformationAwareErrorListener(new ConsoleErrorListener(), transformations));
+        parser.addErrorListener(new TransformationAwareErrorListener(new ConsoleErrorListener(), errorTransformations));
 
         return parser;
     }
