@@ -12,6 +12,9 @@ import shiver.me.timbers.transform.TransformableString;
 import shiver.me.timbers.transform.Transformation;
 import shiver.me.timbers.transform.Transformations;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static shiver.me.timbers.Asserts.assertIsNotNull;
 
 public class TransformingParseTreeListener implements ParseTreeListener {
@@ -21,6 +24,8 @@ public class TransformingParseTreeListener implements ParseTreeListener {
     private final Transformations parentTransformations;
     private final Transformations errorTransformations;
     private final TransformableString transformableString;
+
+    private final Set<String> tokensTranformedInRuleEntry;
 
     public TransformingParseTreeListener(Recognizer recognizer, Transformations transformations,
                                          Transformations parentTransformations, Transformations errorTransformations,
@@ -41,50 +46,47 @@ public class TransformingParseTreeListener implements ParseTreeListener {
         this.parentTransformations = parentTransformations;
         this.errorTransformations = errorTransformations;
         this.recognizer = recognizer;
+
+        this.tokensTranformedInRuleEntry = new HashSet<String>();
     }
 
     @Override
     public void visitTerminal(@NotNull TerminalNode node) {
 
-        final int ruleType = ((RuleContext) node.getParent().getPayload()).getRuleIndex();
+        final RuleContext context = (RuleContext) node.getParent().getPayload();
 
         final Token token = node.getSymbol();
 
-        transformString(parentTransformations, getRuleName(ruleType), token);
+        transformToken(transformations, token);
 
-        final int tokenType = token.getType();
-
-        if (0 <= tokenType) {
-
-            transformString(transformations, getTokenName(tokenType), token);
-        }
+        transformRule(parentTransformations, context, token);
     }
 
     @Override
     public void visitErrorNode(@NotNull ErrorNode node) {
 
         final Token token = node.getSymbol();
-        final int tokenType = token.getType();
 
-        transformString(errorTransformations, getTokenName(tokenType), token);
+        transformToken(errorTransformations, token);
     }
 
     @Override
     public void enterEveryRule(@NotNull ParserRuleContext context) {
 
         final Token token = context.getStart();
-        final int ruleType = context.getRuleIndex();
 
-        transformString(transformations, getRuleName(ruleType), token);
+        transformToken(transformations, token);
+
+        transformRule(transformations, context, token);
     }
 
     @Override
     public void exitEveryRule(@NotNull ParserRuleContext context) {
     }
 
-    private void transformString(Transformations transformations, String name, Token token) {
+    private void transformRule(Transformations transformations, RuleContext context, Token token) {
 
-        final Transformation transformation = transformations.get(name);
+        final Transformation transformation = transformations.get(getRuleName(context.getRuleIndex()));
 
         transformableString.transformSubstring(transformation, token.getStartIndex(), token.getStopIndex());
     }
@@ -92,6 +94,33 @@ public class TransformingParseTreeListener implements ParseTreeListener {
     private String getRuleName(int rule) {
 
         return recognizer.getRuleNames()[rule];
+    }
+
+    private void transformToken(Transformations transformations, Token token) {
+
+        if (isValidTokenType(token) && tokenHasNotBeenPrinted(token)) {
+
+            final Transformation transformation = transformations.get(getTokenName(token.getType()));
+
+            transformableString.transformSubstring(transformation, token.getStartIndex(), token.getStopIndex());
+
+            registerTokenAsPrinted(token);
+        }
+    }
+
+    private boolean isValidTokenType(Token token) {
+
+        return 0 <= token.getType();
+    }
+
+    private boolean tokenHasNotBeenPrinted(Token token) {
+
+        return !tokensTranformedInRuleEntry.contains(token.toString());
+    }
+
+    private void registerTokenAsPrinted(Token token) {
+
+        tokensTranformedInRuleEntry.add(token.toString());
     }
 
     private String getTokenName(int type) {
