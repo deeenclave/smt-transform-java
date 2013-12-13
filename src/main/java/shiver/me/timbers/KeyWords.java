@@ -56,8 +56,6 @@ import static java.util.Arrays.asList;
 
 /**
  * This class contains constants to help with parsing Java keywords.
- *
- * @author Karl Bennett
  */
 public final class KeyWords {
 
@@ -65,9 +63,9 @@ public final class KeyWords {
     }
 
     /**
-     * All the Java keywords.
+     * All the names of the Java keyword types.
      */
-    public static final List<String> KEYWORDS = asList(
+    public static final List<String> KEYWORD_NAMES = asList(
             Abstract.NAME, Assert.NAME, Boolean.NAME, Break.NAME, Byte.NAME, Case.NAME, Catch.NAME, Char.NAME,
             Class.NAME, Continue.NAME, Default.NAME, Do.NAME, Double.NAME, Else.NAME, Enum.NAME, Extends.NAME,
             Final.NAME, Finally.NAME, Float.NAME, For.NAME, If.NAME, Implements.NAME, Import.NAME, Instanceof.NAME,
