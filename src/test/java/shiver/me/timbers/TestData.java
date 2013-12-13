@@ -6,6 +6,7 @@ import shiver.me.timbers.rules.ClassDeclaration;
 import shiver.me.timbers.rules.MethodDeclaration;
 import shiver.me.timbers.transform.Applyer;
 import shiver.me.timbers.transform.CompositeTransformation;
+import shiver.me.timbers.transform.CompoundTransformations;
 import shiver.me.timbers.transform.IndividualTransformations;
 import shiver.me.timbers.transform.Transformation;
 import shiver.me.timbers.transform.Transformations;
@@ -28,6 +29,8 @@ import java.util.List;
 import java.util.Set;
 
 import static org.mockito.Mockito.mock;
+import static shiver.me.timbers.Comments.*;
+import static shiver.me.timbers.KeyWords.*;
 
 public final class TestData {
 
@@ -37,6 +40,8 @@ public final class TestData {
     public static final String TEST_FILE_NAME = "Test.java";
     public static final String INVALID_TEST_FILE_NAME = "InvalidTest.javor";
     public static final String TRANSFORMED_TEST_FILE_NAME = "Test.java.transformed";
+    public static final String TRANSFORMED_KEYWORDS_TEST_FILE_NAME = "Test.java.keywords";
+    public static final String TRANSFORMED_COMMENTS_TEST_FILE_NAME = "Test.java.comments";
     public static final String TRANSFORMED_INVALID_TEST_FILE_NAME = "InvalidTest.javor.transformed";
 
     public static final Applyer MOCK_APPLYER = mock(Applyer.class);
@@ -63,6 +68,12 @@ public final class TestData {
                 addAll(buildTransformations(TYPE_TRANSFORMATION_CLASSES));
                 addAll(buildTransformations(RULE_TRANSFORMATION_CLASSES));
             }});
+
+    public static final Transformations KEYWORD_TRANSFORMATIONS = new CompoundTransformations(KEYWORD_NAMES,
+            new WrappingApplyer("KEYWORD"));
+
+    public static final Transformations COMMENT_TRANSFORMATIONS = new CompoundTransformations(COMMENT_NAMES,
+            new WrappingApplyer("COMMENT"));
 
     public static final Transformations PARENT_TRANSFORMATIONS = new IndividualTransformations(
             Arrays.<Transformation>asList(
@@ -93,6 +104,8 @@ public final class TestData {
 
     public static final String SOURCE = readTestFileToString(TEST_FILE_NAME);
     public static final String TRANSFORMED_SOURCE = readTestFileToString(TRANSFORMED_TEST_FILE_NAME);
+    public static final String TRANSFORMED_KEYWORDS_SOURCE = readTestFileToString(TRANSFORMED_KEYWORDS_TEST_FILE_NAME);
+    public static final String TRANSFORMED_COMMENTS_SOURCE = readTestFileToString(TRANSFORMED_COMMENTS_TEST_FILE_NAME);
     public static final String TRANSFORMED_INVALID_SOURCE = readTestFileToString(TRANSFORMED_INVALID_TEST_FILE_NAME);
 
     /**

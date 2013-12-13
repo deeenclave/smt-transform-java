@@ -22,8 +22,6 @@ import static shiver.me.timbers.Asserts.assertIsNotNull;
 /**
  * A Transformation for Java source code, it will apply any Transformations that have names matching the different token names.
  * These names can be found in the {@link JavaParser#tokenNames} array.
- *
- * @author Karl Bennett
  */
 public class JavaTransformer implements Transformer {
 
