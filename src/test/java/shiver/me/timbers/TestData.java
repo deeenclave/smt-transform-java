@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.Set;
 
 import static org.mockito.Mockito.mock;
-import static shiver.me.timbers.Comments.*;
-import static shiver.me.timbers.KeyWords.*;
+import static shiver.me.timbers.Comments.COMMENT_NAMES;
+import static shiver.me.timbers.KeyWords.KEYWORD_NAMES;
 
 public final class TestData {
 
@@ -148,9 +148,9 @@ public final class TestData {
     @SuppressWarnings("unchecked")
     private static List<Class<Transformation>> allTransformations(Reflections reflections) {
 
-        Set<Class<? extends CompositeTransformation>> allTypeTransformationClasses = reflections.getSubTypesOf(CompositeTransformation.class);
+        final Set<Class<? extends CompositeTransformation>> allTypeTransformationClasses = reflections.getSubTypesOf(CompositeTransformation.class);
 
-        List<Class<Transformation>> typeTransformationsClasses =
+        final List<Class<Transformation>> typeTransformationsClasses =
                 new ArrayList<Class<Transformation>>(allTypeTransformationClasses.size());
 
         for (Class<? extends Object> type : allTypeTransformationClasses) {

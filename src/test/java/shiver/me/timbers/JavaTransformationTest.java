@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static org.junit.Assert.assertEquals;
+import static shiver.me.timbers.TestData.ALL_TRANSFORMATIONS;
 import static shiver.me.timbers.TestData.COMMENT_TRANSFORMATIONS;
 import static shiver.me.timbers.TestData.EMPTY_TRANSFORMATIONS;
 import static shiver.me.timbers.TestData.ERROR_TRANSFORMATIONS;
@@ -13,7 +14,6 @@ import static shiver.me.timbers.TestData.INVALID_TEST_FILE_NAME;
 import static shiver.me.timbers.TestData.KEYWORD_TRANSFORMATIONS;
 import static shiver.me.timbers.TestData.PARENT_TRANSFORMATIONS;
 import static shiver.me.timbers.TestData.SOURCE;
-import static shiver.me.timbers.TestData.ALL_TRANSFORMATIONS;
 import static shiver.me.timbers.TestData.TRANSFORMED_COMMENTS_SOURCE;
 import static shiver.me.timbers.TestData.TRANSFORMED_INVALID_SOURCE;
 import static shiver.me.timbers.TestData.TRANSFORMED_KEYWORDS_SOURCE;
