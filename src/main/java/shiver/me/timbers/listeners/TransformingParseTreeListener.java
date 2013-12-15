@@ -25,11 +25,11 @@ public class TransformingParseTreeListener implements ParseTreeListener {
     private final Transformations errorTransformations;
     private final TransformableString transformableString;
 
-    private final Set<String> tokensTranformedInRuleEntry;
+    private final Set<String> transformedTokens;
 
     public TransformingParseTreeListener(Recognizer recognizer, Transformations transformations,
                                          Transformations parentTransformations, Transformations errorTransformations,
-                                         String string) {
+                                         TransformableString transformableString) {
 
         assertIsNotNull(Transformations.class.getSimpleName() + " recognizer argument cannot be null.",
                 recognizer);
@@ -39,15 +39,15 @@ public class TransformingParseTreeListener implements ParseTreeListener {
                 parentTransformations);
         assertIsNotNull(Transformations.class.getSimpleName() + " errorTransformations argument cannot be null.",
                 errorTransformations);
-        assertIsNotNull(Transformations.class.getSimpleName() + " string argument cannot be null.", string);
+        assertIsNotNull(Transformations.class.getSimpleName() + " string argument cannot be null.", transformableString);
 
-        this.transformableString = new TransformableString(string);
+        this.transformableString = transformableString;
         this.transformations = transformations;
         this.parentTransformations = parentTransformations;
         this.errorTransformations = errorTransformations;
         this.recognizer = recognizer;
 
-        this.tokensTranformedInRuleEntry = new HashSet<String>();
+        this.transformedTokens = new HashSet<String>();
     }
 
     @Override
@@ -115,12 +115,12 @@ public class TransformingParseTreeListener implements ParseTreeListener {
 
     private boolean tokenHasNotBeenPrinted(Token token) {
 
-        return !tokensTranformedInRuleEntry.contains(token.toString());
+        return !transformedTokens.contains(token.toString());
     }
 
     private void registerTokenAsPrinted(Token token) {
 
-        tokensTranformedInRuleEntry.add(token.toString());
+        transformedTokens.add(token.toString());
     }
 
     private String getTokenName(int type) {

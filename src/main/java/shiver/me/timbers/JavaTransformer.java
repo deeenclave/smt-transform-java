@@ -11,6 +11,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.io.IOUtils;
 import shiver.me.timbers.listeners.TransformationAwareErrorListener;
 import shiver.me.timbers.listeners.TransformingParseTreeListener;
+import shiver.me.timbers.transform.TransformableString;
 import shiver.me.timbers.transform.Transformations;
 import shiver.me.timbers.transform.Transformer;
 
@@ -49,7 +50,7 @@ public class JavaTransformer implements Transformer {
         final ParserRuleContext result = parser.compilationUnit();
 
         final ParseTreeListener listener = new TransformingParseTreeListener(parser, transformations,
-                parentTransformations, errorTransformations, source);
+                parentTransformations, errorTransformations, new TransformableString(source));
 
         final ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(listener, result);
