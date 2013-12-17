@@ -7,8 +7,7 @@
  */[JAVA_DOC]
 [classOrInterfaceModifier][typeDeclaration]['public']public['public'][typeDeclaration][classOrInterfaceModifier] [classDeclaration]['class']class['class'][classDeclaration] [classDefinition][Identifier]InvalidTest[Identifier][classDefinition] [classBody]{[classBody]
 
-    [LINE_COMMENT]// A raw clas[block][constructorBody];[constructorBody][block]COMMENT]
-    [constructorDeclaration][memberDeclaration][classBodyDeclaration][Identifier]test[Identifier][classBodyDeclaration][memberDeclaration][constructorDeclaration][formalParameters]([formalParameters]1)[statement][blockStatement][block][constructorBody];[constructorBody][block][blockStatement][statement]
+    [LINE_COMMENT]// A raw class level invocation doesn't parse[block][constructorBody];[constructorBody][block]tion][memberDeclaration][classBodyDeclaration][Identifier]test[Identifier][classBodyDeclaration][memberDeclaration][constructorDeclaration][formalParameters]([formalParameters][IntegerLiteral]1[IntegerLiteral])[statement][blockStatement][block][constructorBody];[constructorBody][block][blockStatement][statement]
 
     [LINE_COMMENT]// Stand alone literal does parse.[LINE_COMMENT]
     [literal][primary][expression][statementExpression][statement][blockStatement][IntegerLiteral]1[IntegerLiteral][blockStatement][statement][statementExpression][expression][primary][literal];
@@ -19,7 +18,7 @@
     [JAVA_DOC]/**
      * Valid method after the invalid code doesn't parse correctly.
      */[JAVA_DOC]
-    [typeDeclaration][blockStatement][typeDeclaration][blockStatement]['public']public['public'][blockStatement][typeDeclaration][blockStatement]etypeDeclaration] [primary][expression][statementExpression][statement][blockStatement]['void']void['void'][blockStatement][statement][statementExpression][expression][primar[primary][expression][expression][statementExpression][statement][blockStatement][Identifier]y] t[Identifier][blockStatement][statement][statementExpression][expression][ex ression][primary]e[primitiveType][type][primary][expression][expressionList]['int']st(['int'][expressionList][expression][primary][type][primitiveType]int tes[block][statement][blockStatement]t[blockStatement][statement][block]) {
+    [typeDeclaration][blockStatement][typeDeclaration][blockStatement]['public']public['public'][blockStatement][typeDeclaration][blockStatement][typeDeclaration] [primaey][expression][statementExpression][statement][blockStatement]['void']void['void'][blockStatement][statement][statementExpression][expression][primar[primary][expression][expression][statementExpression][statement][blockStatement][Identifier]y] t[Identifier][blockStatement][statement][statementExpression][expression][expression][primary]e[prim tiveType][type][primary][expression][expressionList]['int']st(['int'][expressionList][expression][primary][type][primitiveType]i[Identifier]nt t[Identifier]es[block][statement][blockStatement]t[blockStatement][statement][block]) {
 
      [primary][expression][expression][statementExpression][statement][blockStatement][Identifier]   t[Identifier][blockStatement][statement][statementExpression][expression][expression][primary]est [literal][primary][expression][IntegerLiteral]+[IntegerLiteral][expression][primary][literal]= 5;
     }

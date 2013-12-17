@@ -27,17 +27,13 @@ import static shiver.me.timbers.Asserts.assertIsNotNull;
 public class JavaTransformer implements Transformer {
 
     private final Transformations parentTransformations;
-    private final Transformations errorTransformations;
 
-    public JavaTransformer(Transformations parentTransformations, Transformations errorTransformations) {
+    public JavaTransformer(Transformations parentTransformations) {
 
         assertIsNotNull(Transformations.class.getSimpleName() + " parentTransformations argument cannot be null.",
                 parentTransformations);
-        assertIsNotNull(Transformations.class.getSimpleName() + " errorTransformations argument cannot be null.",
-                errorTransformations);
 
         this.parentTransformations = parentTransformations;
-        this.errorTransformations = errorTransformations;
     }
 
     @Override
@@ -45,12 +41,12 @@ public class JavaTransformer implements Transformer {
 
         final String source = toString(stream);
 
-        final JavaParser parser = buildParser(source, errorTransformations);
+        final JavaParser parser = buildParser(source, transformations);
 
         final ParserRuleContext result = parser.compilationUnit();
 
         final ParseTreeListener listener = new TransformingParseTreeListener(parser, transformations,
-                parentTransformations, errorTransformations, new TransformableString(source));
+                parentTransformations, new TransformableString(source));
 
         final ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(listener, result);

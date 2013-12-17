@@ -95,13 +95,6 @@ public final class TestData {
                     })
             ));
 
-    public static final Transformations ERROR_TRANSFORMATIONS = new IndividualTransformations(
-            Arrays.<Transformation>asList(
-                    new NameWrappingTransformation(Comment.NAME),
-                    new NameWrappingTransformation(LineComment.NAME),
-                    new NameWrappingTransformation(JavaDoc.NAME)
-            ));
-
     public static final String SOURCE = readTestFileToString(TEST_FILE_NAME);
     public static final String TRANSFORMED_SOURCE = readTestFileToString(TRANSFORMED_TEST_FILE_NAME);
     public static final String TRANSFORMED_KEYWORDS_SOURCE = readTestFileToString(TRANSFORMED_KEYWORDS_TEST_FILE_NAME);
@@ -153,7 +146,7 @@ public final class TestData {
         final List<Class<Transformation>> typeTransformationsClasses =
                 new ArrayList<Class<Transformation>>(allTypeTransformationClasses.size());
 
-        for (Class<? extends Object> type : allTypeTransformationClasses) {
+        for (Class type : allTypeTransformationClasses) {
 
             typeTransformationsClasses.add((Class<Transformation>) type);
         }
@@ -203,17 +196,6 @@ public final class TestData {
         } catch (NoSuchFieldException e) {
 
             throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * A simple Transformation that wraps the related text with the name of the wrapped Transformation surrounded in square
-     * brackets e.g. [type]int[type].
-     */
-    private static class NameWrappingTransformation extends CompositeTransformation {
-
-        private NameWrappingTransformation(String name) {
-            super(name, new WrappingApplyer(name));
         }
     }
 

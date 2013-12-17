@@ -7,7 +7,7 @@ import shiver.me.timbers.transform.TransformableString;
 import shiver.me.timbers.transform.Transformation;
 import shiver.me.timbers.transform.Transformations;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Mockito.mock;
@@ -15,8 +15,17 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static shiver.me.timbers.TestData.EMPTY_TRANSFORMATIONS;
-import static shiver.me.timbers.listeners.TestUtils.*;
+import static shiver.me.timbers.listeners.TestUtils.TEST_RULE_NAME_ONE;
+import static shiver.me.timbers.listeners.TestUtils.TEST_TOKEN_NAME_ONE;
+import static shiver.me.timbers.listeners.TestUtils.TEST_TOKEN_NAME_TWO;
+import static shiver.me.timbers.listeners.TestUtils.TEST_TOKEN_TYPE_TWO;
+import static shiver.me.timbers.listeners.TestUtils.mockErrorNode;
+import static shiver.me.timbers.listeners.TestUtils.mockErrorNodeWithDefaultToken;
+import static shiver.me.timbers.listeners.TestUtils.mockParserRuleContext;
+import static shiver.me.timbers.listeners.TestUtils.mockParserRuleContextWithDefaultToken;
+import static shiver.me.timbers.listeners.TestUtils.mockRecognizer;
+import static shiver.me.timbers.listeners.TestUtils.mockTerminalNode;
+import static shiver.me.timbers.listeners.TestUtils.mockTerminalNodeWithDefaultToken;
 
 public class TransformingParseTreeListenerTest {
 
@@ -29,7 +38,6 @@ public class TransformingParseTreeListenerTest {
     private Recognizer recognizer;
     private Transformations transformations;
     private Transformations parentTransformations;
-    private Transformations errortTransformations;
     private TransformableString transformableString;
 
     @Before
@@ -39,54 +47,62 @@ public class TransformingParseTreeListenerTest {
 
         transformations = mock(Transformations.class);
         parentTransformations = mock(Transformations.class);
-        errortTransformations = mock(Transformations.class);
 
         transformableString = mock(TransformableString.class);
     }
 
     @Test
-    public void testCreate() {
+    public void testCreateWithMinimalDependencies() {
 
-        createListener();
+        new TransformingParseTreeListener(recognizer, transformations, transformableString);
     }
 
-    private TransformingParseTreeListener createListener() {
+    @Test(expected = AssertionError.class)
+    public void testCreateWithMinimalDependenciesAndNullRecognizer() {
 
-        return new TransformingParseTreeListener(recognizer, transformations, parentTransformations,
-                errortTransformations, transformableString);
+        new TransformingParseTreeListener(null, transformations, transformableString);
+    }
+
+    @Test(expected = AssertionError.class)
+    public void testCreateWithMinimalDependenciesAndNullTransformations() {
+
+        new TransformingParseTreeListener(recognizer, null, transformableString);
+    }
+
+    @Test(expected = AssertionError.class)
+    public void testCreateWithMinimalDependenciesAndNullTransformableString() {
+
+        new TransformingParseTreeListener(recognizer, transformations, null);
+    }
+
+    @Test
+    public void testCreateWithAllDependencies() {
+
+       createListener();
     }
 
     @Test(expected = AssertionError.class)
     public void testCreateWithNullRecognizer() {
 
-        new TransformingParseTreeListener(null, transformations, parentTransformations, errortTransformations,
-                transformableString);
+        new TransformingParseTreeListener(null, transformations, parentTransformations, transformableString);
     }
 
     @Test(expected = AssertionError.class)
     public void testCreateWithNullTransformations() {
 
-        new TransformingParseTreeListener(recognizer, null, parentTransformations, errortTransformations,
-                transformableString);
+        new TransformingParseTreeListener(recognizer, null, parentTransformations, transformableString);
     }
 
     @Test(expected = AssertionError.class)
     public void testCreateWithNullParentTransformations() {
 
-        new TransformingParseTreeListener(recognizer, transformations, null, errortTransformations, transformableString);
+        new TransformingParseTreeListener(recognizer, transformations, null, transformableString);
     }
 
     @Test(expected = AssertionError.class)
-    public void testCreateWithNullErrorTransformations() {
+    public void testCreateWithNullTransformableString() {
 
-        new TransformingParseTreeListener(recognizer, transformations, parentTransformations, null, transformableString);
-    }
-
-    @Test(expected = AssertionError.class)
-    public void testCreateWithNullString() {
-
-        new TransformingParseTreeListener(recognizer, transformations, parentTransformations,
-                EMPTY_TRANSFORMATIONS, null);
+        new TransformingParseTreeListener(recognizer, transformations, parentTransformations, null);
     }
 
     @Test
@@ -147,7 +163,7 @@ public class TransformingParseTreeListenerTest {
 
         createListener().visitErrorNode(mockErrorNodeWithDefaultToken());
 
-        verifyErrorTransformations(CALLED_ONCE, TEST_TOKEN_NAME_ONE);
+        verifyTransforamations(CALLED_ONCE, TEST_TOKEN_NAME_ONE);
 
         verifyTransformableString(CALLED_ONCE);
 
@@ -161,7 +177,7 @@ public class TransformingParseTreeListenerTest {
         listener.visitErrorNode(mockErrorNodeWithDefaultToken());
         listener.visitErrorNode(mockErrorNodeWithDefaultToken());
 
-        verifyErrorTransformations(CALLED_ONCE, TEST_TOKEN_NAME_ONE);
+        verifyTransforamations(CALLED_ONCE, TEST_TOKEN_NAME_ONE);
 
         verifyTransformableString(CALLED_ONCE);
 
@@ -175,8 +191,8 @@ public class TransformingParseTreeListenerTest {
         listener.visitErrorNode(mockErrorNodeWithDefaultToken());
         listener.visitErrorNode(mockErrorNode(TEST_TOKEN_NAME_TWO, TEST_TOKEN_TYPE_TWO));
 
-        verifyErrorTransformations(CALLED_ONCE, TEST_TOKEN_NAME_ONE);
-        verifyErrorTransformations(CALLED_ONCE, TEST_TOKEN_NAME_TWO);
+        verifyTransforamations(CALLED_ONCE, TEST_TOKEN_NAME_ONE);
+        verifyTransforamations(CALLED_ONCE, TEST_TOKEN_NAME_TWO);
 
         verifyTransformableString(CALLED_TWICE);
 
@@ -284,6 +300,12 @@ public class TransformingParseTreeListenerTest {
                 createListener().toString());
     }
 
+    private TransformingParseTreeListener createListener() {
+
+        return new TransformingParseTreeListener(recognizer, transformations, parentTransformations,
+                transformableString);
+    }
+
     private void verifyTransforamations(int times, String value) {
 
         verify(transformations, times(times)).get(value);
@@ -303,12 +325,6 @@ public class TransformingParseTreeListenerTest {
 
         verifyNoMoreInteractions(transformations);
         verifyNoMoreInteractions(parentTransformations);
-        verifyNoMoreInteractions(errortTransformations);
         verifyNoMoreInteractions(transformableString);
-    }
-
-    private void verifyErrorTransformations(int times, String value) {
-
-        verify(errortTransformations, times(times)).get(value);
     }
 }

@@ -8,10 +8,12 @@ import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import shiver.me.timbers.transform.IndividualTransformations;
 import shiver.me.timbers.transform.TransformableString;
 import shiver.me.timbers.transform.Transformation;
 import shiver.me.timbers.transform.Transformations;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,32 +21,44 @@ import static shiver.me.timbers.Asserts.assertIsNotNull;
 
 public class TransformingParseTreeListener implements ParseTreeListener {
 
+    private static final Transformations EMPTY_TRANSFORMATIONS = new IndividualTransformations(
+            Collections.<Transformation>emptySet());
+
     private final Recognizer recognizer;
     private final Transformations transformations;
-    private final Transformations parentTransformations;
-    private final Transformations errorTransformations;
+    private Transformations parentRuleTransformations;
     private final TransformableString transformableString;
 
     private final Set<String> transformedTokens;
 
     public TransformingParseTreeListener(Recognizer recognizer, Transformations transformations,
-                                         Transformations parentTransformations, Transformations errorTransformations,
+                                         TransformableString transformableString) {
+
+        this(recognizer, transformations, EMPTY_TRANSFORMATIONS, transformableString);
+    }
+
+    /**
+     * The {@code parentRuleTransformations} argument in this construct should contain any transformations that should be
+     * run for the parent rule of a terminal token. That is when a token is passed to
+     * {@link #visitTerminal(TerminalNode)} it's parent rules name will be passed to the
+     * {@link Transformations#get(String)} method of the {@code parentRuleTransformations} and the resulting transformation
+     * will be applied to the token.
+     */
+    public TransformingParseTreeListener(Recognizer recognizer, Transformations transformations,
+                                         Transformations parentRuleTransformations,
                                          TransformableString transformableString) {
 
         assertIsNotNull(Transformations.class.getSimpleName() + " recognizer argument cannot be null.",
                 recognizer);
         assertIsNotNull(Transformations.class.getSimpleName() + " transformations argument cannot be null.",
                 transformations);
-        assertIsNotNull(Transformations.class.getSimpleName() + " parentTransformations argument cannot be null.",
-                parentTransformations);
-        assertIsNotNull(Transformations.class.getSimpleName() + " errorTransformations argument cannot be null.",
-                errorTransformations);
+        assertIsNotNull(Transformations.class.getSimpleName() + " parentRuleTransformations argument cannot be null.",
+                parentRuleTransformations);
         assertIsNotNull(Transformations.class.getSimpleName() + " string argument cannot be null.", transformableString);
 
         this.transformableString = transformableString;
         this.transformations = transformations;
-        this.parentTransformations = parentTransformations;
-        this.errorTransformations = errorTransformations;
+        this.parentRuleTransformations = parentRuleTransformations;
         this.recognizer = recognizer;
 
         this.transformedTokens = new HashSet<String>();
@@ -59,7 +73,7 @@ public class TransformingParseTreeListener implements ParseTreeListener {
 
         transformToken(transformations, token);
 
-        transformRule(parentTransformations, context, token);
+        transformRule(parentRuleTransformations, context, token);
     }
 
     @Override
@@ -67,7 +81,7 @@ public class TransformingParseTreeListener implements ParseTreeListener {
 
         final Token token = node.getSymbol();
 
-        transformToken(errorTransformations, token);
+        transformToken(transformations, token);
     }
 
     @Override
