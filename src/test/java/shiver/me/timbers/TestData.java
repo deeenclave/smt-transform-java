@@ -10,11 +10,8 @@ import shiver.me.timbers.transform.CompoundTransformations;
 import shiver.me.timbers.transform.IndividualTransformations;
 import shiver.me.timbers.transform.Transformation;
 import shiver.me.timbers.transform.Transformations;
-import shiver.me.timbers.types.Comment;
 import shiver.me.timbers.types.Const;
 import shiver.me.timbers.types.Goto;
-import shiver.me.timbers.types.JavaDoc;
-import shiver.me.timbers.types.LineComment;
 import shiver.me.timbers.types.Strictfp;
 
 import java.io.IOException;
@@ -79,10 +76,23 @@ public final class TestData {
             Arrays.<Transformation>asList(
                     new CompositeTransformation(ClassDeclaration.NAME, new Applyer() {
 
+                        private boolean isClassName(String string) {
+
+                            for (String name : JavaParser.tokenNames) {
+
+                                if (!"Identifier".equals(name) && string.contains('[' + name + ']')) {
+
+                                    return false;
+                                }
+                            }
+
+                            return true;
+                        }
+
                         @Override
                         public String apply(String string) {
 
-                            return string.contains("]class[") ? string : new WrappingApplyer("classDefinition").apply(string);
+                            return isClassName(string) ? new WrappingApplyer("classDefinition").apply(string) : string;
                         }
                     }),
                     new CompositeTransformation(MethodDeclaration.NAME, new Applyer() {

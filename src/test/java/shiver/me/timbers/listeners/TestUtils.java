@@ -23,14 +23,12 @@ public final class TestUtils {
 
     public static final String TEST_RULE_NAME_ONE = "test rule one";
     public static final String TEST_RULE_NAME_TWO = "test rule two";
-    public static final int TEST_RULE_TYPE_ONE = 0;
-    public static final int TEST_RULE_TYPE_TWO = 1;
 
     public static Recognizer mockRecognizer() {
 
         final Recognizer recognizer = mock(Recognizer.class);
-        when(recognizer.getTokenNames()).thenReturn(new String[] {TEST_TOKEN_NAME_ONE, TEST_TOKEN_NAME_TWO});
-        when(recognizer.getRuleNames()).thenReturn(new String[] {TEST_RULE_NAME_ONE, TEST_RULE_NAME_TWO});
+        when(recognizer.getTokenNames()).thenReturn(new String[]{TEST_TOKEN_NAME_ONE, TEST_TOKEN_NAME_TWO});
+        when(recognizer.getRuleNames()).thenReturn(new String[]{TEST_RULE_NAME_ONE, TEST_RULE_NAME_TWO});
 
         return recognizer;
     }

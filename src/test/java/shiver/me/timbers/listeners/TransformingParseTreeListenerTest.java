@@ -78,7 +78,7 @@ public class TransformingParseTreeListenerTest {
     @Test
     public void testCreateWithAllDependencies() {
 
-       createListener();
+        createListener();
     }
 
     @Test(expected = AssertionError.class)

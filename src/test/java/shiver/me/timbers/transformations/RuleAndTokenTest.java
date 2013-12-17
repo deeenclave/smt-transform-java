@@ -1,6 +1,5 @@
 package shiver.me.timbers.transformations;
 
-import org.junit.Before;
 import org.junit.Test;
 import shiver.me.timbers.transform.Applyer;
 import shiver.me.timbers.transform.Transformation;
