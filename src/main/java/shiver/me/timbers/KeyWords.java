@@ -9,7 +9,6 @@ import shiver.me.timbers.types.Case;
 import shiver.me.timbers.types.Catch;
 import shiver.me.timbers.types.Char;
 import shiver.me.timbers.types.Class;
-import shiver.me.timbers.types.Const;
 import shiver.me.timbers.types.Continue;
 import shiver.me.timbers.types.Default;
 import shiver.me.timbers.types.Do;

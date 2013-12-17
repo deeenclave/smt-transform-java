@@ -7,6 +7,7 @@ import java.io.Serializable;
  *
  * @author Karl Bennett
  */
+@SuppressWarnings("ALL")
 public abstract class Test extends Object implements Serializable {
 
     /*
@@ -69,15 +70,17 @@ public abstract class Test extends Object implements Serializable {
                 number--;
             }
 
-            switch(i) {
-                case 9: break;
-                default: number = 0;
+            switch (i) {
+                case 9:
+                    break;
+                default:
+                    number = 0;
             }
         }
 
         do {
 
-        } while(-1 > number);
+        } while (-1 > number);
 
         return number;
     }

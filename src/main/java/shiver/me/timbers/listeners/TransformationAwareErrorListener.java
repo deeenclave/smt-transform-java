@@ -15,7 +15,6 @@ import shiver.me.timbers.transform.Transformations;
 import java.util.BitSet;
 
 import static shiver.me.timbers.Asserts.assertIsNotNull;
-import static shiver.me.timbers.Checks.isNotNull;
 
 /**
  * This console error listener will not register an error if the error token is for a comment type.

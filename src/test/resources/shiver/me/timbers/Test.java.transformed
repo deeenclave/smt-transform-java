@@ -7,7 +7,8 @@
  *
  * @author Karl Bennett
  */[JAVA_DOC]
-[classOrInterfaceModifier][typeDeclaration]['public']public['public'][typeDeclaration][classOrInterfaceModifier] [classOrInterfaceModifier]['abstract']abstract['abstract'][classOrInterfaceModifier] [classDeclaration]['class']class['class'][classDeclaration] [classDefinition][Identifier]Test[Identifier][classDefinition] [classDefinition]['extends']extends['extends'][classDefinition] [classOrInterfaceType][type][Identifier]Object[Identifier][type][classOrInterfaceType] [classDefinition]['implements']implements['implements'][classDefinition] [classOrInterfaceType][type][typeList][Identifier]Serializable[Identifier][typeList][type][classOrInterfaceType] [classBody]{[classBody]
+[annotation][classOrInterfaceModifier][typeDeclaration]@[typeDeclaration][classOrInterfaceModifier][annotation][qualifiedName][annotationName][Identifier]SuppressWarnings[Identifier][annotationName][qualifiedName]([literal][primary][expression][elementValue][StringLiteral]"ALL"[StringLiteral][elementValue][expression][primary][literal])
+[classOrInterfaceModifier]['public']public['public'][classOrInterfaceModifier] [classOrInterfaceModifier]['abstract']abstract['abstract'][classOrInterfaceModifier] [classDeclaration]['class']class['class'][classDeclaration] [classDefinition][Identifier]Test[Identifier][classDefinition] ['extends']extends['extends'] [classOrInterfaceType][type][Identifier]Object[Identifier][type][classOrInterfaceType] ['implements']implements['implements'] [classOrInterfaceType][type][typeList][Identifier]Serializable[Identifier][typeList][type][classOrInterfaceType] [classBody]{[classBody]
 
     [COMMENT]/*
     * This is a multi line comment.
@@ -69,15 +70,17 @@
                 [primary][expression][expression][statementExpression][statement][blockStatement][Identifier]number[Identifier][blockStatement][statement][statementExpression][expression][expression][primary]--;
             }
 
-            [statement][blockStatement]['switch']switch['switch'][blockStatement][statement][parExpression]([parExpression][primary][expression][Identifier]i[Identifier][expression][primary]) {
-                [switchLabel][switchBlockStatementGroup]['case']case['case'][switchBlockStatementGroup][switchLabel] [literal][primary][expression][constantExpression][IntegerLiteral]9[IntegerLiteral][constantExpression][expression][primary][literal]: [statement][blockStatement]['break']break['break'][blockStatement][statement];
-                [switchLabel][switchBlockStatementGroup]['default']default['default'][switchBlockStatementGroup][switchLabel]: [primary][expression][expression][statementExpression][statement][blockStatement][Identifier]number[Identifier][blockStatement][statement][statementExpression][expression][expression][primary] = [literal][primary][expression][IntegerLiteral]0[IntegerLiteral][expression][primary][literal];
+            [statement][blockStatement]['switch']switch['switch'][blockStatement][statement] [parExpression]([parExpression][primary][expression][Identifier]i[Identifier][expression][primary]) {
+                [switchLabel][switchBlockStatementGroup]['case']case['case'][switchBlockStatementGroup][switchLabel] [literal][primary][expression][constantExpression][IntegerLiteral]9[IntegerLiteral][constantExpression][expression][primary][literal]:
+                    [statement][blockStatement]['break']break['break'][blockStatement][statement];
+                [switchLabel][switchBlockStatementGroup]['default']default['default'][switchBlockStatementGroup][switchLabel]:
+                    [primary][expression][expression][statementExpression][statement][blockStatement][Identifier]number[Identifier][blockStatement][statement][statementExpression][expression][expression][primary] = [literal][primary][expression][IntegerLiteral]0[IntegerLiteral][expression][primary][literal];
             }
         }
 
         [statement][blockStatement]['do']do['do'][blockStatement][statement] [block][statement]{[statement][block]
 
-        } ['while']while['while'][parExpression]([parExpression][expression][expression]-[expression][expression][literal][primary][expression][IntegerLiteral]1[IntegerLiteral][expression][primary][literal] > [primary][expression][Identifier]number[Identifier][expression][primary]);
+        } ['while']while['while'] [parExpression]([parExpression][expression][expression]-[expression][expression][literal][primary][expression][IntegerLiteral]1[IntegerLiteral][expression][primary][literal] > [primary][expression][Identifier]number[Identifier][expression][primary]);
 
         [statement][blockStatement]['return']return['return'][blockStatement][statement] [primary][expression][Identifier]number[Identifier][expression][primary];
     }
