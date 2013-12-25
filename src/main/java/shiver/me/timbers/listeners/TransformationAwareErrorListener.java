@@ -17,7 +17,9 @@ import java.util.BitSet;
 import static shiver.me.timbers.Asserts.assertIsNotNull;
 
 /**
- * This console error listener will not register an error if the error token is for a comment type.
+ * This console error listener can be used to wrap any other error listener, it will then suppress any syntax errors
+ * that relate to tokens that have related transformations. This is usually used to suppress the syntax errors reported
+ * for comments.
  *
  * @author Karl Bennett
  */
