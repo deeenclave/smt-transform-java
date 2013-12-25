@@ -38,11 +38,11 @@ public class TransformingParseTreeListener implements ParseTreeListener {
     }
 
     /**
-     * The {@code parentRuleTransformations} argument in this construct should contain any transformations that should be
-     * run for the parent rule of a terminal token. That is when a token is passed to
+     * The {@code parentRuleTransformations} argument in this constructor should contain any transformations that should
+     * be run for the parent rule of a terminal token. That is when a token is passed to
      * {@link #visitTerminal(TerminalNode)} it's parent rules name will be passed to the
-     * {@link Transformations#get(String)} method of the {@code parentRuleTransformations} and the resulting transformation
-     * will be applied to the token.
+     * {@link Transformations#get(String)} method of the {@code parentRuleTransformations} and the resulting
+     * transformation will be applied to that token.
      */
     public TransformingParseTreeListener(Recognizer recognizer, Transformations transformations,
                                          Transformations parentRuleTransformations,
