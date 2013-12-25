@@ -8,7 +8,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
-import org.apache.commons.io.IOUtils;
 import shiver.me.timbers.listeners.TransformationAwareErrorListener;
 import shiver.me.timbers.listeners.TransformingParseTreeListener;
 import shiver.me.timbers.transform.TransformableString;
@@ -17,6 +16,9 @@ import shiver.me.timbers.transform.Transformer;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
 
 import static shiver.me.timbers.Asserts.assertIsNotNull;
 
@@ -25,6 +27,8 @@ import static shiver.me.timbers.Asserts.assertIsNotNull;
  * These names can be found in the {@link JavaParser#tokenNames} array.
  */
 public class JavaTransformer implements Transformer {
+
+    private static final int STREAM_COPY_BUFFER_SIZE = 1024 * 4; // This value was taken from commons-io.
 
     private final Transformations parentTransformations;
 
@@ -56,14 +60,31 @@ public class JavaTransformer implements Transformer {
 
     private static String toString(InputStream stream) {
 
+        final Reader reader = new InputStreamReader(stream);
+
+        final StringWriter writer = copyToStringWriter(reader);
+
+        return writer.toString();
+    }
+
+    private static StringWriter copyToStringWriter(Reader reader) {
+
+        final StringWriter writer = new StringWriter();
+
+        final char[] buffer = new char[STREAM_COPY_BUFFER_SIZE];
+
         try {
 
-            return IOUtils.toString(stream);
+            for (int charsRead = 0; charsRead != -1; charsRead = reader.read(buffer)) {
 
+                writer.write(buffer, 0, charsRead);
+            }
         } catch (IOException e) {
 
             throw new RuntimeException(e);
         }
+
+        return writer;
     }
 
     private static JavaParser buildParser(String source, Transformations errorTransformations) {
