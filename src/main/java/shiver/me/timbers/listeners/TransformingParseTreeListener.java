@@ -19,6 +19,9 @@ import java.util.Set;
 
 import static shiver.me.timbers.Asserts.assertIsNotNull;
 
+/**
+ * This parse tree listener will apply any supplied transformations to related tokens exposed in the listener methods.
+ */
 public class TransformingParseTreeListener implements ParseTreeListener {
 
     private static final Transformations EMPTY_TRANSFORMATIONS = new IndividualTransformations(
