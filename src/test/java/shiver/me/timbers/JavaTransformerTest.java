@@ -20,10 +20,16 @@ import static shiver.me.timbers.TestData.TRANSFORMED_SOURCE;
 import static shiver.me.timbers.TestData.UNUSED_TRANSFORMATIONS;
 import static shiver.me.timbers.TestData.readTestFile;
 
-public class JavaTransformationTest {
+public class JavaTransformerTest {
 
     @Test
     public void testCreate() {
+
+        new JavaTransformer();
+    }
+
+    @Test
+    public void testCreateWithParentTransformations() {
 
         new JavaTransformer(PARENT_TRANSFORMATIONS);
     }
@@ -46,16 +52,14 @@ public class JavaTransformationTest {
     public void testTransformationKeywordsOnly() {
 
         assertEquals("the source should be Transformed correctly.", TRANSFORMED_KEYWORDS_SOURCE,
-                new JavaTransformer(EMPTY_TRANSFORMATIONS)
-                        .transform(readTestFile(), KEYWORD_TRANSFORMATIONS));
+                new JavaTransformer().transform(readTestFile(), KEYWORD_TRANSFORMATIONS));
     }
 
     @Test
     public void testTransformationCommentsOnly() {
 
         assertEquals("the source should be Transformed correctly.", TRANSFORMED_COMMENTS_SOURCE,
-                new JavaTransformer(EMPTY_TRANSFORMATIONS)
-                        .transform(readTestFile(), COMMENT_TRANSFORMATIONS));
+                new JavaTransformer().transform(readTestFile(), COMMENT_TRANSFORMATIONS));
     }
 
     @Test
@@ -70,8 +74,7 @@ public class JavaTransformationTest {
     public void testTransformationWithNoTransformations() {
 
         assertEquals("the source should be Transformed correctly.", SOURCE,
-                new JavaTransformer(EMPTY_TRANSFORMATIONS)
-                        .transform(readTestFile(), EMPTY_TRANSFORMATIONS)
+                new JavaTransformer().transform(readTestFile(), EMPTY_TRANSFORMATIONS)
         );
     }
 
@@ -89,18 +92,18 @@ public class JavaTransformationTest {
         final InputStream closedStream = readTestFile();
         closedStream.close();
 
-        new JavaTransformer(PARENT_TRANSFORMATIONS).transform(closedStream, ALL_TRANSFORMATIONS);
+        new JavaTransformer().transform(closedStream, ALL_TRANSFORMATIONS);
     }
 
     @Test(expected = AssertionError.class)
     public void testTransformationWithNullTransformations() {
 
-        new JavaTransformer(PARENT_TRANSFORMATIONS).transform(readTestFile(), null);
+        new JavaTransformer().transform(readTestFile(), null);
     }
 
     @Test(expected = NullPointerException.class)
     public void testTransformationWithNullInputStream() {
 
-        new JavaTransformer(PARENT_TRANSFORMATIONS).transform(null, ALL_TRANSFORMATIONS);
+        new JavaTransformer().transform(null, ALL_TRANSFORMATIONS);
     }
 }
