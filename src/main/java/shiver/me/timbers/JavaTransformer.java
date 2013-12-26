@@ -10,6 +10,7 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import shiver.me.timbers.listeners.TransformationAwareErrorListener;
 import shiver.me.timbers.listeners.TransformingParseTreeListener;
+import shiver.me.timbers.transform.IndividualTransformations;
 import shiver.me.timbers.transform.TransformableString;
 import shiver.me.timbers.transform.Transformations;
 import shiver.me.timbers.transform.Transformer;
@@ -32,6 +33,11 @@ public class JavaTransformer implements Transformer {
     private static final int STREAM_COPY_BUFFER_SIZE = 1024 * 4; // This value was taken from commons-io.
 
     private final Transformations parentTransformations;
+
+    public JavaTransformer() {
+
+        this(new IndividualTransformations());
+    }
 
     /**
      * The {@code parentRuleTransformations} should contain any transformations that should
