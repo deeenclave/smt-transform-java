@@ -20,7 +20,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 
-import static shiver.me.timbers.Asserts.assertIsNotNull;
+import static shiver.me.timbers.asserts.Asserts.assertIsNotNull;
+import static shiver.me.timbers.asserts.Asserts.argumentIsNullMessage;
 
 /**
  * A Transformation for Java source code, it will apply any Transformations that have names matching the different token
@@ -32,12 +33,15 @@ public class JavaTransformer implements Transformer {
 
     private final Transformations parentTransformations;
 
-    public JavaTransformer(Transformations parentTransformations) {
+    /**
+     * The {@code parentRuleTransformations} should contain any transformations that should
+     * be run for the parent rule of a terminal token.
+     */
+    public JavaTransformer(Transformations parentRuleTransformations) {
 
-        assertIsNotNull(Transformations.class.getSimpleName() + " parentTransformations argument cannot be null.",
-                parentTransformations);
+        assertIsNotNull(argumentIsNullMessage("parentRuleTransformations"), parentRuleTransformations);
 
-        this.parentTransformations = parentTransformations;
+        this.parentTransformations = parentRuleTransformations;
     }
 
     @Override

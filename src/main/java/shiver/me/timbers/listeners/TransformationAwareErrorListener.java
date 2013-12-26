@@ -14,7 +14,8 @@ import shiver.me.timbers.transform.Transformations;
 
 import java.util.BitSet;
 
-import static shiver.me.timbers.Asserts.assertIsNotNull;
+import static shiver.me.timbers.asserts.Asserts.assertIsNotNull;
+import static shiver.me.timbers.asserts.Asserts.argumentIsNullMessage;
 
 /**
  * This console error listener can be used to wrap any other error listener, it will then suppress any syntax errors
@@ -30,10 +31,8 @@ public class TransformationAwareErrorListener implements ANTLRErrorListener {
 
     public TransformationAwareErrorListener(ANTLRErrorListener listener, Transformations transformations) {
 
-        assertIsNotNull(TransformationAwareErrorListener.class.getSimpleName() + " listener argument cannot be null.",
-                listener);
-        assertIsNotNull(TransformationAwareErrorListener.class.getSimpleName() + " transformations argument cannot be null.",
-                transformations);
+        assertIsNotNull(argumentIsNullMessage("listener"), listener);
+        assertIsNotNull(argumentIsNullMessage("transformations"), transformations);
 
         this.listener = listener;
         this.transformations = transformations;

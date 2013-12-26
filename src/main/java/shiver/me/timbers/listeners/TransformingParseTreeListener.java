@@ -17,7 +17,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static shiver.me.timbers.Asserts.assertIsNotNull;
+import static shiver.me.timbers.asserts.Asserts.assertIsNotNull;
+import static shiver.me.timbers.asserts.Asserts.argumentIsNullMessage;
 
 /**
  * This parse tree listener will apply any supplied transformations to related tokens exposed in the listener methods.
@@ -51,13 +52,11 @@ public class TransformingParseTreeListener implements ParseTreeListener {
                                          Transformations parentRuleTransformations,
                                          TransformableString transformableString) {
 
-        assertIsNotNull(Transformations.class.getSimpleName() + " recognizer argument cannot be null.",
-                recognizer);
-        assertIsNotNull(Transformations.class.getSimpleName() + " transformations argument cannot be null.",
-                transformations);
-        assertIsNotNull(Transformations.class.getSimpleName() + " parentRuleTransformations argument cannot be null.",
+        assertIsNotNull(argumentIsNullMessage("recognizer"), recognizer);
+        assertIsNotNull(argumentIsNullMessage("transformations"), transformations);
+        assertIsNotNull(argumentIsNullMessage("parentRuleTransformations"),
                 parentRuleTransformations);
-        assertIsNotNull(Transformations.class.getSimpleName() + " string argument cannot be null.", transformableString);
+        assertIsNotNull(argumentIsNullMessage("transformableString"), transformableString);
 
         this.transformableString = transformableString;
         this.transformations = transformations;
