@@ -8,6 +8,8 @@ import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import shiver.me.timbers.transform.IndividualTransformations;
 import shiver.me.timbers.transform.TransformableString;
 import shiver.me.timbers.transform.Transformation;
@@ -27,6 +29,8 @@ public class TransformingParseTreeListener implements ParseTreeListener {
 
     private static final Transformations EMPTY_TRANSFORMATIONS = new IndividualTransformations(
             Collections.<Transformation>emptySet());
+
+    private final Logger log = LoggerFactory.getLogger(TransformingParseTreeListener.class);
 
     private final Recognizer recognizer;
     private final Transformations transformations;
@@ -52,6 +56,8 @@ public class TransformingParseTreeListener implements ParseTreeListener {
                                          Transformations parentRuleTransformations,
                                          TransformableString transformableString) {
 
+        log.debug("{} created.", TransformingParseTreeListener.class.getSimpleName());
+
         assertIsNotNull(argumentIsNullMessage("recognizer"), recognizer);
         assertIsNotNull(argumentIsNullMessage("transformations"), transformations);
         assertIsNotNull(argumentIsNullMessage("parentRuleTransformations"),
@@ -73,6 +79,8 @@ public class TransformingParseTreeListener implements ParseTreeListener {
 
         final Token token = node.getSymbol();
 
+        log.debug("\"{}\" terminal node visited.", token.getText());
+
         transformToken(transformations, token);
 
         transformRule(parentRuleTransformations, context, token);
@@ -83,6 +91,8 @@ public class TransformingParseTreeListener implements ParseTreeListener {
 
         final Token token = node.getSymbol();
 
+        log.debug("\"{}\" error node visited.", token.getText());
+
         transformToken(transformations, token);
     }
 
@@ -90,6 +100,8 @@ public class TransformingParseTreeListener implements ParseTreeListener {
     public void enterEveryRule(@NotNull ParserRuleContext context) {
 
         final Token token = context.getStart();
+
+        log.debug("Rule visited for \"{}\".", token.getText());
 
         transformToken(transformations, token);
 
@@ -102,7 +114,11 @@ public class TransformingParseTreeListener implements ParseTreeListener {
 
     private void transformRule(Transformations transformations, RuleContext context, Token token) {
 
-        final Transformation transformation = transformations.get(getRuleName(context.getRuleIndex()));
+        final String ruleName = getRuleName(context.getRuleIndex());
+
+        final Transformation transformation = transformations.get(ruleName);
+
+        log.debug("\"{}\" transformation found for rule \"{}\".", transformation.getName(), ruleName);
 
         transformableString.transformSubstring(transformation, token.getStartIndex(), token.getStopIndex());
     }
@@ -116,7 +132,11 @@ public class TransformingParseTreeListener implements ParseTreeListener {
 
         if (isValidTokenType(token) && tokenHasNotBeenPrinted(token)) {
 
-            final Transformation transformation = transformations.get(getTokenName(token.getType()));
+            final String tokenName = getTokenName(token.getType());
+
+            final Transformation transformation = transformations.get(tokenName);
+
+            log.debug("\"{}\" transformation found for token \"{}\".", transformation.getName(), tokenName);
 
             transformableString.transformSubstring(transformation, token.getStartIndex(), token.getStopIndex());
 

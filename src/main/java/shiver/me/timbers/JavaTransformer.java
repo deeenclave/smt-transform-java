@@ -3,11 +3,13 @@ package shiver.me.timbers;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.ConsoleErrorListener;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.TokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import shiver.me.timbers.listeners.LoggingErrorListener;
 import shiver.me.timbers.listeners.TransformationAwareErrorListener;
 import shiver.me.timbers.listeners.TransformingParseTreeListener;
 import shiver.me.timbers.transform.IndividualTransformations;
@@ -21,8 +23,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 
-import static shiver.me.timbers.asserts.Asserts.assertIsNotNull;
 import static shiver.me.timbers.asserts.Asserts.argumentIsNullMessage;
+import static shiver.me.timbers.asserts.Asserts.assertIsNotNull;
 
 /**
  * A Transformation for Java source code, it will apply any Transformations that have names matching the different token
@@ -31,6 +33,8 @@ import static shiver.me.timbers.asserts.Asserts.argumentIsNullMessage;
 public class JavaTransformer implements Transformer {
 
     private static final int STREAM_COPY_BUFFER_SIZE = 1024 * 4; // This value was taken from commons-io.
+
+    private final Logger log = LoggerFactory.getLogger(JavaTransformer.class);
 
     private final Transformations parentTransformations;
 
@@ -47,21 +51,27 @@ public class JavaTransformer implements Transformer {
 
         assertIsNotNull(argumentIsNullMessage("parentRuleTransformations"), parentRuleTransformations);
 
+        log.debug("{} created.", JavaTransformer.class.getSimpleName());
+
         this.parentTransformations = parentRuleTransformations;
     }
 
     @Override
     public String transform(InputStream stream, final Transformations transformations) {
 
+        log.debug("Reading input stream into string.");
         final String source = toString(stream);
 
+        log.debug("Building parser.");
         final JavaParser parser = buildParser(source, transformations);
 
+        log.debug("Parsing.");
         final ParserRuleContext result = parser.compilationUnit();
 
         final ParseTreeListener listener = new TransformingParseTreeListener(parser, transformations,
                 parentTransformations, new TransformableString(source));
 
+        log.debug("Begin walking the parse tree.");
         final ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(listener, result);
 
@@ -107,7 +117,7 @@ public class JavaTransformer implements Transformer {
 
         final JavaParser parser = new JavaParser(tokenStream);
         parser.removeErrorListeners();
-        parser.addErrorListener(new TransformationAwareErrorListener(new ConsoleErrorListener(), errorTransformations));
+        parser.addErrorListener(new TransformationAwareErrorListener(new LoggingErrorListener(), errorTransformations));
 
         return parser;
     }

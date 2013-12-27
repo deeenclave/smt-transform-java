@@ -9,6 +9,8 @@ import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.antlr.v4.runtime.misc.Nullable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import shiver.me.timbers.transform.NullTransformation;
 import shiver.me.timbers.transform.Transformations;
 
@@ -26,6 +28,8 @@ import static shiver.me.timbers.asserts.Asserts.argumentIsNullMessage;
  */
 public class TransformationAwareErrorListener implements ANTLRErrorListener {
 
+    private final Logger log = LoggerFactory.getLogger(TransformationAwareErrorListener.class);
+
     private final ANTLRErrorListener listener;
     private final Transformations transformations;
 
@@ -33,6 +37,8 @@ public class TransformationAwareErrorListener implements ANTLRErrorListener {
 
         assertIsNotNull(argumentIsNullMessage("listener"), listener);
         assertIsNotNull(argumentIsNullMessage("transformations"), transformations);
+
+        log.debug("{} created.", TransformationAwareErrorListener.class.getSimpleName());
 
         this.listener = listener;
         this.transformations = transformations;
@@ -51,6 +57,8 @@ public class TransformationAwareErrorListener implements ANTLRErrorListener {
             final String tokenName = recognizer.getTokenNames()[type];
 
             if (canTransform(tokenName)) {
+
+                log.debug("\"{}\" token can be transformed so error suppressed.", tokenName);
 
                 return;
             }

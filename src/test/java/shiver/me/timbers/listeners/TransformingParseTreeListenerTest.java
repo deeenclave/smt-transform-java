@@ -10,6 +10,7 @@ import shiver.me.timbers.transform.Transformations;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -45,8 +46,15 @@ public class TransformingParseTreeListenerTest {
 
         recognizer = mockRecognizer();
 
+        final Transformation transformation = mock(Transformation.class);
+
         transformations = mock(Transformations.class);
+        when(transformations.get(anyInt())).thenReturn(transformation);
+        when(transformations.get(anyString())).thenReturn(transformation);
+
         parentTransformations = mock(Transformations.class);
+        when(parentTransformations.get(anyInt())).thenReturn(transformation);
+        when(parentTransformations.get(anyString())).thenReturn(transformation);
 
         transformableString = mock(TransformableString.class);
     }
