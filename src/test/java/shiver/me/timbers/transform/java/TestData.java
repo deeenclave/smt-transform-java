@@ -41,6 +41,8 @@ public final class TestData {
     public static final String TRANSFORMED_KEYWORDS_TEST_FILE_NAME = "Test.java.keywords";
     public static final String TRANSFORMED_COMMENTS_TEST_FILE_NAME = "Test.java.comments";
     public static final String TRANSFORMED_INVALID_TEST_FILE_NAME = "InvalidTest.javor.transformed";
+    public static final String TRANSFORMED_TYPES_TEST_FILE_NAME = "Test.java.types";
+    public static final String TRANSFORMED_RULES_TEST_FILE_NAME = "Test.java.rules";
 
     public static final Applyer MOCK_APPLYER = mock(Applyer.class);
 
@@ -61,11 +63,17 @@ public final class TestData {
             new Strictfp(MOCK_APPLYER)
     ));
 
+    public static final Transformations TYPES_TRANSFORMATIONS = new IndividualTransformations(
+            buildTransformations(TYPE_TRANSFORMATION_CLASSES));
+    public static final Transformations RULES_TRANSFORMATIONS = new IndividualTransformations(
+            buildTransformations(RULE_TRANSFORMATION_CLASSES));
+
     public static final Transformations ALL_TRANSFORMATIONS = new IndividualTransformations(
-            new ArrayList<Transformation>() {{
-                addAll(buildTransformations(TYPE_TRANSFORMATION_CLASSES));
-                addAll(buildTransformations(RULE_TRANSFORMATION_CLASSES));
-            }});
+            Arrays.<Iterable<Transformation>>asList(
+                    TYPES_TRANSFORMATIONS,
+                    RULES_TRANSFORMATIONS
+            )
+    );
 
     public static final Transformations KEYWORD_TRANSFORMATIONS = new CompoundTransformations(KEYWORD_NAMES,
             new WrappingApplyer("KEYWORD"));
@@ -111,6 +119,8 @@ public final class TestData {
     public static final String TRANSFORMED_KEYWORDS_SOURCE = readTestFileToString(TRANSFORMED_KEYWORDS_TEST_FILE_NAME);
     public static final String TRANSFORMED_COMMENTS_SOURCE = readTestFileToString(TRANSFORMED_COMMENTS_TEST_FILE_NAME);
     public static final String TRANSFORMED_INVALID_SOURCE = readTestFileToString(TRANSFORMED_INVALID_TEST_FILE_NAME);
+    public static final String TRANSFORMED_TYPES_SOURCE = readTestFileToString(TRANSFORMED_TYPES_TEST_FILE_NAME);
+    public static final String TRANSFORMED_RULES_SOURCE = readTestFileToString(TRANSFORMED_RULES_TEST_FILE_NAME);
 
     /**
      * @return the input stream for the default test file.

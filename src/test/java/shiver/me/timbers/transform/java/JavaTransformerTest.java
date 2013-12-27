@@ -12,11 +12,15 @@ import static shiver.me.timbers.transform.java.TestData.EMPTY_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TestData.INVALID_TEST_FILE_NAME;
 import static shiver.me.timbers.transform.java.TestData.KEYWORD_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TestData.PARENT_TRANSFORMATIONS;
+import static shiver.me.timbers.transform.java.TestData.RULES_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TestData.SOURCE;
 import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_COMMENTS_SOURCE;
 import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_INVALID_SOURCE;
 import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_KEYWORDS_SOURCE;
+import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_RULES_SOURCE;
 import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_SOURCE;
+import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_TYPES_SOURCE;
+import static shiver.me.timbers.transform.java.TestData.TYPES_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TestData.UNUSED_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TestData.readTestFile;
 
@@ -67,6 +71,20 @@ public class JavaTransformerTest {
         assertEquals("the source should be Transformed correctly.", TRANSFORMED_INVALID_SOURCE,
                 new JavaTransformer(PARENT_TRANSFORMATIONS)
                         .transform(readTestFile(INVALID_TEST_FILE_NAME), ALL_TRANSFORMATIONS));
+    }
+
+    @Test
+    public void testTransformationWithTypesOnly() {
+
+        assertEquals("the source should be Transformed correctly.", TRANSFORMED_TYPES_SOURCE,
+                new JavaTransformer().transform(readTestFile(), TYPES_TRANSFORMATIONS));
+    }
+
+    @Test
+    public void testTransformationWithRulesOnly() {
+
+        assertEquals("the source should be Transformed correctly.", TRANSFORMED_RULES_SOURCE,
+                new JavaTransformer().transform(readTestFile(), RULES_TRANSFORMATIONS));
     }
 
     @Test

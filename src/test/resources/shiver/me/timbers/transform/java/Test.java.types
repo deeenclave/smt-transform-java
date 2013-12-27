@@ -1,0 +1,89 @@
+['package']package['package'] [Identifier]shiver[Identifier].[Identifier]me[Identifier].[Identifier]timbers[Identifier].[Identifier]transform[Identifier].[Identifier]java[Identifier];
+
+['import']import['import'] [Identifier]java[Identifier].[Identifier]io[Identifier].[Identifier]Serializable[Identifier];
+
+[JAVA_DOC]/**
+ * This class has been created to provide some example source for Transforming.
+ *
+ * @author Karl Bennett
+ */[JAVA_DOC]
+@[Identifier]SuppressWarnings[Identifier]([StringLiteral]"ALL"[StringLiteral])
+['public']public['public'] ['abstract']abstract['abstract'] ['class']class['class'] [Identifier]Test[Identifier] ['extends']extends['extends'] [Identifier]Object[Identifier] ['implements']implements['implements'] [Identifier]Serializable[Identifier] {
+
+    [COMMENT]/*
+    * This is a multi line comment.
+    */[COMMENT]
+    ['private']private['private'] ['final']final['final'] ['transient']transient['transient'] [Identifier]String[Identifier] [Identifier]test[Identifier];
+    ['protected']protected['protected'] ['volatile']volatile['volatile'] ['byte']byte['byte'] [Identifier]aByte[Identifier];
+    ['protected']protected['protected'] ['short']short['short'] [Identifier]aShort[Identifier];
+    ['protected']protected['protected'] ['int']int['int'] [Identifier]anInt[Identifier];
+    ['protected']protected['protected'] ['long']long['long'] [Identifier]aLong[Identifier];
+    ['protected']protected['protected'] ['float']float['float'] [Identifier]aFloat[Identifier];
+    ['protected']protected['protected'] ['double']double['double'] [Identifier]aDouble[Identifier];
+
+    ['enum']enum['enum'] [Identifier]ENUM[Identifier] {
+        [Identifier]ONE[Identifier],
+        [Identifier]TWO[Identifier]
+    }
+
+    ['public']public['public'] [Identifier]Test[Identifier]([Identifier]String[Identifier] [Identifier]test[Identifier]) {
+        ['super']super['super']();
+
+        ['assert']assert['assert'] ['null']null['null'] != [Identifier]test[Identifier];
+
+        ['this']this['this'].[Identifier]test[Identifier] = [Identifier]test[Identifier];
+    }
+
+    ['public']public['public'] [Identifier]String[Identifier] [Identifier]getTest[Identifier]() ['throws']throws['throws'] [Identifier]RuntimeException[Identifier] {
+
+        ['return']return['return'] [Identifier]test[Identifier];
+    }
+
+    ['public']public['public'] ['boolean']boolean['boolean'] [Identifier]append[Identifier](['char']char['char'] [Identifier]number[Identifier]) {
+
+        ['try']try['try'] {
+
+            [LINE_COMMENT]// This is a comment.[LINE_COMMENT]
+            ['return']return['return'] [Identifier]test[Identifier] + [Identifier]number[Identifier] == [StringLiteral]"2"[StringLiteral];
+
+        } ['catch']catch['catch'] ([Identifier]Exception[Identifier] [Identifier]e[Identifier]) {
+
+            ['throw']throw['throw'] ['new']new['new'] [Identifier]RuntimeException[Identifier]([Identifier]e[Identifier]);
+
+        } ['finally']finally['finally'] {
+
+            [Identifier]System[Identifier].[Identifier]out[Identifier].[Identifier]println[Identifier]([StringLiteral]"done."[StringLiteral]);
+        }
+    }
+
+    ['public']public['public'] ['static']static['static'] ['int']int['int'] [Identifier]increment[Identifier](['int']int['int'] [Identifier]number[Identifier]) {
+
+        ['final']final['final'] [Identifier]Object[Identifier] [Identifier]object[Identifier] = ['new']new['new'] [Identifier]Object[Identifier]();
+
+        ['for']for['for'] (['int']int['int'] [Identifier]i[Identifier] = [IntegerLiteral]0[IntegerLiteral]; [Identifier]i[Identifier] < [IntegerLiteral]10[IntegerLiteral]; [Identifier]i[Identifier]++) {
+
+            [Identifier]number[Identifier]++;
+
+            ['if']if['if'] ([Identifier]object[Identifier] ['instanceof']instanceof['instanceof'] [Identifier]Double[Identifier]) ['continue']continue['continue'];
+            ['else']else['else'] {
+
+                [Identifier]number[Identifier]--;
+            }
+
+            ['switch']switch['switch'] ([Identifier]i[Identifier]) {
+                ['case']case['case'] [IntegerLiteral]9[IntegerLiteral]:
+                    ['break']break['break'];
+                ['default']default['default']:
+                    [Identifier]number[Identifier] = [IntegerLiteral]0[IntegerLiteral];
+            }
+        }
+
+        ['do']do['do'] {
+
+        } ['while']while['while'] (-[IntegerLiteral]1[IntegerLiteral] > [Identifier]number[Identifier]);
+
+        ['return']return['return'] [Identifier]number[Identifier];
+    }
+
+    ['public']public['public'] ['synchronized']synchronized['synchronized'] ['native']native['native'] ['void']void['void'] [Identifier]method[Identifier]();
+}
