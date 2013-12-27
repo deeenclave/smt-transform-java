@@ -2,7 +2,7 @@ package shiver.me.timbers.transform.java;
 
 import org.apache.commons.io.IOUtils;
 import org.reflections.Reflections;
-import shiver.me.timbers.JavaParser;
+import shiver.me.timbers.antlr4.java.JavaParser;
 import shiver.me.timbers.transform.Applyer;
 import shiver.me.timbers.transform.CompositeTransformation;
 import shiver.me.timbers.transform.CompoundTransformations;

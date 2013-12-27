@@ -71,7 +71,7 @@
         </dependency>
         <dependency>
             <groupId>shiver.me.timbers</groupId>
-            <artifactId>smt-java-parser</artifactId>
+            <artifactId>smt-antlr4-java-parser</artifactId>
             <version>[1.0-SNAPSHOT]</version>
         </dependency>
         <dependency>

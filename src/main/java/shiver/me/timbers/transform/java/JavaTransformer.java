@@ -9,8 +9,8 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import shiver.me.timbers.JavaLexer;
-import shiver.me.timbers.JavaParser;
+import shiver.me.timbers.antlr4.java.JavaLexer;
+import shiver.me.timbers.antlr4.java.JavaParser;
 import shiver.me.timbers.transform.IndividualTransformations;
 import shiver.me.timbers.transform.TransformableString;
 import shiver.me.timbers.transform.Transformations;
@@ -30,7 +30,7 @@ import static shiver.me.timbers.asserts.Asserts.assertIsNotNull;
 
 /**
  * A Transformation for Java source code, it will apply any Transformations that have names matching the different token
- * names. These names can be found in the {@link shiver.me.timbers.JavaParser#tokenNames} array.
+ * names. These names can be found in the {@link JavaParser#tokenNames} array.
  */
 public class JavaTransformer implements Transformer {
 
