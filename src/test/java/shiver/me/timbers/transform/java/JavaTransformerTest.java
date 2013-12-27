@@ -1,10 +1,11 @@
 package shiver.me.timbers.transform.java;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+
+import static org.junit.Assert.assertEquals;
 
 public class JavaTransformerTest {
 
@@ -29,7 +30,7 @@ public class JavaTransformerTest {
     @Test
     public void testTransformation() {
 
-        Assert.assertEquals("the source should be Transformed correctly.", TestData.TRANSFORMED_SOURCE,
+        assertEquals("the source should be Transformed correctly.", TestData.TRANSFORMED_SOURCE,
                 new JavaTransformer(TestData.PARENT_TRANSFORMATIONS)
                         .transform(TestData.readTestFile(), TestData.ALL_TRANSFORMATIONS));
     }
@@ -37,21 +38,21 @@ public class JavaTransformerTest {
     @Test
     public void testTransformationKeywordsOnly() {
 
-        Assert.assertEquals("the source should be Transformed correctly.", TestData.TRANSFORMED_KEYWORDS_SOURCE,
+        assertEquals("the source should be Transformed correctly.", TestData.TRANSFORMED_KEYWORDS_SOURCE,
                 new JavaTransformer().transform(TestData.readTestFile(), TestData.KEYWORD_TRANSFORMATIONS));
     }
 
     @Test
     public void testTransformationCommentsOnly() {
 
-        Assert.assertEquals("the source should be Transformed correctly.", TestData.TRANSFORMED_COMMENTS_SOURCE,
+        assertEquals("the source should be Transformed correctly.", TestData.TRANSFORMED_COMMENTS_SOURCE,
                 new JavaTransformer().transform(TestData.readTestFile(), TestData.COMMENT_TRANSFORMATIONS));
     }
 
     @Test
     public void testTransformationWithInvalidSource() {
 
-        Assert.assertEquals("the source should be Transformed correctly.", TestData.TRANSFORMED_INVALID_SOURCE,
+        assertEquals("the source should be Transformed correctly.", TestData.TRANSFORMED_INVALID_SOURCE,
                 new JavaTransformer(TestData.PARENT_TRANSFORMATIONS)
                         .transform(TestData.readTestFile(TestData.INVALID_TEST_FILE_NAME), TestData.ALL_TRANSFORMATIONS));
     }
@@ -59,7 +60,7 @@ public class JavaTransformerTest {
     @Test
     public void testTransformationWithNoTransformations() {
 
-        Assert.assertEquals("the source should be Transformed correctly.", TestData.SOURCE,
+        assertEquals("the source should be Transformed correctly.", TestData.SOURCE,
                 new JavaTransformer().transform(TestData.readTestFile(), TestData.EMPTY_TRANSFORMATIONS)
         );
     }
@@ -67,7 +68,7 @@ public class JavaTransformerTest {
     @Test
     public void testTransformationWithIrrelevantTransformations() {
 
-        Assert.assertEquals("the source should be Transformed correctly.", TestData.SOURCE,
+        assertEquals("the source should be Transformed correctly.", TestData.SOURCE,
                 new JavaTransformer(TestData.UNUSED_TRANSFORMATIONS)
                         .transform(TestData.readTestFile(), TestData.UNUSED_TRANSFORMATIONS));
     }
