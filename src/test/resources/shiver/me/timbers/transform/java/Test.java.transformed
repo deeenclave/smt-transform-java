@@ -1,0 +1,89 @@
+[packageDeclaration][compilationUnit]['package']package['package'][compilationUnit][packageDeclaration] [qualifiedName][Identifier]shiver[Identifier][qualifiedName].[Identifier]me[Identifier].[Identifier]timbers[Identifier].[Identifier]transform[Identifier].[Identifier]java[Identifier];
+
+[importDeclaration]['import']import['import'][importDeclaration] [qualifiedName][Identifier]java[Identifier][qualifiedName].[Identifier]io[Identifier].[Identifier]Serializable[Identifier];
+
+[JAVA_DOC]/**
+ * This class has been created to provide some example source for Transforming.
+ *
+ * @author Karl Bennett
+ */[JAVA_DOC]
+[annotation][classOrInterfaceModifier][typeDeclaration]@[typeDeclaration][classOrInterfaceModifier][annotation][qualifiedName][annotationName][Identifier]SuppressWarnings[Identifier][annotationName][qualifiedName]([literal][primary][expression][elementValue][StringLiteral]"ALL"[StringLiteral][elementValue][expression][primary][literal])
+[classOrInterfaceModifier]['public']public['public'][classOrInterfaceModifier] [classOrInterfaceModifier]['abstract']abstract['abstract'][classOrInterfaceModifier] [classDeclaration]['class']class['class'][classDeclaration] [classDefinition][Identifier]Test[Identifier][classDefinition] ['extends']extends['extends'] [classOrInterfaceType][type][Identifier]Object[Identifier][type][classOrInterfaceType] ['implements']implements['implements'] [classOrInterfaceType][type][typeList][Identifier]Serializable[Identifier][typeList][type][classOrInterfaceType] [classBody]{[classBody]
+
+    [COMMENT]/*
+    * This is a multi line comment.
+    */[COMMENT]
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['private']private['private'][classBodyDeclaration][modifier][classOrInterfaceModifier] [classOrInterfaceModifier][modifier]['final']final['final'][modifier][classOrInterfaceModifier] [modifier]['transient']transient['transient'][modifier] [classOrInterfaceType][type][fieldDeclaration][memberDeclaration][Identifier]String[Identifier][memberDeclaration][fieldDeclaration][type][classOrInterfaceType] [variableDeclaratorId][variableDeclarator][variableDeclarators][Identifier]test[Identifier][variableDeclarators][variableDeclarator][variableDeclaratorId];
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['protected']protected['protected'][classBodyDeclaration][modifier][classOrInterfaceModifier] [modifier]['volatile']volatile['volatile'][modifier] [primitiveType][type][fieldDeclaration][memberDeclaration]['byte']byte['byte'][memberDeclaration][fieldDeclaration][type][primitiveType] [variableDeclaratorId][variableDeclarator][variableDeclarators][Identifier]aByte[Identifier][variableDeclarators][variableDeclarator][variableDeclaratorId];
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['protected']protected['protected'][classBodyDeclaration][modifier][classOrInterfaceModifier] [primitiveType][type][fieldDeclaration][memberDeclaration]['short']short['short'][memberDeclaration][fieldDeclaration][type][primitiveType] [variableDeclaratorId][variableDeclarator][variableDeclarators][Identifier]aShort[Identifier][variableDeclarators][variableDeclarator][variableDeclaratorId];
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['protected']protected['protected'][classBodyDeclaration][modifier][classOrInterfaceModifier] [primitiveType][type][fieldDeclaration][memberDeclaration]['int']int['int'][memberDeclaration][fieldDeclaration][type][primitiveType] [variableDeclaratorId][variableDeclarator][variableDeclarators][Identifier]anInt[Identifier][variableDeclarators][variableDeclarator][variableDeclaratorId];
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['protected']protected['protected'][classBodyDeclaration][modifier][classOrInterfaceModifier] [primitiveType][type][fieldDeclaration][memberDeclaration]['long']long['long'][memberDeclaration][fieldDeclaration][type][primitiveType] [variableDeclaratorId][variableDeclarator][variableDeclarators][Identifier]aLong[Identifier][variableDeclarators][variableDeclarator][variableDeclaratorId];
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['protected']protected['protected'][classBodyDeclaration][modifier][classOrInterfaceModifier] [primitiveType][type][fieldDeclaration][memberDeclaration]['float']float['float'][memberDeclaration][fieldDeclaration][type][primitiveType] [variableDeclaratorId][variableDeclarator][variableDeclarators][Identifier]aFloat[Identifier][variableDeclarators][variableDeclarator][variableDeclaratorId];
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['protected']protected['protected'][classBodyDeclaration][modifier][classOrInterfaceModifier] [primitiveType][type][fieldDeclaration][memberDeclaration]['double']double['double'][memberDeclaration][fieldDeclaration][type][primitiveType] [variableDeclaratorId][variableDeclarator][variableDeclarators][Identifier]aDouble[Identifier][variableDeclarators][variableDeclarator][variableDeclaratorId];
+
+    [enumDeclaration][memberDeclaration][classBodyDeclaration]['enum']enum['enum'][classBodyDeclaration][memberDeclaration][enumDeclaration] [Identifier]ENUM[Identifier] {
+        [enumConstant][enumConstants][Identifier]ONE[Identifier][enumConstants][enumConstant],
+        [enumConstant][Identifier]TWO[Identifier][enumConstant]
+    }
+
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['public']public['public'][classBodyDeclaration][modifier][classOrInterfaceModifier] [constructorDeclaration][memberDeclaration][Identifier]Test[Identifier][memberDeclaration][constructorDeclaration][formalParameters]([formalParameters][classOrInterfaceType][type][formalParameter][formalParameterList][Identifier]String[Identifier][formalParameterList][formalParameter][type][classOrInterfaceType] [variableDeclaratorId][Identifier]test[Identifier][variableDeclaratorId]) [block][constructorBody]{[constructorBody][block]
+        [primary][expression][expression][statementExpression][statement][blockStatement]['super']super['super'][blockStatement][statement][statementExpression][expression][expression][primary]();
+
+        [statement][blockStatement]['assert']assert['assert'][blockStatement][statement] [literal][primary][expression][expression]['null']null['null'][expression][expression][primary][literal] != [primary][expression][Identifier]test[Identifier][expression][primary];
+
+        [primary][expression][expression][expression][statementExpression][statement][blockStatement]['this']this['this'][blockStatement][statement][statementExpression][expression][expression][expression][primary].[Identifier]test[Identifier] = [primary][expression][Identifier]test[Identifier][expression][primary];
+    }
+
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['public']public['public'][classBodyDeclaration][modifier][classOrInterfaceModifier] [classOrInterfaceType][type][methodDeclaration][memberDeclaration][Identifier]String[Identifier][memberDeclaration][methodDeclaration][type][classOrInterfaceType] [methodDefinition][Identifier]getTest[Identifier][methodDefinition][formalParameters]([formalParameters]) [methodDefinition]['throws']throws['throws'][methodDefinition] [qualifiedName][qualifiedNameList][Identifier]RuntimeException[Identifier][qualifiedNameList][qualifiedName] [block][methodBody]{[methodBody][block]
+
+        [statement][blockStatement]['return']return['return'][blockStatement][statement] [primary][expression][Identifier]test[Identifier][expression][primary];
+    }
+
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['public']public['public'][classBodyDeclaration][modifier][classOrInterfaceModifier] [primitiveType][type][methodDeclaration][memberDeclaration]['boolean']boolean['boolean'][memberDeclaration][methodDeclaration][type][primitiveType] [methodDefinition][Identifier]append[Identifier][methodDefinition][formalParameters]([formalParameters][primitiveType][type][formalParameter][formalParameterList]['char']char['char'][formalParameterList][formalParameter][type][primitiveType] [variableDeclaratorId][Identifier]number[Identifier][variableDeclaratorId]) [block][methodBody]{[methodBody][block]
+
+        [statement][blockStatement]['try']try['try'][blockStatement][statement] [block]{[block]
+
+            [LINE_COMMENT]// This is a comment.[LINE_COMMENT]
+            [statement][blockStatement]['return']return['return'][blockStatement][statement] [primary][expression][expression][expression][Identifier]test[Identifier][expression][expression][expression][primary] + [primary][expression][Identifier]number[Identifier][expression][primary] == [literal][primary][expression][StringLiteral]"2"[StringLiteral][expression][primary][literal];
+
+        } [catchClause]['catch']catch['catch'][catchClause] ([qualifiedName][catchType][Identifier]Exception[Identifier][catchType][qualifiedName] [Identifier]e[Identifier]) [block]{[block]
+
+            [statement][blockStatement]['throw']throw['throw'][blockStatement][statement] [expression]['new']new['new'][expression] [createdName][creator][Identifier]RuntimeException[Identifier][creator][createdName][arguments][classCreatorRest]([classCreatorRest][arguments][primary][expression][expressionList][Identifier]e[Identifier][expressionList][expression][primary]);
+
+        } [finallyBlock]['finally']finally['finally'][finallyBlock] [block]{[block]
+
+            [primary][expression][expression][expression][expression][statementExpression][statement][blockStatement][Identifier]System[Identifier][blockStatement][statement][statementExpression][expression][expression][expression][expression][primary].[Identifier]out[Identifier].[Identifier]println[Identifier]([literal][primary][expression][expressionList][StringLiteral]"done."[StringLiteral][expressionList][expression][primary][literal]);
+        }
+    }
+
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['public']public['public'][classBodyDeclaration][modifier][classOrInterfaceModifier] [classOrInterfaceModifier][modifier]['static']static['static'][modifier][classOrInterfaceModifier] [primitiveType][type][methodDeclaration][memberDeclaration]['int']int['int'][memberDeclaration][methodDeclaration][type][primitiveType] [methodDefinition][Identifier]increment[Identifier][methodDefinition][formalParameters]([formalParameters][primitiveType][type][formalParameter][formalParameterList]['int']int['int'][formalParameterList][formalParameter][type][primitiveType] [variableDeclaratorId][Identifier]number[Identifier][variableDeclaratorId]) [block][methodBody]{[methodBody][block]
+
+        [variableModifier][localVariableDeclaration][localVariableDeclarationStatement][blockStatement]['final']final['final'][blockStatement][localVariableDeclarationStatement][localVariableDeclaration][variableModifier] [classOrInterfaceType][type][Identifier]Object[Identifier][type][classOrInterfaceType] [variableDeclaratorId][variableDeclarator][variableDeclarators][Identifier]object[Identifier][variableDeclarators][variableDeclarator][variableDeclaratorId] = [expression][variableInitializer]['new']new['new'][variableInitializer][expression] [createdName][creator][Identifier]Object[Identifier][creator][createdName][arguments][classCreatorRest]([classCreatorRest][arguments]);
+
+        [statement][blockStatement]['for']for['for'][blockStatement][statement] ([primitiveType][type][localVariableDeclaration][forInit][forControl]['int']int['int'][forControl][forInit][localVariableDeclaration][type][primitiveType] [variableDeclaratorId][variableDeclarator][variableDeclarators][Identifier]i[Identifier][variableDeclarators][variableDeclarator][variableDeclaratorId] = [literal][primary][expression][variableInitializer][IntegerLiteral]0[IntegerLiteral][variableInitializer][expression][primary][literal]; [primary][expression][expression][Identifier]i[Identifier][expression][expression][primary] < [literal][primary][expression][IntegerLiteral]10[IntegerLiteral][expression][primary][literal]; [primary][expression][expression][expressionList][forUpdate][Identifier]i[Identifier][forUpdate][expressionList][expression][expression][primary]++) [block][statement]{[statement][block]
+
+            [primary][expression][expression][statementExpression][statement][blockStatement][Identifier]number[Identifier][blockStatement][statement][statementExpression][expression][expression][primary]++;
+
+            [statement][blockStatement]['if']if['if'][blockStatement][statement] [parExpression]([parExpression][primary][expression][expression][Identifier]object[Identifier][expression][expression][primary] ['instanceof']instanceof['instanceof'] [classOrInterfaceType][type][Identifier]Double[Identifier][type][classOrInterfaceType]) [statement]['continue']continue['continue'][statement];
+            ['else']else['else'] [block][statement]{[statement][block]
+
+                [primary][expression][expression][statementExpression][statement][blockStatement][Identifier]number[Identifier][blockStatement][statement][statementExpression][expression][expression][primary]--;
+            }
+
+            [statement][blockStatement]['switch']switch['switch'][blockStatement][statement] [parExpression]([parExpression][primary][expression][Identifier]i[Identifier][expression][primary]) {
+                [switchLabel][switchBlockStatementGroup]['case']case['case'][switchBlockStatementGroup][switchLabel] [literal][primary][expression][constantExpression][IntegerLiteral]9[IntegerLiteral][constantExpression][expression][primary][literal]:
+                    [statement][blockStatement]['break']break['break'][blockStatement][statement];
+                [switchLabel][switchBlockStatementGroup]['default']default['default'][switchBlockStatementGroup][switchLabel]:
+                    [primary][expression][expression][statementExpression][statement][blockStatement][Identifier]number[Identifier][blockStatement][statement][statementExpression][expression][expression][primary] = [literal][primary][expression][IntegerLiteral]0[IntegerLiteral][expression][primary][literal];
+            }
+        }
+
+        [statement][blockStatement]['do']do['do'][blockStatement][statement] [block][statement]{[statement][block]
+
+        } ['while']while['while'] [parExpression]([parExpression][expression][expression]-[expression][expression][literal][primary][expression][IntegerLiteral]1[IntegerLiteral][expression][primary][literal] > [primary][expression][Identifier]number[Identifier][expression][primary]);
+
+        [statement][blockStatement]['return']return['return'][blockStatement][statement] [primary][expression][Identifier]number[Identifier][expression][primary];
+    }
+
+    [classOrInterfaceModifier][modifier][classBodyDeclaration]['public']public['public'][classBodyDeclaration][modifier][classOrInterfaceModifier] [modifier]['synchronized']synchronized['synchronized'][modifier] [modifier]['native']native['native'][modifier] [methodDefinition][methodDeclaration][memberDeclaration]['void']void['void'][memberDeclaration][methodDeclaration][methodDefinition] [methodDefinition][Identifier]method[Identifier][methodDefinition][formalParameters]([formalParameters]);
+}
