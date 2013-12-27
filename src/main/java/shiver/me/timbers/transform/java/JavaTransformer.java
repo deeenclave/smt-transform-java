@@ -29,8 +29,9 @@ import static shiver.me.timbers.asserts.Asserts.argumentIsNullMessage;
 import static shiver.me.timbers.asserts.Asserts.assertIsNotNull;
 
 /**
- * A Transformation for Java source code, it will apply any Transformations that have names matching the different token
- * names. These names can be found in the {@link JavaParser#tokenNames} array.
+ * A Transformer for Java source code, it will apply any Transformations that have names matching the different token
+ * and rule names. These names can be found in the {@link JavaParser#tokenNames} and {@link JavaParser#ruleNames}
+ * arrays.
  */
 public class JavaTransformer implements Transformer {
 
