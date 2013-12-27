@@ -1,25 +1,25 @@
-[packageDeclaration][compilationUnit]['package']package['package'][compilationUnit][packageDeclaration] [qualifiedName][Identifier]shiver[Identifier][qualifiedName].[Identifier]me[Identifier].[Identifier]timbers[Identifier];
+['package'][packageDeclaration][compilationUnit]package[compilationUnit][packageDeclaration]['package'] [Identifier][qualifiedName]shiver[qualifiedName][Identifier].[Identifier]me[Identifier].[Identifier]timbers[Identifier];
 
 [JAVA_DOC]/**
  * This class has been created to provide some example source that is syntactically incorrect.
  *
  * @author Karl Bennett
  */[JAVA_DOC]
-[classOrInterfaceModifier][typeDeclaration]['public']public['public'][typeDeclaration][classOrInterfaceModifier] [classDeclaration]['class']class['class'][classDeclaration] [classDefinition][Identifier]InvalidTest[Identifier][classDefinition] [classBody]{[classBody]
+['public'][classOrInterfaceModifier][typeDeclaration]public[typeDeclaration][classOrInterfaceModifier]['public'] ['class'][classDeclaration]class[classDeclaration]['class'] [classDefinition][Identifier]InvalidTest[Identifier][classDefinition] [classBody]{[classBody]
 
-    [LINE_COMMENT]// A raw class level invocation doesn't parse[block][constructorBody];[constructorBody][block]tion][memberDeclaration][classBodyDeclaration][Identifier]test[Identifier][classBodyDeclaration][memberDeclaration][constructorDeclaration][formalParameters]([formalParameters][IntegerLiteral]1[IntegerLiteral])[statement][blockStatement][block][constructorBody];[constructorBody][block][blockStatement][statement]
+    [LINE_COMMENT]// A raw class level invocation doesn't parse[block][constructorBody];[constructorBody][block]uctorDeclaration][memberDeclaration][classBodyDeclaration]test[classBodyDeclaration][memberDeclaration][constructorDeclaration][Identifier][formalParameters]([formalParameters][IntegerLiteral]1[IntegerLiteral])[statement][blockStatement][block][constructorBody];[constructorBody][block][blockStatement][statement]
 
     [LINE_COMMENT]// Stand alone literal does parse.[LINE_COMMENT]
-    [literal][primary][expression][statementExpression][statement][blockStatement][IntegerLiteral]1[IntegerLiteral][blockStatement][statement][statementExpression][expression][primary][literal];
+    [IntegerLiteral][literal][primary][expression][statementExpression][statement][blockStatement]1[blockStatement][statement][statementExpression][expression][primary][literal][IntegerLiteral];
 
     [LINE_COMMENT]// A raw class level expression does not parse correctly.[LINE_COMMENT]
-    [primary][expression][expression][statementExpression][statement][blockStatement][Identifier]test[Identifier][blockStatement][statement][statementExpression][expression][expression][primary] [primary][expression][statementExpression][statement][blockStatement]['void']void['void'][blockStatement][statement][statementExpression][expression][primary]tegerLiteral]1[IntegerLiteral][expression][primary][literal];
+    [Identifier][primary][expression][expression][statementExpression][statement][blockStatement]test[blockStatement][statement][statementExpression][expression][expression][primary][Identifier] ['void'][primary][expression][statementExpression][statement][blockStatement]void[blockStatement][statement][statementExpression][expression][primary]['void']][expression]1[expression][primary][literal][IntegerLiteral];
 
     [JAVA_DOC]/**
      * Valid method after the invalid code doesn't parse correctly.
      */[JAVA_DOC]
-    [typeDeclaration][blockStatement][typeDeclaration][blockStatement]['public']public['public'][blockStatement][typeDeclaration][blockStatement][typeDeclaration] [primaey][expression][statementExpression][statement][blockStatement]['void']void['void'][blockStatement][statement][statementExpression][expression][primar[primary][expression][expression][statementExpression][statement][blockStatement][Identifier]y] t[Identifier][blockStatement][statement][statementExpression][expression][expression][primary]e[prim tiveType][type][primary][expression][expressionList]['int']st(['int'][expressionList][expression][primary][type][primitiveType]i[Identifier]nt t[Identifier]es[block][statement][blockStatement]t[blockStatement][statement][block]) {
+    ['public'][typeDeclaration][blockStatement][typeDeclaration][blockStatement]public[blockStatement][typeDeclaration][blockStatement][typeDeclaration]['public'] ['voide][primary][expression][statementExpression][statement][blockStatement]void[blockStatement][statement][statementExpression][expression][primary]['void[Identifier][primary][expression][expression][statementExpression][statement][blockStatement]'] t[blockStatement][statement][statementExpression][expression][expression][primary][Identifier]e['int ][primitiveType][type][primary][expression][expressionList]st([expressionList][expression][primary][type][primitiveType]['int']i[Identifier]nt t[Identifier]es[block][statement][blockStatement]t[blockStatement][statement][block]) {
 
-     [primary][expression][expression][statementExpression][statement][blockStatement][Identifier]   t[Identifier][blockStatement][statement][statementExpression][expression][expression][primary]est [literal][primary][expression][IntegerLiteral]+[IntegerLiteral][expression][primary][literal]= 5;
+     [Identifier][primary][expression][expression][statementExpression][statement][blockStatement]   t[blockStatement][statement][statementExpression][expression][expression][primary][Identifier]est [IntegerLiteral][literal][primary][expression]+[expression][primary][literal][IntegerLiteral]= 5;
     }
 }
