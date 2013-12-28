@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import shiver.me.timbers.antlr4.java.JavaLexer;
 import shiver.me.timbers.antlr4.java.JavaParser;
 import shiver.me.timbers.transform.IndividualTransformations;
-import shiver.me.timbers.transform.TransformableString;
+import shiver.me.timbers.transform.InPlaceModifiableString;
 import shiver.me.timbers.transform.Transformations;
 import shiver.me.timbers.transform.Transformer;
 import shiver.me.timbers.transform.antlr4.listeners.LoggingErrorListener;
@@ -39,7 +39,7 @@ public class JavaTransformer implements Transformer {
 
     private final Logger log = LoggerFactory.getLogger(JavaTransformer.class);
 
-    private final Transformations parentTransformations;
+    private final Transformations parentRuleTransformations;
 
     public JavaTransformer() {
 
@@ -56,7 +56,7 @@ public class JavaTransformer implements Transformer {
 
         log.debug("{} created.", JavaTransformer.class.getSimpleName());
 
-        this.parentTransformations = parentRuleTransformations;
+        this.parentRuleTransformations = parentRuleTransformations;
     }
 
     @Override
@@ -72,7 +72,7 @@ public class JavaTransformer implements Transformer {
         final ParserRuleContext result = parser.compilationUnit();
 
         final ParseTreeListener listener = new TransformingParseTreeListener(parser, transformations,
-                parentTransformations, new TransformableString(source));
+                parentRuleTransformations, new InPlaceModifiableString(source));
 
         log.debug("Begin walking the parse tree.");
         final ParseTreeWalker walker = new ParseTreeWalker();
