@@ -87,6 +87,12 @@
             <artifactId>mockito-all</artifactId>
         </dependency>
         <dependency>
+            <groupId>shiver.me.timbers</groupId>
+            <artifactId>smt-transform-language-test</artifactId>
+            <version>[1.0-SNAPSHOT]</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-io</artifactId>
             <version>[1.3.2]</version>

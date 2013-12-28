@@ -1,53 +1,48 @@
 package shiver.me.timbers.transform.java;
 
 import org.junit.Test;
-import shiver.me.timbers.antlr4.java.JavaParser;
-import shiver.me.timbers.transform.IndividualTransformations;
-import shiver.me.timbers.transform.Transformations;
-import shiver.me.timbers.transform.antlr4.TokenTransformation;
+import shiver.me.timbers.transform.language.test.ParserBuilderTestTemplate;
 
-import static org.junit.Assert.assertNotNull;
-import static shiver.me.timbers.transform.antlr4.NullTokenTransformation.NULL_TOKEN_TRANSFORMATION;
+import static shiver.me.timbers.transform.language.test.ParserBuilderTestUtils.buildParserTest;
+import static shiver.me.timbers.transform.language.test.ParserBuilderTestUtils.buildParserWithNullSourceStringTest;
+import static shiver.me.timbers.transform.language.test.ParserBuilderTestUtils.buildParserWithNullTransformationsTest;
+import static shiver.me.timbers.transform.language.test.ParserBuilderTestUtils.parseTest;
+import static shiver.me.timbers.transform.language.test.ParserBuilderTestUtils.parseWithNullParserTest;
 
-public class JavaParserBuilderTest {
-
-    private static final String SOURCE = "";
-
-    private static final Transformations<TokenTransformation> TRANSFORMATIONS =
-            new IndividualTransformations<TokenTransformation>(NULL_TOKEN_TRANSFORMATION);
+public class JavaParserBuilderTest implements ParserBuilderTestTemplate {
 
     @Test
+    @Override
     public void testBuildParser() {
 
-        assertNotNull("a built parser should be produced.",
-                new JavaParserBuilder().buildParser(SOURCE, TRANSFORMATIONS));
+        buildParserTest(new JavaParserBuilder());
     }
 
     @Test(expected = NullPointerException.class)
+    @Override
     public void testBuildParserWithNullSourceString() {
 
-        new JavaParserBuilder().buildParser(null, TRANSFORMATIONS);
+        buildParserWithNullSourceStringTest(new JavaParserBuilder());
     }
 
     @Test(expected = AssertionError.class)
+    @Override
     public void testBuildParserWithNullTransformations() {
 
-        new JavaParserBuilder().buildParser(SOURCE, null);
+        buildParserWithNullTransformationsTest(new JavaParserBuilder());
     }
 
     @Test
+    @Override
     public void testParse() {
 
-        final JavaParserBuilder parserBuilder = new JavaParserBuilder();
-
-        final JavaParser parser = parserBuilder.buildParser(SOURCE, TRANSFORMATIONS);
-
-        assertNotNull("parse should produce a parse tree.", parserBuilder.parse(parser));
+        parseTest(new JavaParserBuilder());
     }
 
     @Test(expected = NullPointerException.class)
+    @Override
     public void testParseWithNullParser() {
 
-        new JavaParserBuilder().parse(null);
+        parseWithNullParserTest(new JavaParserBuilder());
     }
 }
