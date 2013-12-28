@@ -15,6 +15,7 @@ import shiver.me.timbers.transform.IndividualTransformations;
 import shiver.me.timbers.transform.Transformations;
 import shiver.me.timbers.transform.Transformer;
 import shiver.me.timbers.transform.antlr4.InPlaceModifiableString;
+import shiver.me.timbers.transform.antlr4.TokenTransformation;
 import shiver.me.timbers.transform.antlr4.listeners.LoggingErrorListener;
 import shiver.me.timbers.transform.antlr4.listeners.TransformationAwareErrorListener;
 import shiver.me.timbers.transform.antlr4.listeners.TransformingParseTreeListener;
@@ -27,30 +28,31 @@ import java.io.StringWriter;
 
 import static shiver.me.timbers.asserts.Asserts.argumentIsNullMessage;
 import static shiver.me.timbers.asserts.Asserts.assertIsNotNull;
+import static shiver.me.timbers.transform.antlr4.NullTokenTransformation.NULL_TOKEN_TRANSFORMATION;
 
 /**
  * A Transformer for Java source code, it will apply any Transformations that have names matching the different token
  * and rule names. These names can be found in the {@link JavaParser#tokenNames} and {@link JavaParser#ruleNames}
  * arrays.
  */
-public class JavaTransformer implements Transformer {
+public class JavaTransformer implements Transformer<TokenTransformation> {
 
     private static final int STREAM_COPY_BUFFER_SIZE = 1024 * 4; // This value was taken from commons-io.
 
     private final Logger log = LoggerFactory.getLogger(JavaTransformer.class);
 
-    private final Transformations parentRuleTransformations;
+    private final Transformations<TokenTransformation> parentRuleTransformations;
 
     public JavaTransformer() {
 
-        this(new IndividualTransformations());
+        this(new IndividualTransformations<TokenTransformation>(NULL_TOKEN_TRANSFORMATION));
     }
 
     /**
      * The {@code parentRuleTransformations} should contain any transformations that should
      * be run for the parent rule of a terminal token.
      */
-    public JavaTransformer(Transformations parentRuleTransformations) {
+    public JavaTransformer(Transformations<TokenTransformation> parentRuleTransformations) {
 
         assertIsNotNull(argumentIsNullMessage("parentRuleTransformations"), parentRuleTransformations);
 
@@ -60,7 +62,7 @@ public class JavaTransformer implements Transformer {
     }
 
     @Override
-    public String transform(InputStream stream, final Transformations transformations) {
+    public String transform(InputStream stream, final Transformations<TokenTransformation> transformations) {
 
         log.debug("Reading input stream into string.");
         final String source = toString(stream);

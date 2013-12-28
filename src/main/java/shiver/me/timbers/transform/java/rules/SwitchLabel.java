@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.rules;
 
-import shiver.me.timbers.transform.Applyer;
-import shiver.me.timbers.transform.CompositeTransformation;
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
 
-public class SwitchLabel extends CompositeTransformation {
+public class SwitchLabel extends CompositeTokenTransformation {
     public static final String NAME = "switchLabel";
 
-    public SwitchLabel(Applyer applyer) {
+    public SwitchLabel(TokenApplyer applyer) {
         super(NAME, applyer);
     }
 }

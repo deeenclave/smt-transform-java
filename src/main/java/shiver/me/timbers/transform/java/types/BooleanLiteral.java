@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.types;
 
-import shiver.me.timbers.transform.Applyer;
-import shiver.me.timbers.transform.CompositeTransformation;
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
 
-public class BooleanLiteral extends CompositeTransformation {
+public class BooleanLiteral extends CompositeTokenTransformation {
     public static final String NAME = "BooleanLiteral";
 
-    public BooleanLiteral(Applyer applyer) {
+    public BooleanLiteral(TokenApplyer applyer) {
         super(NAME, applyer);
     }
 }

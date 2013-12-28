@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.types;
 
-import shiver.me.timbers.transform.Applyer;
-import shiver.me.timbers.transform.CompositeTransformation;
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
 
-public class Null extends CompositeTransformation {
+public class Null extends CompositeTokenTransformation {
     public static final String NAME = "'null'";
 
-    public Null(Applyer applyer) {
+    public Null(TokenApplyer applyer) {
         super(NAME, applyer);
     }
 }

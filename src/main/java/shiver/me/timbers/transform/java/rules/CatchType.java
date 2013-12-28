@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.rules;
 
-import shiver.me.timbers.transform.Applyer;
-import shiver.me.timbers.transform.CompositeTransformation;
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
 
-public class CatchType extends CompositeTransformation {
+public class CatchType extends CompositeTokenTransformation {
     public static final String NAME = "catchType";
 
-    public CatchType(Applyer applyer) {
+    public CatchType(TokenApplyer applyer) {
         super(NAME, applyer);
     }
 }

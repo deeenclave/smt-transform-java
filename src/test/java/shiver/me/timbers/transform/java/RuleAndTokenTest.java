@@ -1,8 +1,11 @@
 package shiver.me.timbers.transform.java;
 
+import org.antlr.v4.runtime.RuleContext;
+import org.antlr.v4.runtime.Token;
 import org.junit.Test;
-import shiver.me.timbers.transform.Applyer;
 import shiver.me.timbers.transform.Transformation;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
+import shiver.me.timbers.transform.antlr4.TokenTransformation;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -10,6 +13,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -33,36 +38,36 @@ public class RuleAndTokenTest {
         transformationsTest(TestData.RULE_TRANSFORMATION_CLASSES);
     }
 
-    public void transformationsTest(List<Class<Transformation>> transformationTypes) throws InvocationTargetException,
+    public void transformationsTest(List<Class<TokenTransformation>> transformationTypes) throws InvocationTargetException,
             NoSuchMethodException,
             InstantiationException, IllegalAccessException, NoSuchFieldException {
 
-        for (Class<Transformation> type : transformationTypes) {
+        for (Class<TokenTransformation> type : transformationTypes) {
 
-            Applyer mockApplyer = buildMockApplyer();
+            TokenApplyer mockApplyer = buildMockApplyer();
 
-            Transformation transformation = newTransformation(type, mockApplyer);
+            TokenTransformation transformation = newTransformation(type, mockApplyer);
 
             assertEquals(staticName(transformation), transformation.getName());
 
-            assertEquals(APPLY_STRING, transformation.apply(APPLY_STRING));
+            assertEquals(APPLY_STRING, transformation.apply(mock(RuleContext.class), mock(Token.class), APPLY_STRING));
 
-            verify(mockApplyer, times(1)).apply(APPLY_STRING);
+            verify(mockApplyer, times(1)).apply(any(RuleContext.class), any(Token.class), eq(APPLY_STRING));
         }
     }
 
-    private static Applyer buildMockApplyer() {
+    private static TokenApplyer buildMockApplyer() {
 
-        final Applyer mockApplyer = mock(Applyer.class);
-        when(mockApplyer.apply(APPLY_STRING)).thenReturn(APPLY_STRING);
+        final TokenApplyer mockApplyer = mock(TokenApplyer.class);
+        when(mockApplyer.apply(any(RuleContext.class), any(Token.class), eq(APPLY_STRING))).thenReturn(APPLY_STRING);
 
         return mockApplyer;
     }
 
-    private static Transformation newTransformation(Class<Transformation> type, Applyer applyer)
+    private static TokenTransformation newTransformation(Class<TokenTransformation> type, TokenApplyer applyer)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
-        final Constructor<Transformation> constructor = type.getConstructor(Applyer.class);
+        final Constructor<TokenTransformation> constructor = type.getConstructor(TokenApplyer.class);
 
         return constructor.newInstance(applyer);
     }

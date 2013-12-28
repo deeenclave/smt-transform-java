@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.rules;
 
-import shiver.me.timbers.transform.Applyer;
-import shiver.me.timbers.transform.CompositeTransformation;
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
 
-public class ParExpression extends CompositeTransformation {
+public class ParExpression extends CompositeTokenTransformation {
     public static final String NAME = "parExpression";
 
-    public ParExpression(Applyer applyer) {
+    public ParExpression(TokenApplyer applyer) {
         super(NAME, applyer);
     }
 }

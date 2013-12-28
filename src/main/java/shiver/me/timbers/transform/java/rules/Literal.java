@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.rules;
 
-import shiver.me.timbers.transform.Applyer;
-import shiver.me.timbers.transform.CompositeTransformation;
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
 
-public class Literal extends CompositeTransformation {
+public class Literal extends CompositeTokenTransformation {
     public static final String NAME = "literal";
 
-    public Literal(Applyer applyer) {
+    public Literal(TokenApplyer applyer) {
         super(NAME, applyer);
     }
 }

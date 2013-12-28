@@ -1,14 +1,16 @@
 package shiver.me.timbers.transform.java;
 
+import org.antlr.v4.runtime.RuleContext;
+import org.antlr.v4.runtime.Token;
 import org.apache.commons.io.IOUtils;
 import org.reflections.Reflections;
 import shiver.me.timbers.antlr4.java.JavaParser;
-import shiver.me.timbers.transform.Applyer;
-import shiver.me.timbers.transform.CompositeTransformation;
-import shiver.me.timbers.transform.CompoundTransformations;
 import shiver.me.timbers.transform.IndividualTransformations;
-import shiver.me.timbers.transform.Transformation;
 import shiver.me.timbers.transform.Transformations;
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.CompoundTransformations;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
+import shiver.me.timbers.transform.antlr4.TokenTransformation;
 import shiver.me.timbers.transform.java.rules.ClassDeclaration;
 import shiver.me.timbers.transform.java.rules.MethodDeclaration;
 import shiver.me.timbers.transform.java.types.Const;
@@ -27,6 +29,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.mockito.Mockito.mock;
+import static shiver.me.timbers.transform.antlr4.NullTokenTransformation.NULL_TOKEN_TRANSFORMATION;
 import static shiver.me.timbers.transform.java.Comments.COMMENT_NAMES;
 import static shiver.me.timbers.transform.java.KeyWords.KEYWORD_NAMES;
 
@@ -44,75 +47,86 @@ public final class TestData {
     public static final String TRANSFORMED_TYPES_TEST_FILE_NAME = "Test.java.types";
     public static final String TRANSFORMED_RULES_TEST_FILE_NAME = "Test.java.rules";
 
-    public static final Applyer MOCK_APPLYER = mock(Applyer.class);
+    public static final TokenApplyer MOCK_APPLYER = mock(TokenApplyer.class);
 
     private static final Reflections TYPE_TRANSFORMATION_REFECTIONS = buildReflections("shiver.me.timbers.transform.java.type");
     private static final Reflections RULE_TRANSFORMATION_REFECTIONS = buildReflections("shiver.me.timbers.transform.java.rules");
 
-    public static final List<Class<Transformation>> TYPE_TRANSFORMATION_CLASSES =
+    public static final List<Class<TokenTransformation>> TYPE_TRANSFORMATION_CLASSES =
             allTransformations(TYPE_TRANSFORMATION_REFECTIONS);
-    public static final List<Class<Transformation>> RULE_TRANSFORMATION_CLASSES =
+    public static final List<Class<TokenTransformation>> RULE_TRANSFORMATION_CLASSES =
             allTransformations(RULE_TRANSFORMATION_REFECTIONS);
 
-    public static final Transformations EMPTY_TRANSFORMATIONS =
-            new IndividualTransformations(Collections.<Transformation>emptyList());
+    public static final Transformations<TokenTransformation> EMPTY_TRANSFORMATIONS =
+            new IndividualTransformations<TokenTransformation>(Collections.<TokenTransformation>emptyList(),
+                    NULL_TOKEN_TRANSFORMATION);
 
-    public static final Transformations UNUSED_TRANSFORMATIONS = new IndividualTransformations(Arrays.<Transformation>asList(
-            new Const(MOCK_APPLYER),
-            new Goto(MOCK_APPLYER),
-            new Strictfp(MOCK_APPLYER)
-    ));
+    public static final Transformations<TokenTransformation> UNUSED_TRANSFORMATIONS =
+            new IndividualTransformations<TokenTransformation>(
+                    Arrays.<TokenTransformation>asList(
+                            new Const(MOCK_APPLYER),
+                            new Goto(MOCK_APPLYER),
+                            new Strictfp(MOCK_APPLYER)
+                    ),
+                    NULL_TOKEN_TRANSFORMATION
+            );
 
-    public static final Transformations TYPES_TRANSFORMATIONS = new IndividualTransformations(
-            buildTransformations(TYPE_TRANSFORMATION_CLASSES));
-    public static final Transformations RULES_TRANSFORMATIONS = new IndividualTransformations(
-            buildTransformations(RULE_TRANSFORMATION_CLASSES));
+    public static final Transformations<TokenTransformation> TYPES_TRANSFORMATIONS =
+            new IndividualTransformations<TokenTransformation>(
+                    buildTransformations(TYPE_TRANSFORMATION_CLASSES), NULL_TOKEN_TRANSFORMATION);
+    public static final Transformations<TokenTransformation> RULES_TRANSFORMATIONS =
+            new IndividualTransformations<TokenTransformation>(
+                    buildTransformations(RULE_TRANSFORMATION_CLASSES), NULL_TOKEN_TRANSFORMATION);
 
-    public static final Transformations ALL_TRANSFORMATIONS = new IndividualTransformations(
-            Arrays.<Iterable<Transformation>>asList(
-                    TYPES_TRANSFORMATIONS,
-                    RULES_TRANSFORMATIONS
-            )
-    );
+    @SuppressWarnings("unchecked")
+    public static final Transformations<TokenTransformation> ALL_TRANSFORMATIONS =
+            new IndividualTransformations<TokenTransformation>(
+                    Arrays.<Iterable<TokenTransformation>>asList(
+                            TYPES_TRANSFORMATIONS,
+                            RULES_TRANSFORMATIONS
+                    ), NULL_TOKEN_TRANSFORMATION);
 
-    public static final Transformations KEYWORD_TRANSFORMATIONS = new CompoundTransformations(KEYWORD_NAMES,
+    public static final Transformations<TokenTransformation> KEYWORD_TRANSFORMATIONS = new CompoundTransformations(KEYWORD_NAMES,
             new WrappingApplyer("KEYWORD"));
 
-    public static final Transformations COMMENT_TRANSFORMATIONS = new CompoundTransformations(COMMENT_NAMES,
+    public static final Transformations<TokenTransformation> COMMENT_TRANSFORMATIONS = new CompoundTransformations(COMMENT_NAMES,
             new WrappingApplyer("COMMENT"));
 
-    public static final Transformations PARENT_TRANSFORMATIONS = new IndividualTransformations(
-            Arrays.<Transformation>asList(
-                    new CompositeTransformation(ClassDeclaration.NAME, new Applyer() {
+    public static final Transformations<TokenTransformation> PARENT_TRANSFORMATIONS =
+            new IndividualTransformations<TokenTransformation>(
+                    Arrays.<TokenTransformation>asList(
+                            new CompositeTokenTransformation(ClassDeclaration.NAME, new TokenApplyer() {
 
-                        private boolean isClassName(String string) {
+                                private boolean isClassName(String string) {
 
-                            for (String name : JavaParser.tokenNames) {
+                                    for (String name : JavaParser.tokenNames) {
 
-                                if (!"Identifier".equals(name) && string.contains('[' + name + ']')) {
+                                        if (!"Identifier".equals(name) && string.contains('[' + name + ']')) {
 
-                                    return false;
+                                            return false;
+                                        }
+                                    }
+
+                                    return true;
                                 }
-                            }
 
-                            return true;
-                        }
+                                @Override
+                                public String apply(RuleContext context, Token token, String string) {
 
-                        @Override
-                        public String apply(String string) {
+                                    return isClassName(string) ?
+                                            new WrappingApplyer("classDefinition").apply(context, token, string) : string;
+                                }
+                            }),
+                            new CompositeTokenTransformation(MethodDeclaration.NAME, new TokenApplyer() {
 
-                            return isClassName(string) ? new WrappingApplyer("classDefinition").apply(string) : string;
-                        }
-                    }),
-                    new CompositeTransformation(MethodDeclaration.NAME, new Applyer() {
+                                @Override
+                                public String apply(RuleContext context, Token token, String string) {
 
-                        @Override
-                        public String apply(String string) {
-
-                            return string.equals(";") ? string : new WrappingApplyer("methodDefinition").apply(string);
-                        }
-                    })
-            ));
+                                    return string.equals(";") ? string :
+                                            new WrappingApplyer("methodDefinition").apply(context, token, string);
+                                }
+                            })
+                    ), NULL_TOKEN_TRANSFORMATION);
 
     public static final String SOURCE = readTestFileToString(TEST_FILE_NAME);
     public static final String TRANSFORMED_SOURCE = readTestFileToString(TRANSFORMED_TEST_FILE_NAME);
@@ -160,26 +174,27 @@ public final class TestData {
     }
 
     @SuppressWarnings("unchecked")
-    private static List<Class<Transformation>> allTransformations(Reflections reflections) {
+    private static List<Class<TokenTransformation>> allTransformations(Reflections reflections) {
 
-        final Set<Class<? extends CompositeTransformation>> allTypeTransformationClasses = reflections.getSubTypesOf(CompositeTransformation.class);
+        final Set<Class<? extends CompositeTokenTransformation>> allTypeTransformationClasses =
+                reflections.getSubTypesOf(CompositeTokenTransformation.class);
 
-        final List<Class<Transformation>> typeTransformationsClasses =
-                new ArrayList<Class<Transformation>>(allTypeTransformationClasses.size());
+        final List<Class<TokenTransformation>> typeTransformationsClasses =
+                new ArrayList<Class<TokenTransformation>>(allTypeTransformationClasses.size());
 
         for (Class type : allTypeTransformationClasses) {
 
-            typeTransformationsClasses.add((Class<Transformation>) type);
+            typeTransformationsClasses.add((Class<TokenTransformation>) type);
         }
 
         return Collections.unmodifiableList(typeTransformationsClasses);
     }
 
-    private static List<Transformation> buildTransformations(List<Class<Transformation>> classes) {
+    private static List<TokenTransformation> buildTransformations(List<Class<TokenTransformation>> classes) {
 
-        List<Transformation> transformations = new ArrayList<Transformation>(classes.size());
+        List<TokenTransformation> transformations = new ArrayList<TokenTransformation>(classes.size());
 
-        for (Class<Transformation> type : classes) {
+        for (Class<TokenTransformation> type : classes) {
 
             transformations.add(buildTransformation(type));
         }
@@ -187,11 +202,11 @@ public final class TestData {
         return transformations;
     }
 
-    private static Transformation buildTransformation(Class<Transformation> type) {
+    private static TokenTransformation buildTransformation(Class<TokenTransformation> type) {
 
         try {
 
-            Constructor<Transformation> constructor = type.getConstructor(Applyer.class);
+            Constructor<TokenTransformation> constructor = type.getConstructor(TokenApplyer.class);
             Field field = type.getField("NAME");
 
             String name = field.get(null).toString();
@@ -220,7 +235,7 @@ public final class TestData {
         }
     }
 
-    private static class WrappingApplyer implements Applyer {
+    private static class WrappingApplyer implements TokenApplyer {
 
         private final String name;
 
@@ -230,7 +245,7 @@ public final class TestData {
         }
 
         @Override
-        public String apply(String string) {
+        public String apply(RuleContext context, Token token, String string) {
 
             return '[' + name + ']' + string + '[' + name + ']';
         }

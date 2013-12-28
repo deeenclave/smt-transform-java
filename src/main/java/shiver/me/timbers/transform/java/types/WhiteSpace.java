@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.types;
 
-import shiver.me.timbers.transform.Applyer;
-import shiver.me.timbers.transform.CompositeTransformation;
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
 
-public class WhiteSpace extends CompositeTransformation {
+public class WhiteSpace extends CompositeTokenTransformation {
     public static final String NAME = "WS";
 
-    public WhiteSpace(Applyer applyer) {
+    public WhiteSpace(TokenApplyer applyer) {
         super(NAME, applyer);
     }
 }

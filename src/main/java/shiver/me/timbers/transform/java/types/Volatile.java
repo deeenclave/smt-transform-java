@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.types;
 
-import shiver.me.timbers.transform.Applyer;
-import shiver.me.timbers.transform.CompositeTransformation;
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
 
-public class Volatile extends CompositeTransformation {
+public class Volatile extends CompositeTokenTransformation {
     public static final String NAME = "'volatile'";
 
-    public Volatile(Applyer applyer) {
+    public Volatile(TokenApplyer applyer) {
         super(NAME, applyer);
     }
 }

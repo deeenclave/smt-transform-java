@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.types;
 
-import shiver.me.timbers.transform.Applyer;
-import shiver.me.timbers.transform.CompositeTransformation;
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
 
-public class Strictfp extends CompositeTransformation {
+public class Strictfp extends CompositeTokenTransformation {
     public static final String NAME = "'strictfp'";
 
-    public Strictfp(Applyer applyer) {
+    public Strictfp(TokenApplyer applyer) {
         super(NAME, applyer);
     }
 }

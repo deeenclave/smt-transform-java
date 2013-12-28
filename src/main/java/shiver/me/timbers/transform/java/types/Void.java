@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.types;
 
-import shiver.me.timbers.transform.Applyer;
-import shiver.me.timbers.transform.CompositeTransformation;
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.TokenApplyer;
 
-public class Void extends CompositeTransformation {
+public class Void extends CompositeTokenTransformation {
     public static final String NAME = "'void'";
 
-    public Void(Applyer applyer) {
+    public Void(TokenApplyer applyer) {
         super(NAME, applyer);
     }
 }
