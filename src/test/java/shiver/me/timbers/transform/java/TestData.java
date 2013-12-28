@@ -95,37 +95,10 @@ public final class TestData {
     public static final Transformations<TokenTransformation> PARENT_TRANSFORMATIONS =
             new IndividualTransformations<TokenTransformation>(
                     Arrays.<TokenTransformation>asList(
-                            new CompositeTokenTransformation(ClassDeclaration.NAME, new TokenApplyer() {
-
-                                private boolean isClassName(String string) {
-
-                                    for (String name : JavaParser.tokenNames) {
-
-                                        if (!"Identifier".equals(name) && string.contains('[' + name + ']')) {
-
-                                            return false;
-                                        }
-                                    }
-
-                                    return true;
-                                }
-
-                                @Override
-                                public String apply(RuleContext context, Token token, String string) {
-
-                                    return isClassName(string) ?
-                                            new WrappingApplyer("classDefinition").apply(context, token, string) : string;
-                                }
-                            }),
-                            new CompositeTokenTransformation(MethodDeclaration.NAME, new TokenApplyer() {
-
-                                @Override
-                                public String apply(RuleContext context, Token token, String string) {
-
-                                    return string.equals(";") ? string :
-                                            new WrappingApplyer("methodDefinition").apply(context, token, string);
-                                }
-                            })
+                            new CompositeTokenTransformation(ClassDeclaration.NAME,
+                                    new IdentifierWrappingApplyer("classDefinition")),
+                            new CompositeTokenTransformation(MethodDeclaration.NAME,
+                                    new IdentifierWrappingApplyer("methodDefinition"))
                     ), NULL_TOKEN_TRANSFORMATION);
 
     public static final String SOURCE = readTestFileToString(TEST_FILE_NAME);
@@ -248,6 +221,25 @@ public final class TestData {
         public String apply(RuleContext context, Token token, String string) {
 
             return '[' + name + ']' + string + '[' + name + ']';
+        }
+    }
+
+    private static class IdentifierWrappingApplyer extends WrappingApplyer {
+
+        private IdentifierWrappingApplyer(String name) {
+
+            super(name);
+        }
+
+        @Override
+        public String apply(RuleContext context, Token token, String string) {
+
+            return isIdentifier(token) ? super.apply(context, token, string) : string;
+        }
+
+        private static boolean isIdentifier(Token token) {
+
+            return "Identifier".equals(JavaParser.tokenNames[token.getType()]);
         }
     }
 }

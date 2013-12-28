@@ -34,7 +34,7 @@
         ['this'][primary][expression][expression][expression][statementExpression][statement][blockStatement]this[blockStatement][statement][statementExpression][expression][expression][expression][primary]['this'].[Identifier]test[Identifier] = [Identifier][primary][expression]test[expression][primary][Identifier];
     }
 
-    ['public'][classOrInterfaceModifier][modifier][classBodyDeclaration]public[classBodyDeclaration][modifier][classOrInterfaceModifier]['public'] [Identifier][classOrInterfaceType][type][methodDeclaration][memberDeclaration]String[memberDeclaration][methodDeclaration][type][classOrInterfaceType][Identifier] [methodDefinition][Identifier]getTest[Identifier][methodDefinition][formalParameters]([formalParameters]) [methodDefinition]['throws']throws['throws'][methodDefinition] [Identifier][qualifiedName][qualifiedNameList]RuntimeException[qualifiedNameList][qualifiedName][Identifier] [block][methodBody]{[methodBody][block]
+    ['public'][classOrInterfaceModifier][modifier][classBodyDeclaration]public[classBodyDeclaration][modifier][classOrInterfaceModifier]['public'] [Identifier][classOrInterfaceType][type][methodDeclaration][memberDeclaration]String[memberDeclaration][methodDeclaration][type][classOrInterfaceType][Identifier] [methodDefinition][Identifier]getTest[Identifier][methodDefinition][formalParameters]([formalParameters]) ['throws']throws['throws'] [Identifier][qualifiedName][qualifiedNameList]RuntimeException[qualifiedNameList][qualifiedName][Identifier] [block][methodBody]{[methodBody][block]
 
         ['return'][statement][blockStatement]return[blockStatement][statement]['return'] [Identifier][primary][expression]test[expression][primary][Identifier];
     }
@@ -85,5 +85,5 @@
         ['return'][statement][blockStatement]return[blockStatement][statement]['return'] [Identifier][primary][expression]number[expression][primary][Identifier];
     }
 
-    ['public'][classOrInterfaceModifier][modifier][classBodyDeclaration]public[classBodyDeclaration][modifier][classOrInterfaceModifier]['public'] ['synchronized'][modifier]synchronized[modifier]['synchronized'] ['native'][modifier]native[modifier]['native'] [methodDefinition]['void'][methodDeclaration][memberDeclaration]void[memberDeclaration][methodDeclaration]['void'][methodDefinition] [methodDefinition][Identifier]method[Identifier][methodDefinition][formalParameters]([formalParameters]);
+    ['public'][classOrInterfaceModifier][modifier][classBodyDeclaration]public[classBodyDeclaration][modifier][classOrInterfaceModifier]['public'] ['synchronized'][modifier]synchronized[modifier]['synchronized'] ['native'][modifier]native[modifier]['native'] ['void'][methodDeclaration][memberDeclaration]void[memberDeclaration][methodDeclaration]['void'] [methodDefinition][Identifier]method[Identifier][methodDefinition][formalParameters]([formalParameters]);
 }
