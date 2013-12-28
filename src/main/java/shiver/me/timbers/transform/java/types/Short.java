@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.types;
 
 import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
-import shiver.me.timbers.transform.antlr4.TokenApplyer;
+import shiver.me.timbers.transform.antlr4.TokenApplier;
 
 public class Short extends CompositeTokenTransformation {
     public static final String NAME = "'short'";
 
-    public Short(TokenApplyer applyer) {
-        super(NAME, applyer);
+    public Short(TokenApplier applier) {
+        super(NAME, applier);
     }
 }

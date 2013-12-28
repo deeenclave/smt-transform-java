@@ -4,7 +4,7 @@ import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.Token;
 import org.junit.Test;
 import shiver.me.timbers.transform.Transformation;
-import shiver.me.timbers.transform.antlr4.TokenApplyer;
+import shiver.me.timbers.transform.antlr4.TokenApplier;
 import shiver.me.timbers.transform.antlr4.TokenTransformation;
 
 import java.lang.reflect.Constructor;
@@ -44,32 +44,32 @@ public class RuleAndTokenTest {
 
         for (Class<TokenTransformation> type : transformationTypes) {
 
-            TokenApplyer mockApplyer = buildMockApplyer();
+            TokenApplier mockApplier = buildMockApplier();
 
-            TokenTransformation transformation = newTransformation(type, mockApplyer);
+            TokenTransformation transformation = newTransformation(type, mockApplier);
 
             assertEquals(staticName(transformation), transformation.getName());
 
             assertEquals(APPLY_STRING, transformation.apply(mock(RuleContext.class), mock(Token.class), APPLY_STRING));
 
-            verify(mockApplyer, times(1)).apply(any(RuleContext.class), any(Token.class), eq(APPLY_STRING));
+            verify(mockApplier, times(1)).apply(any(RuleContext.class), any(Token.class), eq(APPLY_STRING));
         }
     }
 
-    private static TokenApplyer buildMockApplyer() {
+    private static TokenApplier buildMockApplier() {
 
-        final TokenApplyer mockApplyer = mock(TokenApplyer.class);
-        when(mockApplyer.apply(any(RuleContext.class), any(Token.class), eq(APPLY_STRING))).thenReturn(APPLY_STRING);
+        final TokenApplier mockApplier = mock(TokenApplier.class);
+        when(mockApplier.apply(any(RuleContext.class), any(Token.class), eq(APPLY_STRING))).thenReturn(APPLY_STRING);
 
-        return mockApplyer;
+        return mockApplier;
     }
 
-    private static TokenTransformation newTransformation(Class<TokenTransformation> type, TokenApplyer applyer)
+    private static TokenTransformation newTransformation(Class<TokenTransformation> type, TokenApplier applier)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
-        final Constructor<TokenTransformation> constructor = type.getConstructor(TokenApplyer.class);
+        final Constructor<TokenTransformation> constructor = type.getConstructor(TokenApplier.class);
 
-        return constructor.newInstance(applyer);
+        return constructor.newInstance(applier);
     }
 
     private static String staticName(Transformation transformation) throws NoSuchFieldException,

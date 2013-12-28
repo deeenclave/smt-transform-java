@@ -9,7 +9,7 @@ import shiver.me.timbers.transform.IndividualTransformations;
 import shiver.me.timbers.transform.Transformations;
 import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
 import shiver.me.timbers.transform.antlr4.CompoundTransformations;
-import shiver.me.timbers.transform.antlr4.TokenApplyer;
+import shiver.me.timbers.transform.antlr4.TokenApplier;
 import shiver.me.timbers.transform.antlr4.TokenTransformation;
 import shiver.me.timbers.transform.java.rules.ClassDeclaration;
 import shiver.me.timbers.transform.java.rules.MethodDeclaration;
@@ -47,7 +47,7 @@ public final class TestData {
     public static final String TRANSFORMED_TYPES_TEST_FILE_NAME = "Test.java.types";
     public static final String TRANSFORMED_RULES_TEST_FILE_NAME = "Test.java.rules";
 
-    public static final TokenApplyer MOCK_APPLYER = mock(TokenApplyer.class);
+    public static final TokenApplier MOCK_APPLIER = mock(TokenApplier.class);
 
     private static final Reflections TYPE_TRANSFORMATION_REFECTIONS = buildReflections("shiver.me.timbers.transform.java.type");
     private static final Reflections RULE_TRANSFORMATION_REFECTIONS = buildReflections("shiver.me.timbers.transform.java.rules");
@@ -64,9 +64,9 @@ public final class TestData {
     public static final Transformations<TokenTransformation> UNUSED_TRANSFORMATIONS =
             new IndividualTransformations<TokenTransformation>(
                     Arrays.<TokenTransformation>asList(
-                            new Const(MOCK_APPLYER),
-                            new Goto(MOCK_APPLYER),
-                            new Strictfp(MOCK_APPLYER)
+                            new Const(MOCK_APPLIER),
+                            new Goto(MOCK_APPLIER),
+                            new Strictfp(MOCK_APPLIER)
                     ),
                     NULL_TOKEN_TRANSFORMATION
             );
@@ -87,18 +87,18 @@ public final class TestData {
                     ), NULL_TOKEN_TRANSFORMATION);
 
     public static final Transformations<TokenTransformation> KEYWORD_TRANSFORMATIONS = new CompoundTransformations(KEYWORD_NAMES,
-            new WrappingApplyer("KEYWORD"));
+            new WrappingApplier("KEYWORD"));
 
     public static final Transformations<TokenTransformation> COMMENT_TRANSFORMATIONS = new CompoundTransformations(COMMENT_NAMES,
-            new WrappingApplyer("COMMENT"));
+            new WrappingApplier("COMMENT"));
 
     public static final Transformations<TokenTransformation> PARENT_TRANSFORMATIONS =
             new IndividualTransformations<TokenTransformation>(
                     Arrays.<TokenTransformation>asList(
                             new CompositeTokenTransformation(ClassDeclaration.NAME,
-                                    new IdentifierWrappingApplyer("classDefinition")),
+                                    new IdentifierWrappingApplier("classDefinition")),
                             new CompositeTokenTransformation(MethodDeclaration.NAME,
-                                    new IdentifierWrappingApplyer("methodDefinition"))
+                                    new IdentifierWrappingApplier("methodDefinition"))
                     ), NULL_TOKEN_TRANSFORMATION);
 
     public static final String SOURCE = readTestFileToString(TEST_FILE_NAME);
@@ -179,12 +179,12 @@ public final class TestData {
 
         try {
 
-            Constructor<TokenTransformation> constructor = type.getConstructor(TokenApplyer.class);
+            Constructor<TokenTransformation> constructor = type.getConstructor(TokenApplier.class);
             Field field = type.getField("NAME");
 
             String name = field.get(null).toString();
 
-            return constructor.newInstance(new WrappingApplyer(name));
+            return constructor.newInstance(new WrappingApplier(name));
 
         } catch (NoSuchMethodException e) {
 
@@ -208,11 +208,11 @@ public final class TestData {
         }
     }
 
-    private static class WrappingApplyer implements TokenApplyer {
+    private static class WrappingApplier implements TokenApplier {
 
         private final String name;
 
-        private WrappingApplyer(String name) {
+        private WrappingApplier(String name) {
 
             this.name = name;
         }
@@ -224,9 +224,9 @@ public final class TestData {
         }
     }
 
-    private static class IdentifierWrappingApplyer extends WrappingApplyer {
+    private static class IdentifierWrappingApplier extends WrappingApplier {
 
-        private IdentifierWrappingApplyer(String name) {
+        private IdentifierWrappingApplier(String name) {
 
             super(name);
         }

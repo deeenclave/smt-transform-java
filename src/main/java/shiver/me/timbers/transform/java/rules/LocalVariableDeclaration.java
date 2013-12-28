@@ -1,12 +1,12 @@
 package shiver.me.timbers.transform.java.rules;
 
 import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
-import shiver.me.timbers.transform.antlr4.TokenApplyer;
+import shiver.me.timbers.transform.antlr4.TokenApplier;
 
 public class LocalVariableDeclaration extends CompositeTokenTransformation {
     public static final String NAME = "localVariableDeclaration";
 
-    public LocalVariableDeclaration(TokenApplyer applyer) {
-        super(NAME, applyer);
+    public LocalVariableDeclaration(TokenApplier applier) {
+        super(NAME, applier);
     }
 }
