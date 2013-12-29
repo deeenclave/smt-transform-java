@@ -6,23 +6,23 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import static org.junit.Assert.assertEquals;
-import static shiver.me.timbers.transform.java.TestData.ALL_TRANSFORMATIONS;
-import static shiver.me.timbers.transform.java.TestData.COMMENT_TRANSFORMATIONS;
-import static shiver.me.timbers.transform.java.TestData.EMPTY_TRANSFORMATIONS;
-import static shiver.me.timbers.transform.java.TestData.INVALID_TEST_FILE_NAME;
-import static shiver.me.timbers.transform.java.TestData.KEYWORD_TRANSFORMATIONS;
-import static shiver.me.timbers.transform.java.TestData.PARENT_TRANSFORMATIONS;
-import static shiver.me.timbers.transform.java.TestData.RULES_TRANSFORMATIONS;
-import static shiver.me.timbers.transform.java.TestData.SOURCE;
-import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_COMMENTS_SOURCE;
-import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_INVALID_SOURCE;
-import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_KEYWORDS_SOURCE;
-import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_RULES_SOURCE;
-import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_SOURCE;
-import static shiver.me.timbers.transform.java.TestData.TRANSFORMED_TYPES_SOURCE;
-import static shiver.me.timbers.transform.java.TestData.TYPES_TRANSFORMATIONS;
-import static shiver.me.timbers.transform.java.TestData.UNUSED_TRANSFORMATIONS;
-import static shiver.me.timbers.transform.java.TestData.readTestFile;
+import static shiver.me.timbers.transform.java.FileConstants.INVALID_TEST_FILE_NAME;
+import static shiver.me.timbers.transform.java.FileConstants.SOURCE;
+import static shiver.me.timbers.transform.java.FileConstants.TRANSFORMED_COMMENTS_SOURCE;
+import static shiver.me.timbers.transform.java.FileConstants.TRANSFORMED_INVALID_SOURCE;
+import static shiver.me.timbers.transform.java.FileConstants.TRANSFORMED_KEYWORDS_SOURCE;
+import static shiver.me.timbers.transform.java.FileConstants.TRANSFORMED_RULES_SOURCE;
+import static shiver.me.timbers.transform.java.FileConstants.TRANSFORMED_SOURCE;
+import static shiver.me.timbers.transform.java.FileConstants.TRANSFORMED_TYPES_SOURCE;
+import static shiver.me.timbers.transform.java.FileConstants.readTestFile;
+import static shiver.me.timbers.transform.java.TransformationsConstants.ALL_TRANSFORMATIONS;
+import static shiver.me.timbers.transform.java.TransformationsConstants.COMMENT_TRANSFORMATIONS;
+import static shiver.me.timbers.transform.java.TransformationsConstants.EMPTY_TRANSFORMATIONS;
+import static shiver.me.timbers.transform.java.TransformationsConstants.KEYWORD_TRANSFORMATIONS;
+import static shiver.me.timbers.transform.java.TransformationsConstants.PARENT_TRANSFORMATIONS;
+import static shiver.me.timbers.transform.java.TransformationsConstants.RULES_TRANSFORMATIONS;
+import static shiver.me.timbers.transform.java.TransformationsConstants.TYPES_TRANSFORMATIONS;
+import static shiver.me.timbers.transform.java.TransformationsConstants.UNUSED_TRANSFORMATIONS;
 
 public class JavaTransformerTest {
 
