@@ -1,11 +1,10 @@
 package shiver.me.timbers.transform.java;
 
 import org.junit.Test;
+import shiver.me.timbers.transform.language.test.TransformerTestTemplate;
 
 import java.io.IOException;
-import java.io.InputStream;
 
-import static org.junit.Assert.assertEquals;
 import static shiver.me.timbers.transform.java.FileConstants.INVALID_TEST_FILE_NAME;
 import static shiver.me.timbers.transform.java.FileConstants.SOURCE;
 import static shiver.me.timbers.transform.java.FileConstants.TRANSFORMED_COMMENTS_SOURCE;
@@ -17,109 +16,127 @@ import static shiver.me.timbers.transform.java.FileConstants.TRANSFORMED_TYPES_S
 import static shiver.me.timbers.transform.java.FileConstants.readTestFile;
 import static shiver.me.timbers.transform.java.TransformationsConstants.ALL_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.COMMENT_TRANSFORMATIONS;
-import static shiver.me.timbers.transform.java.TransformationsConstants.EMPTY_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.KEYWORD_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.PARENT_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.RULES_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.TYPES_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.UNUSED_TRANSFORMATIONS;
+import static shiver.me.timbers.transform.language.test.TransformerTestUtils.transformCommentsOnlyTest;
+import static shiver.me.timbers.transform.language.test.TransformerTestUtils.transformKeywordsOnlyTest;
+import static shiver.me.timbers.transform.language.test.TransformerTestUtils.transformTest;
+import static shiver.me.timbers.transform.language.test.TransformerTestUtils.transformWithClosedStreamTest;
+import static shiver.me.timbers.transform.language.test.TransformerTestUtils.transformWithInvalidSourceTest;
+import static shiver.me.timbers.transform.language.test.TransformerTestUtils.transformWithIrrelevantTransformationsTest;
+import static shiver.me.timbers.transform.language.test.TransformerTestUtils.transformWithNoTransformationsTest;
+import static shiver.me.timbers.transform.language.test.TransformerTestUtils.transformWithNullInputStreamTest;
+import static shiver.me.timbers.transform.language.test.TransformerTestUtils.transformWithNullTransformationsTest;
+import static shiver.me.timbers.transform.language.test.TransformerTestUtils.transformWithRulesOnlyTest;
+import static shiver.me.timbers.transform.language.test.TransformerTestUtils.transformWithTypesOnlyTest;
 
-public class JavaTransformerTest {
+public class JavaTransformerTest implements TransformerTestTemplate {
 
     @Test
+    @Override
     public void testCreate() {
 
         new JavaTransformer();
     }
 
     @Test
+    @Override
     public void testCreateWithParentTransformations() {
 
         new JavaTransformer(PARENT_TRANSFORMATIONS);
     }
 
     @Test(expected = AssertionError.class)
+    @Override
     public void testCreateWithNullParentTransformations() {
 
         new JavaTransformer(null);
     }
 
     @Test
-    public void testTransformation() {
+    @Override
+    public void testTransform() {
 
-        assertEquals("the source should be Transformed correctly.", TRANSFORMED_SOURCE,
-                new JavaTransformer(PARENT_TRANSFORMATIONS).transform(readTestFile(), ALL_TRANSFORMATIONS));
+        transformTest(TRANSFORMED_SOURCE, new JavaTransformer(PARENT_TRANSFORMATIONS), readTestFile(),
+                ALL_TRANSFORMATIONS);
     }
 
     @Test
-    public void testTransformationKeywordsOnly() {
+    @Override
+    public void testTransformKeywordsOnly() {
 
-        assertEquals("the source should be Transformed correctly.", TRANSFORMED_KEYWORDS_SOURCE,
-                new JavaTransformer().transform(readTestFile(), KEYWORD_TRANSFORMATIONS));
+        transformKeywordsOnlyTest(TRANSFORMED_KEYWORDS_SOURCE, new JavaTransformer(), readTestFile(),
+                KEYWORD_TRANSFORMATIONS);
     }
 
     @Test
-    public void testTransformationCommentsOnly() {
+    @Override
+    public void testTransformCommentsOnly() {
 
-        assertEquals("the source should be Transformed correctly.", TRANSFORMED_COMMENTS_SOURCE,
-                new JavaTransformer().transform(readTestFile(), COMMENT_TRANSFORMATIONS));
+        transformCommentsOnlyTest(TRANSFORMED_COMMENTS_SOURCE, new JavaTransformer(), readTestFile(),
+                COMMENT_TRANSFORMATIONS);
     }
 
     @Test
-    public void testTransformationWithInvalidSource() {
+    @Override
+    public void testTransformWithInvalidSource() {
 
-        assertEquals("the source should be Transformed correctly.", TRANSFORMED_INVALID_SOURCE,
-                new JavaTransformer(PARENT_TRANSFORMATIONS)
-                        .transform(readTestFile(INVALID_TEST_FILE_NAME), ALL_TRANSFORMATIONS));
+        transformWithInvalidSourceTest(TRANSFORMED_INVALID_SOURCE, new JavaTransformer(PARENT_TRANSFORMATIONS),
+                readTestFile(INVALID_TEST_FILE_NAME), ALL_TRANSFORMATIONS);
     }
 
     @Test
-    public void testTransformationWithTypesOnly() {
+    @Override
+    public void testTransformWithTypesOnly() {
 
-        assertEquals("the source should be Transformed correctly.", TRANSFORMED_TYPES_SOURCE,
-                new JavaTransformer().transform(readTestFile(), TYPES_TRANSFORMATIONS));
+        transformWithTypesOnlyTest(TRANSFORMED_TYPES_SOURCE, new JavaTransformer(), readTestFile(),
+                TYPES_TRANSFORMATIONS);
     }
 
     @Test
-    public void testTransformationWithRulesOnly() {
+    @Override
+    public void testTransformWithRulesOnly() {
 
-        assertEquals("the source should be Transformed correctly.", TRANSFORMED_RULES_SOURCE,
-                new JavaTransformer().transform(readTestFile(), RULES_TRANSFORMATIONS));
+        transformWithRulesOnlyTest(TRANSFORMED_RULES_SOURCE, new JavaTransformer(), readTestFile(),
+                RULES_TRANSFORMATIONS);
     }
 
     @Test
-    public void testTransformationWithNoTransformations() {
+    @Override
+    public void testTransformWithNoTransformations() {
 
-        assertEquals("the source should be Transformed correctly.", SOURCE,
-                new JavaTransformer().transform(readTestFile(), EMPTY_TRANSFORMATIONS)
-        );
+        transformWithNoTransformationsTest(SOURCE, new JavaTransformer(), readTestFile());
     }
 
     @Test
-    public void testTransformationWithIrrelevantTransformations() {
+    @Override
+    public void testTransformWithIrrelevantTransformations() {
 
-        assertEquals("the source should be Transformed correctly.", SOURCE,
-                new JavaTransformer(UNUSED_TRANSFORMATIONS).transform(readTestFile(), UNUSED_TRANSFORMATIONS));
+        transformWithIrrelevantTransformationsTest(SOURCE, new JavaTransformer(UNUSED_TRANSFORMATIONS), readTestFile(),
+                UNUSED_TRANSFORMATIONS);
     }
 
     @Test(expected = RuntimeException.class)
-    public void testTransformationWithClosedStream() throws IOException {
+    @Override
+    public void testTransformWithClosedStream() throws IOException {
 
-        final InputStream closedStream = readTestFile();
-        closedStream.close();
-
-        new JavaTransformer().transform(closedStream, ALL_TRANSFORMATIONS);
+        transformWithClosedStreamTest(new JavaTransformer(), readTestFile(), ALL_TRANSFORMATIONS);
     }
 
     @Test(expected = AssertionError.class)
-    public void testTransformationWithNullTransformations() {
+    @Override
+    public void testTransformWithNullTransformations() {
 
-        new JavaTransformer().transform(readTestFile(), null);
+        transformWithNullTransformationsTest(new JavaTransformer(), readTestFile());
     }
 
     @Test(expected = NullPointerException.class)
-    public void testTransformationWithNullInputStream() {
+    @Override
+    public void testTransformWithNullInputStream() {
 
-        new JavaTransformer().transform(null, ALL_TRANSFORMATIONS);
+        transformWithNullInputStreamTest(new JavaTransformer(), ALL_TRANSFORMATIONS);
     }
 }

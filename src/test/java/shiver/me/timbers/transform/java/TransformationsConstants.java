@@ -16,7 +16,6 @@ import shiver.me.timbers.transform.java.types.Goto;
 import shiver.me.timbers.transform.java.types.Strictfp;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 import static org.mockito.Mockito.mock;
 import static shiver.me.timbers.transform.antlr4.NullTokenTransformation.NULL_TOKEN_TRANSFORMATION;
@@ -49,10 +48,6 @@ public final class TransformationsConstants {
                             TYPES_TRANSFORMATIONS,
                             RULES_TRANSFORMATIONS
                     ),
-                    NULL_TOKEN_TRANSFORMATION);
-
-    public static final Transformations<TokenTransformation> EMPTY_TRANSFORMATIONS =
-            new IndividualTransformations<TokenTransformation>(Collections.<TokenTransformation>emptyList(),
                     NULL_TOKEN_TRANSFORMATION);
 
     public static final Transformations<TokenTransformation> UNUSED_TRANSFORMATIONS =
