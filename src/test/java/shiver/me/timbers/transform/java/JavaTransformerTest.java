@@ -17,7 +17,7 @@ import static shiver.me.timbers.transform.java.FileConstants.readTestFile;
 import static shiver.me.timbers.transform.java.TransformationsConstants.ALL_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.COMMENT_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.KEYWORD_TRANSFORMATIONS;
-import static shiver.me.timbers.transform.java.TransformationsConstants.PARENT_TRANSFORMATIONS;
+import static shiver.me.timbers.transform.java.TransformationsConstants.PARENT_RULE_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.RULES_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.TYPES_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.UNUSED_TRANSFORMATIONS;
@@ -46,7 +46,7 @@ public class JavaTransformerTest implements TransformerTestTemplate {
     @Override
     public void testCreateWithParentTransformations() {
 
-        new JavaTransformer(PARENT_TRANSFORMATIONS);
+        new JavaTransformer(PARENT_RULE_TRANSFORMATIONS);
     }
 
     @Test(expected = AssertionError.class)
@@ -60,7 +60,7 @@ public class JavaTransformerTest implements TransformerTestTemplate {
     @Override
     public void testTransform() {
 
-        transformTest(TRANSFORMED_SOURCE, new JavaTransformer(PARENT_TRANSFORMATIONS), readTestFile(),
+        transformTest(TRANSFORMED_SOURCE, new JavaTransformer(PARENT_RULE_TRANSFORMATIONS), readTestFile(),
                 ALL_TRANSFORMATIONS);
     }
 
@@ -84,7 +84,7 @@ public class JavaTransformerTest implements TransformerTestTemplate {
     @Override
     public void testTransformWithInvalidSource() {
 
-        transformWithInvalidSourceTest(TRANSFORMED_INVALID_SOURCE, new JavaTransformer(PARENT_TRANSFORMATIONS),
+        transformWithInvalidSourceTest(TRANSFORMED_INVALID_SOURCE, new JavaTransformer(PARENT_RULE_TRANSFORMATIONS),
                 readTestFile(INVALID_TEST_FILE_NAME), ALL_TRANSFORMATIONS);
     }
 

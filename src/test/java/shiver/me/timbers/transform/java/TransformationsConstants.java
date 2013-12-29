@@ -66,7 +66,7 @@ public final class TransformationsConstants {
     public static final Transformations<TokenTransformation> COMMENT_TRANSFORMATIONS = new CompoundTransformations(COMMENT_NAMES,
             new WrappingApplier("COMMENT"));
 
-    public static final Transformations<TokenTransformation> PARENT_TRANSFORMATIONS =
+    public static final Transformations<TokenTransformation> PARENT_RULE_TRANSFORMATIONS =
             new IndividualTransformations<TokenTransformation>(
                     Arrays.<TokenTransformation>asList(
                             new CompositeTokenTransformation(ClassDeclaration.NAME,
