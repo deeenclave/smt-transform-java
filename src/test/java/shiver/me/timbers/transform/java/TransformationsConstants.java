@@ -14,6 +14,7 @@ import shiver.me.timbers.transform.java.rules.MethodDeclaration;
 import shiver.me.timbers.transform.java.types.Const;
 import shiver.me.timbers.transform.java.types.Goto;
 import shiver.me.timbers.transform.java.types.Strictfp;
+import shiver.me.timbers.transform.language.test.WrappingTokenApplier;
 
 import java.util.Arrays;
 
@@ -61,10 +62,10 @@ public final class TransformationsConstants {
             );
 
     public static final Transformations<TokenTransformation> KEYWORD_TRANSFORMATIONS = new CompoundTransformations(KEYWORD_NAMES,
-            new WrappingApplier("KEYWORD"));
+            new WrappingTokenApplier("KEYWORD"));
 
     public static final Transformations<TokenTransformation> COMMENT_TRANSFORMATIONS = new CompoundTransformations(COMMENT_NAMES,
-            new WrappingApplier("COMMENT"));
+            new WrappingTokenApplier("COMMENT"));
 
     public static final Transformations<TokenTransformation> PARENT_RULE_TRANSFORMATIONS =
             new IndividualTransformations<TokenTransformation>(
@@ -75,23 +76,7 @@ public final class TransformationsConstants {
                                     new IdentifierWrappingApplier("methodDefinition"))
                     ), NULL_TOKEN_TRANSFORMATION);
 
-    private static class WrappingApplier implements TokenApplier {
-
-        private final String name;
-
-        private WrappingApplier(String name) {
-
-            this.name = name;
-        }
-
-        @Override
-        public String apply(RuleContext context, Token token, String string) {
-
-            return '[' + name + ']' + string + '[' + name + ']';
-        }
-    }
-
-    private static class IdentifierWrappingApplier extends WrappingApplier {
+    private static class IdentifierWrappingApplier extends WrappingTokenApplier {
 
         private IdentifierWrappingApplier(String name) {
 
