@@ -1,6 +1,5 @@
 package shiver.me.timbers.transform.java;
 
-import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
 import shiver.me.timbers.transform.antlr4.StaticNameListBuilder;
 import shiver.me.timbers.transform.java.types.Abstract;
 import shiver.me.timbers.transform.java.types.Assert;
@@ -51,9 +50,9 @@ import shiver.me.timbers.transform.java.types.Void;
 import shiver.me.timbers.transform.java.types.Volatile;
 import shiver.me.timbers.transform.java.types.While;
 
+import java.util.Arrays;
 import java.util.List;
 
-import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
 
 /**
@@ -68,16 +67,15 @@ public final class KeyWords {
      * All the transformation types of the Java keyword types.
      */
     @SuppressWarnings("unchecked")
-    public static final List<java.lang.Class<? extends CompositeTokenTransformation>> KEYWORDS =
-            unmodifiableList(asList(
-                    Abstract.class, Assert.class, Boolean.class, Break.class, Byte.class, Case.class, Catch.class,
-                    Char.class, Class.class, Continue.class, Default.class, Do.class, Double.class, Else.class,
-                    Enum.class, Extends.class, Final.class, Finally.class, Float.class, For.class, If.class,
-                    Implements.class, Import.class, Instanceof.class, Int.class, Interface.class, Long.class,
-                    Native.class, New.class, Null.class, Package.class, Private.class, Protected.class, Public.class,
-                    Return.class, Short.class, Static.class, Super.class, Switch.class, Synchronized.class, This.class,
-                    Throw.class, Throws.class, Transient.class, Try.class, Void.class, Volatile.class, While.class
-            ));
+    public static final List<java.lang.Class> KEYWORDS = unmodifiableList(Arrays.<java.lang.Class>asList(
+            Abstract.class, Assert.class, Boolean.class, Break.class, Byte.class, Case.class, Catch.class,
+            Char.class, Class.class, Continue.class, Default.class, Do.class, Double.class, Else.class,
+            Enum.class, Extends.class, Final.class, Finally.class, Float.class, For.class, If.class,
+            Implements.class, Import.class, Instanceof.class, Int.class, Interface.class, Long.class,
+            Native.class, New.class, Null.class, Package.class, Private.class, Protected.class, Public.class,
+            Return.class, Short.class, Static.class, Super.class, Switch.class, Synchronized.class, This.class,
+            Throw.class, Throws.class, Transient.class, Try.class, Void.class, Volatile.class, While.class
+    ));
 
     /**
      * All the names of the Java keyword types.
