@@ -1,5 +1,7 @@
 package shiver.me.timbers.transform.java;
 
+import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
+import shiver.me.timbers.transform.antlr4.StaticNameListBuilder;
 import shiver.me.timbers.transform.java.types.Abstract;
 import shiver.me.timbers.transform.java.types.Assert;
 import shiver.me.timbers.transform.java.types.Boolean;
@@ -52,6 +54,7 @@ import shiver.me.timbers.transform.java.types.While;
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.unmodifiableList;
 
 /**
  * This class contains constants to help with parsing Java keywords.
@@ -62,14 +65,24 @@ public final class KeyWords {
     }
 
     /**
+     * All the transformation types of the Java keyword types.
+     */
+    @SuppressWarnings("unchecked")
+    public static final List<java.lang.Class<? extends CompositeTokenTransformation>> KEYWORDS =
+            unmodifiableList(asList(
+                    Abstract.class, Assert.class, Boolean.class, Break.class, Byte.class, Case.class, Catch.class,
+                    Char.class, Class.class, Continue.class, Default.class, Do.class, Double.class, Else.class,
+                    Enum.class, Extends.class, Final.class, Finally.class, Float.class, For.class, If.class,
+                    Implements.class, Import.class, Instanceof.class, Int.class, Interface.class, Long.class,
+                    Native.class, New.class, Null.class, Package.class, Private.class, Protected.class, Public.class,
+                    Return.class, Short.class, Static.class, Super.class, Switch.class, Synchronized.class, This.class,
+                    Throw.class, Throws.class, Transient.class, Try.class, Void.class, Volatile.class, While.class
+            ));
+
+    /**
      * All the names of the Java keyword types.
      */
-    public static final List<String> KEYWORD_NAMES = asList(
-            Abstract.NAME, Assert.NAME, Boolean.NAME, Break.NAME, Byte.NAME, Case.NAME, Catch.NAME, Char.NAME,
-            Class.NAME, Continue.NAME, Default.NAME, Do.NAME, Double.NAME, Else.NAME, Enum.NAME, Extends.NAME,
-            Final.NAME, Finally.NAME, Float.NAME, For.NAME, If.NAME, Implements.NAME, Import.NAME, Instanceof.NAME,
-            Int.NAME, Interface.NAME, Long.NAME, Native.NAME, New.NAME, Null.NAME, Package.NAME, Private.NAME,
-            Protected.NAME, Public.NAME, Return.NAME, Short.NAME, Static.NAME, Super.NAME, Switch.NAME,
-            Synchronized.NAME, This.NAME, Throw.NAME, Throws.NAME, Transient.NAME, Try.NAME, Void.NAME, Volatile.NAME,
-            While.NAME);
+    @SuppressWarnings("unchecked")
+    public static final List<String> KEYWORD_NAMES = unmodifiableList(
+            new StaticNameListBuilder((Iterable) KEYWORDS).build());
 }

@@ -31,7 +31,7 @@ public final class TransformationsConstants {
 
     public static final TokenApplier MOCK_APPLIER = mock(TokenApplier.class);
 
-    public static final String TYPES_PACKAGE_NAME = "shiver.me.timbers.transform.java.type";
+    public static final String TYPES_PACKAGE_NAME = "shiver.me.timbers.transform.java.types";
     public static final String RULES_PACKAGE_NAME = "shiver.me.timbers.transform.java.rules";
 
     public static final Transformations<TokenTransformation> TYPES_TRANSFORMATIONS =
