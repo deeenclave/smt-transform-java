@@ -17,6 +17,7 @@ import shiver.me.timbers.transform.java.types.Strictfp;
 import shiver.me.timbers.transform.language.test.WrappingTokenApplier;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import static org.mockito.Mockito.mock;
 import static shiver.me.timbers.transform.antlr4.NullTokenTransformation.NULL_TOKEN_TRANSFORMATION;
@@ -45,10 +46,10 @@ public final class TransformationsConstants {
     @SuppressWarnings("unchecked")
     public static final Transformations<TokenTransformation> ALL_TRANSFORMATIONS =
             new IndividualTransformations<TokenTransformation>(
-                    Arrays.<Iterable<TokenTransformation>>asList(
-                            TYPES_TRANSFORMATIONS,
-                            RULES_TRANSFORMATIONS
-                    ),
+                    new LinkedList<TokenTransformation>() {{
+                        addAll(TYPES_TRANSFORMATIONS.asCollection());
+                        addAll(RULES_TRANSFORMATIONS.asCollection());
+                    }},
                     NULL_TOKEN_TRANSFORMATION);
 
     public static final Transformations<TokenTransformation> UNUSED_TRANSFORMATIONS =
