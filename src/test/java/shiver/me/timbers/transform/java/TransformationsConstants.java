@@ -3,7 +3,7 @@ package shiver.me.timbers.transform.java;
 import org.antlr.v4.runtime.RuleContext;
 import org.antlr.v4.runtime.Token;
 import shiver.me.timbers.antlr4.java.JavaParser;
-import shiver.me.timbers.transform.IndividualTransformations;
+import shiver.me.timbers.transform.IterableTransformations;
 import shiver.me.timbers.transform.Transformations;
 import shiver.me.timbers.transform.antlr4.CompositeTokenTransformation;
 import shiver.me.timbers.transform.antlr4.CompoundTransformations;
@@ -36,16 +36,16 @@ public final class TransformationsConstants {
     public static final String RULES_PACKAGE_NAME = "shiver.me.timbers.transform.java.rules";
 
     public static final Transformations<TokenTransformation> TYPES_TRANSFORMATIONS =
-            new IndividualTransformations<TokenTransformation>(
+            new IterableTransformations<TokenTransformation>(
                     buildWrappingTransformationsFromPackageName(TYPES_PACKAGE_NAME), NULL_TOKEN_TRANSFORMATION);
 
     public static final Transformations<TokenTransformation> RULES_TRANSFORMATIONS =
-            new IndividualTransformations<TokenTransformation>(
+            new IterableTransformations<TokenTransformation>(
                     buildWrappingTransformationsFromPackageName(RULES_PACKAGE_NAME), NULL_TOKEN_TRANSFORMATION);
 
     @SuppressWarnings("unchecked")
     public static final Transformations<TokenTransformation> ALL_TRANSFORMATIONS =
-            new IndividualTransformations<TokenTransformation>(
+            new IterableTransformations<TokenTransformation>(
                     new LinkedList<TokenTransformation>() {{
                         addAll(TYPES_TRANSFORMATIONS.asCollection());
                         addAll(RULES_TRANSFORMATIONS.asCollection());
@@ -53,7 +53,7 @@ public final class TransformationsConstants {
                     NULL_TOKEN_TRANSFORMATION);
 
     public static final Transformations<TokenTransformation> UNUSED_TRANSFORMATIONS =
-            new IndividualTransformations<TokenTransformation>(
+            new IterableTransformations<TokenTransformation>(
                     Arrays.<TokenTransformation>asList(
                             new Const(MOCK_APPLIER),
                             new Goto(MOCK_APPLIER),
@@ -69,7 +69,7 @@ public final class TransformationsConstants {
             new WrappingTokenApplier("COMMENT"));
 
     public static final Transformations<TokenTransformation> PARENT_RULE_TRANSFORMATIONS =
-            new IndividualTransformations<TokenTransformation>(
+            new IterableTransformations<TokenTransformation>(
                     Arrays.<TokenTransformation>asList(
                             new CompositeTokenTransformation(ClassDeclaration.NAME,
                                     new IdentifierWrappingApplier("classDefinition")),
