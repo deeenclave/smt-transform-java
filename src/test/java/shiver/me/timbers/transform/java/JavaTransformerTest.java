@@ -16,7 +16,6 @@ import static shiver.me.timbers.transform.java.FileConstants.TRANSFORMED_TYPES_S
 import static shiver.me.timbers.transform.java.TransformationsConstants.ALL_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.COMMENT_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.KEYWORD_TRANSFORMATIONS;
-import static shiver.me.timbers.transform.java.TransformationsConstants.PARENT_RULE_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.RULES_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.TYPES_TRANSFORMATIONS;
 import static shiver.me.timbers.transform.java.TransformationsConstants.UNUSED_TRANSFORMATIONS;
@@ -32,24 +31,10 @@ public class JavaTransformerTest implements TransformerTestTemplate {
 
     @Test
     @Override
-    public void testCreateWithParentTransformations() {
-
-        new JavaTransformer(PARENT_RULE_TRANSFORMATIONS);
-    }
-
-    @Test(expected = AssertionError.class)
-    @Override
-    public void testCreateWithNullParentTransformations() {
-
-        new JavaTransformer(null);
-    }
-
-    @Test
-    @Override
     public void testTransform() {
 
         assertEquals("the source should be Transformed correctly.", TRANSFORMED_SOURCE,
-                new JavaTransformer(PARENT_RULE_TRANSFORMATIONS).transform(TEST_FILE_SOURCE, ALL_TRANSFORMATIONS));
+                new JavaTransformer().transform(TEST_FILE_SOURCE, ALL_TRANSFORMATIONS));
     }
 
     @Test
@@ -73,7 +58,7 @@ public class JavaTransformerTest implements TransformerTestTemplate {
     public void testTransformWithInvalidSource() {
 
         assertEquals("the source should be Transformed correctly.", TRANSFORMED_INVALID_SOURCE,
-                new JavaTransformer(PARENT_RULE_TRANSFORMATIONS).transform(INVALID_TEST_FILE_SOURCE,
+                new JavaTransformer().transform(INVALID_TEST_FILE_SOURCE,
                         ALL_TRANSFORMATIONS));
     }
 
@@ -107,7 +92,7 @@ public class JavaTransformerTest implements TransformerTestTemplate {
     public void testTransformWithIrrelevantTransformations() {
 
         assertEquals("the source should be Transformed correctly.", TEST_FILE_SOURCE,
-                new JavaTransformer(UNUSED_TRANSFORMATIONS).transform(TEST_FILE_SOURCE, UNUSED_TRANSFORMATIONS));
+                new JavaTransformer().transform(TEST_FILE_SOURCE, UNUSED_TRANSFORMATIONS));
     }
 
     @Test(expected = AssertionError.class)

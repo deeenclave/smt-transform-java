@@ -40,12 +40,23 @@ public final class TransformationsConstants {
     public static final Transformations<TokenTransformation> RULES_TRANSFORMATIONS =
             new IterableTokenTransformations(buildWrappingTransformationsFromPackageName(RULES_PACKAGE_NAME));
 
+    public static final Transformations<TokenTransformation> DEFINITION_TRANSFORMATIONS =
+            new IterableTokenTransformations(
+                    Arrays.<TokenTransformation>asList(
+                            new CompositeTokenTransformation(ClassDeclaration.NAME,
+                                    new IdentifierApplier(new WrappingTokenApplier("classDefinition"))),
+                            new CompositeTokenTransformation(MethodDeclaration.NAME,
+                                    new IdentifierApplier(new WrappingTokenApplier("methodDefinition")))
+                    )
+            );
+
     @SuppressWarnings("unchecked")
     public static final Transformations<TokenTransformation> ALL_TRANSFORMATIONS =
             new IterableTokenTransformations(
                     new LinkedList<TokenTransformation>() {{
                         addAll(TYPES_TRANSFORMATIONS.asCollection());
                         addAll(RULES_TRANSFORMATIONS.asCollection());
+                        addAll(DEFINITION_TRANSFORMATIONS.asCollection());
                     }}
             );
 
@@ -58,33 +69,25 @@ public final class TransformationsConstants {
                     )
             );
 
-    public static final Transformations<TokenTransformation> KEYWORD_TRANSFORMATIONS = new CompoundTransformations(KEYWORD_NAMES,
-            new WrappingTokenApplier("KEYWORD"));
+    public static final Transformations<TokenTransformation> KEYWORD_TRANSFORMATIONS =
+            new CompoundTransformations(KEYWORD_NAMES, new WrappingTokenApplier("KEYWORD"));
 
-    public static final Transformations<TokenTransformation> COMMENT_TRANSFORMATIONS = new CompoundTransformations(COMMENT_NAMES,
-            new WrappingTokenApplier("COMMENT"));
+    public static final Transformations<TokenTransformation> COMMENT_TRANSFORMATIONS =
+            new CompoundTransformations(COMMENT_NAMES, new WrappingTokenApplier("COMMENT"));
 
-    public static final Transformations<TokenTransformation> PARENT_RULE_TRANSFORMATIONS =
-            new IterableTokenTransformations(
-                    Arrays.<TokenTransformation>asList(
-                            new CompositeTokenTransformation(ClassDeclaration.NAME,
-                                    new IdentifierWrappingApplier("classDefinition")),
-                            new CompositeTokenTransformation(MethodDeclaration.NAME,
-                                    new IdentifierWrappingApplier("methodDefinition"))
-                    )
-            );
+    private static class IdentifierApplier implements TokenApplier {
 
-    private static class IdentifierWrappingApplier extends WrappingTokenApplier {
+        private final TokenApplier applier;
 
-        private IdentifierWrappingApplier(String name) {
+        private IdentifierApplier(TokenApplier applier) {
 
-            super(name);
+            this.applier = applier;
         }
 
         @Override
         public String apply(RuleContext context, Token token, String string) {
 
-            return isIdentifier(token) ? super.apply(context, token, string) : string;
+            return isIdentifier(token) ? this.applier.apply(context, token, string) : string;
         }
 
         private static boolean isIdentifier(Token token) {
