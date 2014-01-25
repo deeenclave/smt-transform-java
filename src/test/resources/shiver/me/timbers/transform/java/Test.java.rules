@@ -27,11 +27,11 @@
     [enumDeclaration]}[enumDeclaration]
 
     [classOrInterfaceModifier][modifier][classBodyDeclaration]public[classBodyDeclaration][modifier][classOrInterfaceModifier] [constructorDeclaration][memberDeclaration]Test[memberDeclaration][constructorDeclaration][formalParameters]([formalParameters][classOrInterfaceType][type][formalParameter][formalParameterList]String[formalParameterList][formalParameter][type][classOrInterfaceType] [variableDeclaratorId]test[variableDeclaratorId][formalParameters])[formalParameters] [block][constructorBody]{[constructorBody][block]
-        [primary][expression][expression][statementExpression][statement][blockStatement]super[blockStatement][statement][statementExpression][expression][expression][primary]([expression])[expression][statement];[statement]
+        [expression][primary][expression][statementExpression][statement][blockStatement]super[blockStatement][statement][statementExpression][expression][primary][expression]([expression])[expression][statement];[statement]
 
-        [statement][blockStatement]assert[blockStatement][statement] [literal][primary][expression][expression]null[expression][expression][primary][literal] [expression]!=[expression] [primary][expression]test[expression][primary][statement];[statement]
+        [statement][blockStatement]assert[blockStatement][statement] [expression][literal][primary][expression]null[expression][primary][literal][expression] [expression]!=[expression] [primary][expression]test[expression][primary][statement];[statement]
 
-        [primary][expression][expression][expression][statementExpression][statement][blockStatement]this[blockStatement][statement][statementExpression][expression][expression][expression][primary][expression].[expression]test [expression]=[expression] [primary][expression]test[expression][primary][statement];[statement]
+        [expression][primary][expression][statementExpression][statement][blockStatement]this[blockStatement][statement][statementExpression][expression][primary][expression][expression].[expression]test [expression]=[expression] [primary][expression]test[expression][primary][statement];[statement]
     [block]}[block]
 
     [classOrInterfaceModifier][modifier][classBodyDeclaration]public[classBodyDeclaration][modifier][classOrInterfaceModifier] [classOrInterfaceType][type][methodDeclaration][memberDeclaration]String[memberDeclaration][methodDeclaration][type][classOrInterfaceType] [methodDeclaration]getTest[methodDeclaration][formalParameters]([formalParameters][formalParameters])[formalParameters] [methodDeclaration]throws[methodDeclaration] [qualifiedName][qualifiedNameList]RuntimeException[qualifiedNameList][qualifiedName] [block][methodBody]{[methodBody][block]
@@ -44,7 +44,7 @@
         [statement][blockStatement]try[blockStatement][statement] [block]{[block]
 
             // This is a comment.
-            [statement][blockStatement]return[blockStatement][statement] [primary][expression][expression][expression]test[expression][expression][expression][primary] [expression]+[expression] [primary][expression]number[expression][primary] [expression]==[expression] [literal][primary][expression]"2"[expression][primary][literal][statement];[statement]
+            [statement][blockStatement]return[blockStatement][statement] [expression][primary][expression]test[expression][primary][expression] [expression]+[expression] [primary][expression]number[expression][primary] [expression]==[expression] [literal][primary][expression]"2"[expression][primary][literal][statement];[statement]
 
         [block]}[block] [catchClause]catch[catchClause] ([qualifiedName][catchType]Exception[catchType][qualifiedName] [catchClause]e[catchClause][catchClause])[catchClause] [block]{[block]
 
@@ -52,7 +52,7 @@
 
         [block]}[block] [finallyBlock]finally[finallyBlock] [block]{[block]
 
-            [primary][expression][expression][expression][expression][statementExpression][statement][blockStatement]System[blockStatement][statement][statementExpression][expression][expression][expression][expression][primary][expression].[expression][expression]out[expression][expression].[expression][expression]println[expression]([literal][primary][expression][expressionList]"done."[expressionList][expression][primary][literal][expression])[expression][statement];[statement]
+            [expression][primary][expression][statementExpression][statement][blockStatement]System[blockStatement][statement][statementExpression][expression][primary][expression][expression].[expression][expression]out[expression][expression].[expression][expression]println[expression]([literal][primary][expression][expressionList]"done."[expressionList][expression][primary][literal][expression])[expression][statement];[statement]
         [block]}[block]
     [block]}[block]
 
@@ -60,27 +60,27 @@
 
         [variableModifier][localVariableDeclaration][localVariableDeclarationStatement][blockStatement]final[blockStatement][localVariableDeclarationStatement][localVariableDeclaration][variableModifier] [classOrInterfaceType][type]Object[type][classOrInterfaceType] [variableDeclaratorId][variableDeclarator][variableDeclarators]object[variableDeclarators][variableDeclarator][variableDeclaratorId] [variableDeclarator]=[variableDeclarator] [expression][variableInitializer]new[variableInitializer][expression] [createdName][creator]Object[creator][createdName][arguments][classCreatorRest]([classCreatorRest][arguments][arguments])[arguments][localVariableDeclarationStatement];[localVariableDeclarationStatement]
 
-        [statement][blockStatement]for[blockStatement][statement] ([primitiveType][type][localVariableDeclaration][forInit][forControl]int[forControl][forInit][localVariableDeclaration][type][primitiveType] [variableDeclaratorId][variableDeclarator][variableDeclarators]i[variableDeclarators][variableDeclarator][variableDeclaratorId] [variableDeclarator]=[variableDeclarator] [literal][primary][expression][variableInitializer]0[variableInitializer][expression][primary][literal][forControl];[forControl] [primary][expression][expression]i[expression][expression][primary] [expression]<[expression] [literal][primary][expression]10[expression][primary][literal][forControl];[forControl] [primary][expression][expression][expressionList][forUpdate]i[forUpdate][expressionList][expression][expression][primary][expression]++[expression][statement])[statement] [block][statement]{[statement][block]
+        [statement][blockStatement]for[blockStatement][statement] ([primitiveType][type][localVariableDeclaration][forInit][forControl]int[forControl][forInit][localVariableDeclaration][type][primitiveType] [variableDeclaratorId][variableDeclarator][variableDeclarators]i[variableDeclarators][variableDeclarator][variableDeclaratorId] [variableDeclarator]=[variableDeclarator] [literal][primary][expression][variableInitializer]0[variableInitializer][expression][primary][literal][forControl];[forControl] [expression][primary][expression]i[expression][primary][expression] [expression]<[expression] [literal][primary][expression]10[expression][primary][literal][forControl];[forControl] [expression][primary][expression][expressionList][forUpdate]i[forUpdate][expressionList][expression][primary][expression][expression]++[expression][statement])[statement] [block][statement]{[statement][block]
 
-            [primary][expression][expression][statementExpression][statement][blockStatement]number[blockStatement][statement][statementExpression][expression][expression][primary][expression]++[expression][statement];[statement]
+            [expression][primary][expression][statementExpression][statement][blockStatement]number[blockStatement][statement][statementExpression][expression][primary][expression][expression]++[expression][statement];[statement]
 
-            [statement][blockStatement]if[blockStatement][statement] [parExpression]([parExpression][primary][expression][expression]object[expression][expression][primary] [expression]instanceof[expression] [classOrInterfaceType][type]Double[type][classOrInterfaceType][parExpression])[parExpression] [statement]continue[statement][statement];[statement]
+            [statement][blockStatement]if[blockStatement][statement] [parExpression]([parExpression][expression][primary][expression]object[expression][primary][expression] [expression]instanceof[expression] [classOrInterfaceType][type]Double[type][classOrInterfaceType][parExpression])[parExpression] [statement]continue[statement][statement];[statement]
             [statement]else[statement] [block][statement]{[statement][block]
 
-                [primary][expression][expression][statementExpression][statement][blockStatement]number[blockStatement][statement][statementExpression][expression][expression][primary][expression]--[expression][statement];[statement]
+                [expression][primary][expression][statementExpression][statement][blockStatement]number[blockStatement][statement][statementExpression][expression][primary][expression][expression]--[expression][statement];[statement]
             [block]}[block]
 
             [statement][blockStatement]switch[blockStatement][statement] [parExpression]([parExpression][primary][expression]i[expression][primary][parExpression])[parExpression] {
                 [switchLabel][switchBlockStatementGroup]case[switchBlockStatementGroup][switchLabel] [literal][primary][expression][constantExpression]9[constantExpression][expression][primary][literal][switchLabel]:[switchLabel]
                     [statement][blockStatement]break[blockStatement][statement][statement];[statement]
                 [switchLabel][switchBlockStatementGroup]default[switchBlockStatementGroup][switchLabel][switchLabel]:[switchLabel]
-                    [primary][expression][expression][statementExpression][statement][blockStatement]number[blockStatement][statement][statementExpression][expression][expression][primary] [expression]=[expression] [literal][primary][expression]0[expression][primary][literal][statement];[statement]
+                    [expression][primary][expression][statementExpression][statement][blockStatement]number[blockStatement][statement][statementExpression][expression][primary][expression] [expression]=[expression] [literal][primary][expression]0[expression][primary][literal][statement];[statement]
             [statement]}[statement]
         [block]}[block]
 
         [statement][blockStatement]do[blockStatement][statement] [block][statement]{[statement][block]
 
-        [block]}[block] [statement]while[statement] [parExpression]([parExpression][expression][expression]-[expression][expression][literal][primary][expression]1[expression][primary][literal] [expression]>[expression] [primary][expression]number[expression][primary][parExpression])[parExpression][statement];[statement]
+        [block]}[block] [statement]while[statement] [parExpression]([parExpression][expression]-[expression][literal][primary][expression]1[expression][primary][literal] [expression]>[expression] [primary][expression]number[expression][primary][parExpression])[parExpression][statement];[statement]
 
         [statement][blockStatement]return[blockStatement][statement] [primary][expression]number[expression][primary][statement];[statement]
     [block]}[block]

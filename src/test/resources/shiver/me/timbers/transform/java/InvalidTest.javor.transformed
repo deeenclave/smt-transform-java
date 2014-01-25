@@ -8,19 +8,19 @@
 ['public'][classOrInterfaceModifier][typeDeclaration]public[typeDeclaration][classOrInterfaceModifier]['public'] ['class']class['class'] [classDefinition][Identifier]InvalidTest[Identifier][classDefinition] [classBody]{[classBody]
 
     [LINE_COMMENT]// A raw class level invocation doesn't parse correctly.[LINE_COMMENT]
-    [Ident<missing '{'>[classBodyDeclaration]test[classBodyDeclaration][memberDeclaration][constructorDeclaration][Identifier][formalParameters]([formalParameters][IntegerLiteral]1[IntegerLiteral][formalParameters])[formalParameters][block][constructorBody];[constructo[statement][blockStatement][block][constructorBody];[constructorBody][block][blockStatement][statement]
+    [Identifier][constructorDeclaration][memberDeclaration][classBodyDeclaration]test[classBodyDeclaration][memberDeclaration][constructorDeclaration][Identifier][formalParameters]([formalParameters][IntegerLiteral]1[IntegerLiteral][formalParameters])[formalParameters][statement][blockStatement][block][constructorBody];[constructorBody][block][blockStatement][statement]
 
     [LINE_COMMENT]// Stand alone literal does parse.[LINE_COMMENT]
     [IntegerLiteral][literal][primary][expression][statementExpression][statement][blockStatement]1[blockStatement][statement][statementExpression][expression][primary][literal][IntegerLiteral];
 
     [LINE_COMMENT]// A raw class level expression does not parse correctly.[LINE_COMMENT]
-    [Identifier][primary][expression][expression][statementExpression][statement][blockStatement]test[blockStatement][statement][statementExpression][expression][expression][primary][Identifier] [expression]=[expression] [IntegerLiteral][liter<missing ';'>][expression]1[expression][primary][literal][IntegerLiteral];
+    [expression][Identifier][primary][expression][statementExpression][statement][blockStatement]test[blockStatement][statement][statementExpression][expression][primary][Identifier][expression] [expression]=[expression] [expression][IntegerLiteral][literal][primary][expression]1[expression][primary][literal][IntegerLiteral][expression] [expression]+[expression] [IntegerLiteral][literal][primary][expression]1[expression][primary][literal][IntegerLiteral];
 
     [JAVA_DOC]/**
      * Valid method after the invalid code doesn't parse correctly.
      */[JAVA_DOC]
-    ['public'][typeDeclaration][blockStatement][typeDeclaration][blockStatement]public[blockStatement][typeDeclaration][blockStatement][typeDeclaration]['public'] ['void<missing ';'>tatementExpression][statement][blockStatement]void[blockStatement][statement][statementExpression][expression][primary]['void[Identifier][primary][expression][expression][statementExpression][statement][blockStatement]test[blockStatement][statement][statementExpression][expression][expression][primary][Identifier](['int'][primitiveType][type][primary][expression][expressionList]in<missing '}'>t][expression][primary][type][primitiveType]['int']i[Identifier]test[Identifier][expression])[expression]s[block][statement][blockStatement]{[blockStatement][statement][block]) {
+    ['public'][typeDeclaration][blockStatement][typeDeclaration][blockStatement]public[blockStatement][typeDeclaration][blockStatement][typeDeclaration]['public'] ['void'][primary][expression][statementExpression][statement][blockStatement]void[blockStatement][statement][statementExpression][expression][primary]['void'] [expression][Identifier][primary][expression][statementExpression][statement][blockStatement]test[blockStatement][statement][statementExpression][expression][primary][Identifier][expression](['int'][primitiveType][type][primary][expression][expressionList]int[expressionList][expression][primary][type][primitiveType]['int'] [Identifier]test[Identifier][expression])[expression] [block][statement][blockStatement]{[blockStatement][statement][block]
 
-     [Identifier][primary][expression][expression][statementExpression][statement][blockStatement]test[blockStatement][statement][statementExpression][expression][expression][primary][Identifier]e[expression]+=[expression] [IntegerLiteral][literal][primary][expression]5[expression][primary][literal][IntegerLiteral]; 5;
- [block]}[block] [block]}[block]}
-}
+        [expression][Identifier][primary][expression][statementExpression][statement][blockStatement]test[blockStatement][statement][statementExpression][expression][primary][Identifier][expression] [expression]+=[expression] [IntegerLiteral][literal][primary][expression]5[expression][primary][literal][IntegerLiteral];
+    [block]}[block]
+[block]}[block]
