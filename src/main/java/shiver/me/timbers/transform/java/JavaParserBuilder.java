@@ -24,6 +24,8 @@ public class JavaParserBuilder implements ParserBuilder<JavaParser> {
         final CharStream charStream = new ANTLRInputStream(source);
 
         final JavaLexer lexer = new JavaLexer(charStream);
+        lexer.removeErrorListeners();
+        lexer.addErrorListener(new LoggingErrorListener());
 
         final TokenStream tokenStream = new BufferedTokenStream(lexer);
 
